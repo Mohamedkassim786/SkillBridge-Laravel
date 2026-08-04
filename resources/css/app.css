@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+/* 
+ * SkillBridge Design System - Synchronized directly from Stitch MCP
+ * Project: projects/4692913134826943320 (SkillBridge Learning and Career Portal)
+ * Aesthetic: Corporate Modernism with Structured Momentum
+ */
+
+@layer base {
+  :root {
+    /* Brand Primary Accent & Action Colors */
+    --color-primary: #b7102a;             /* Main Primary Red Accent */
+    --color-primary-cta: #e63946;         /* Vibrant Action Trigger Red */
+    --color-primary-container: #db313f;   /* Primary Container Surface */
+    --color-on-primary: #ffffff;
+
+    /* Secondary Navy & Structural Accent Colors */
+    --color-secondary: #49607c;           /* Slate Secondary */
+    --color-secondary-navy: #102a43;      /* Deep Navy Headers & Navigation */
+    --color-secondary-container: #c7dfff;
+
+    /* Surfaces & Background Canvas */
+    --color-background: #f8f9ff;          /* Light Cool Background Canvas */
+    --color-surface-lowest: #ffffff;      /* Pure White Card Base */
+    --color-surface-low: #eff4ff;         /* Low Surface Fill */
+    --color-surface-container: #e5eeff;    /* Default Surface Fill */
+    --color-surface-high: #dce9ff;        /* High Surface Fill */
+    --color-surface-highest: #d3e4fe;     /* Highest Surface Fill */
+
+    /* Typography & Neutral Text Colors */
+    --color-on-surface: #0b1c30;         /* Primary Dark Body & Title Text */
+    --color-on-surface-variant: #5b403f; /* Muted Secondary Text */
+    --color-outline: #8f6f6e;            /* Subtle Outline Divider */
+    --color-outline-variant: #e4bebc;    /* Light Border Divider */
+
+    /* Semantic State Colors */
+    --color-error: #ba1a1a;
+    --color-error-container: #ffdad6;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-on-surface);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Custom Stitch Utility Classes */
+
+/* Primary CTA Buttons */
+.btn-primary-stitch {
+  background-color: var(--color-primary-cta);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 0.5rem; /* 8px rounded-md */
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 8px rgba(230, 57, 70, 0.25);
+}
+
+.btn-primary-stitch:hover {
+  background-color: var(--color-primary);
+  box-shadow: 0 4px 14px rgba(183, 16, 42, 0.35);
+}
+
+/* Secondary Navy Buttons */
+.btn-secondary-stitch {
+  background-color: var(--color-secondary-navy);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-secondary-stitch:hover {
+  background-color: #0b1c30;
+}
+
+/* Stitch Surface Cards */
+.card-stitch {
+  background-color: var(--color-surface-lowest);
+  border: 1px solid rgba(143, 111, 110, 0.15);
+  border-radius: 1rem; /* 16px rounded-lg */
+  box-shadow: 0 4px 20px rgba(11, 28, 48, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-stitch:hover {
+  box-shadow: 0 8px 30px rgba(11, 28, 48, 0.08);
+}
+
+/* Stitch Status Chips */
+.badge-stitch {
+  border-radius: 1.5rem; /* 24px rounded-xl */
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge-primary {
+  background-color: rgba(230, 57, 70, 0.1);
+  color: var(--color-primary-cta);
+}
+
+.badge-navy {
+  background-color: rgba(16, 42, 67, 0.1);
+  color: var(--color-secondary-navy);
+}
+
+/* Glassmorphism Header & Mobile Nav */
+.glass-header-stitch {
+  background: rgba(248, 249, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(143, 111, 110, 0.15);
+}
