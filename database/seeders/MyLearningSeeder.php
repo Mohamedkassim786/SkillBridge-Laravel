@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Certificate;
 use App\Models\Course;
 use App\Models\CourseResource;
 use App\Models\CourseReview;
@@ -54,41 +55,103 @@ class MyLearningSeeder extends Seeder
 
         $m1 = Module::firstOrCreate(
             ['course_version_id' => $v1->id, 'sort_order' => 1],
-            ['title' => 'Module 1: Domain Architecture & SOLID Principles']
+            ['title' => 'Module 1: Web Development Fundamentals & Backend Architecture']
         );
+        $m1->update(['title' => 'Module 1: Web Development Fundamentals & Backend Architecture']);
 
         $m2 = Module::firstOrCreate(
             ['course_version_id' => $v1->id, 'sort_order' => 2],
-            ['title' => 'Module 2: Repositories & Service Layer Integration']
+            ['title' => 'Module 2: MVC Pattern & RESTful API Architecture']
         );
+        $m2->update(['title' => 'Module 2: MVC Pattern & RESTful API Architecture']);
 
         $l1 = Lesson::firstOrCreate(
             ['module_id' => $m1->id, 'sort_order' => 1],
             [
-                'title' => 'Lesson 1: Introduction to Domain Driven Architecture',
-                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-                'duration' => 1200,
+                'title' => 'Lesson 1: Full Stack Web Development Course Introduction',
+                'video_url' => 'storage/videos/full-stack-laravel-architecture/module-1-fundamentals/Full Stack Web Development Course Introduction_720p60.mp4',
+                'duration' => 278,
                 'is_free_preview' => true,
             ]
         );
+        $l1->update([
+            'title' => 'Lesson 1: Full Stack Web Development Course Introduction',
+            'video_url' => 'storage/videos/full-stack-laravel-architecture/module-1-fundamentals/Full Stack Web Development Course Introduction_720p60.mp4',
+            'duration' => 278,
+            'is_free_preview' => true,
+        ]);
 
         $l2 = Lesson::firstOrCreate(
-            ['module_id' => $m2->id, 'sort_order' => 1],
+            ['module_id' => $m1->id, 'sort_order' => 2],
             [
-                'title' => 'Lesson 2: Building Enterprise Repositories in PHP 8.3',
-                'video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-                'duration' => 1800,
-                'is_free_preview' => false,
+                'title' => 'Lesson 2: How The Backend Works',
+                'video_url' => 'storage/videos/full-stack-laravel-architecture/module-1-fundamentals/How The Backend Works_720p.mp4',
+                'duration' => 954,
+                'is_free_preview' => true,
             ]
         );
+        $l2->update([
+            'title' => 'Lesson 2: How The Backend Works',
+            'video_url' => 'storage/videos/full-stack-laravel-architecture/module-1-fundamentals/How The Backend Works_720p.mp4',
+            'duration' => 954,
+            'is_free_preview' => true,
+        ]);
+
+        $l3 = Lesson::firstOrCreate(
+            ['module_id' => $m2->id, 'sort_order' => 1],
+            [
+                'title' => 'Lesson 3: MVC Pattern Explained in 4 Minutes',
+                'video_url' => 'storage/videos/full-stack-laravel-architecture/module-2-mvc-rest/MVC Explained in 4 Minutes_720p60.mp4',
+                'duration' => 253,
+                'is_free_preview' => true,
+            ]
+        );
+        $l3->update([
+            'title' => 'Lesson 3: MVC Pattern Explained in 4 Minutes',
+            'video_url' => 'storage/videos/full-stack-laravel-architecture/module-2-mvc-rest/MVC Explained in 4 Minutes_720p60.mp4',
+            'duration' => 253,
+            'is_free_preview' => true,
+        ]);
+
+        $l4 = Lesson::firstOrCreate(
+            ['module_id' => $m2->id, 'sort_order' => 2],
+            [
+                'title' => 'Lesson 4: What is REST API Architecture',
+                'video_url' => 'storage/videos/full-stack-laravel-architecture/module-2-mvc-rest/What is REST _720p60.mp4',
+                'duration' => 762,
+                'is_free_preview' => true,
+            ]
+        );
+        $l4->update([
+            'title' => 'Lesson 4: What is REST API Architecture',
+            'video_url' => 'storage/videos/full-stack-laravel-architecture/module-2-mvc-rest/What is REST _720p60.mp4',
+            'duration' => 762,
+            'is_free_preview' => true,
+        ]);
 
         // Enroll Student
-        Enrollment::firstOrCreate(
+        $enr = Enrollment::firstOrCreate(
             ['user_id' => $student->id, 'course_id' => $course1->id],
             [
                 'course_version_id' => $v1->id,
-                'progress_percent' => 65,
-                'status' => 'active',
+                'progress_percent' => 100,
+                'status' => 'completed',
+                'completed_at' => now(),
+            ]
+        );
+        $enr->update([
+            'progress_percent' => 100,
+            'status' => 'completed',
+            'completed_at' => now(),
+        ]);
+
+        Certificate::firstOrCreate(
+            ['user_id' => $student->id, 'course_version_id' => $v1->id],
+            [
+                'uuid' => '8a7b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d',
+                'certificate_hash' => hash('sha256', $student->id . '-full-stack-laravel'),
+                'issued_at' => now(),
+                'pdf_s3_key' => 'certificates/full-stack-laravel-architecture.pdf',
             ]
         );
 

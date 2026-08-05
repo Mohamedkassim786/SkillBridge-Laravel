@@ -29,25 +29,23 @@ class LessonRepository implements LessonRepositoryInterface
 
     public function isLessonUnlocked(User $user, Lesson $lesson): bool
     {
-        // First lesson in module is unlocked by default
-        $module = $lesson->module;
-        if (! $module) {
+        // Free preview lessons are always unlocked
+        if ($lesson->is_free_preview) {
             return true;
         }
 
-        $previousLesson = Lesson::where('module_id', $module->id)
-            ->where('sort_order', '<', $lesson->sort_order)
-            ->orderBy('sort_order', 'desc')
-            ->first();
+        // Enrolled students have full access to all lessons in the course curriculum
+        $courseId = $lesson->module?->courseVersion?->course_id;
+        if ($courseId) {
+            $isEnrolled = \App\Models\Enrollment::where('user_id', $user->id)
+                ->where('course_id', $courseId)
+                ->exists();
 
-        if (! $previousLesson) {
-            return true;
+            if ($isEnrolled) {
+                return true;
+            }
         }
 
-        $prevProgress = LessonProgress::where('user_id', $user->id)
-            ->where('lesson_id', $previousLesson->id)
-            ->first();
-
-        return ($prevProgress?->watch_percentage ?? 0) >= 90;
+        return true;
     }
 }

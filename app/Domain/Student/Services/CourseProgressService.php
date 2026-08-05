@@ -20,6 +20,22 @@ class CourseProgressService
                 'completed_at' => $percentage >= 100 ? now() : null,
             ]);
 
+        if ($percentage >= 100) {
+            $enrollment = Enrollment::where('user_id', $userId)->where('course_id', $courseId)->first();
+            if ($enrollment && $enrollment->course_version_id) {
+                $uuid = (string) \Illuminate\Support\Str::uuid();
+                \App\Models\Certificate::firstOrCreate(
+                    ['user_id' => $userId, 'course_version_id' => $enrollment->course_version_id],
+                    [
+                        'uuid' => $uuid,
+                        'certificate_hash' => hash('sha256', $userId . '-' . $courseId . '-' . time()),
+                        'pdf_s3_key' => 'certificates/' . $userId . '_' . $courseId . '.pdf',
+                        'issued_at' => now(),
+                    ]
+                );
+            }
+        }
+
         return $percentage;
     }
 }

@@ -235,6 +235,39 @@ class Player extends Component
         session()->flash('status', 'Review deleted.');
     }
 
+    public function getIsLocalMediaProperty(): bool
+    {
+        if (! $this->activeLesson || ! $this->activeLesson->video_url) {
+            return false;
+        }
+
+        $url = strtolower($this->activeLesson->video_url);
+
+        if (str_contains($url, 'youtube.com') || str_contains($url, 'youtu.be') || str_contains($url, 'vimeo.com')) {
+            return false;
+        }
+
+        return str_starts_with($url, 'storage/') ||
+               str_starts_with($url, 'videos/') ||
+               str_contains($url, '/storage/') ||
+               preg_match('/\.(mp4|mp3|webm|ogg|wav|m4a)$/i', $url) === 1;
+    }
+
+    public function getMediaUrlProperty(): string
+    {
+        if (! $this->activeLesson || ! $this->activeLesson->video_url) {
+            return '';
+        }
+
+        $url = $this->activeLesson->video_url;
+
+        if (str_starts_with($url, 'http://') || str_starts_with($url, 'https://')) {
+            return $url;
+        }
+
+        return asset($url);
+    }
+
     public function getEmbedUrlProperty(): string
     {
         if (! $this->activeLesson || ! $this->activeLesson->video_url) {

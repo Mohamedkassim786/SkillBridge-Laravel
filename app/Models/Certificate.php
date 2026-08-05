@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Certificate extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUlids;
 
     protected $fillable = [
         'uuid',
+        'certificate_hash',
         'user_id',
-        'course_id',
-        'pdf_path',
+        'course_version_id',
+        'pdf_s3_key',
         'issued_at',
     ];
 
@@ -22,8 +24,18 @@ class Certificate extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function course()
+    public function courseVersion()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(CourseVersion::class);
+    }
+
+    public function getCourseAttribute()
+    {
+        return $this->courseVersion?->course;
+    }
+
+    public function getTitleAttribute()
+    {
+        return $this->courseVersion?->course?->title ?? 'Certified Software Engineer';
     }
 }

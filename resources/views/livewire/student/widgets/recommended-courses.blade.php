@@ -10,25 +10,28 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        @foreach ($courses as $c)
+        @forelse ($courses as $c)
             <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:shadow-md transition-shadow">
                 <div>
                     <div class="inline-block px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[10px] font-extrabold uppercase mb-2">
-                        {{ $c->category ?? 'Software' }}
+                        {{ $c->category?->name ?? 'Software Development' }}
                     </div>
                     <h4 class="text-sm font-extrabold text-[#0B1F3A] leading-snug">{{ $c->title }}</h4>
                     <div class="mt-2 flex items-center gap-3 text-xs text-slate-500">
-                        <span>⭐ {{ $c->rating ?? 4.9 }}</span>
-                        <span>👥 {{ $c->students_count ?? 1200 }} students</span>
+                        <span>Level: <strong class="capitalize">{{ $c->currentVersion?->level ?? 'Intermediate' }}</strong></span>
                     </div>
                 </div>
                 <div class="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between">
-                    <span class="text-base font-extrabold text-[#0B1F3A]">{{ $c->price ?? '$49' }}</span>
-                    <a href="#" class="px-3.5 py-1.5 rounded-lg bg-[#D62828] hover:bg-[#b7102a] text-white font-bold text-xs shadow-sm transition-all">
-                        Enroll Now
+                    <span class="text-base font-extrabold text-[#0B1F3A]">${{ number_format($c->currentVersion?->price ?? 0, 2) }}</span>
+                    <a href="{{ route('student.courses.show', $c->id) }}" class="px-3.5 py-1.5 rounded-lg bg-[#D62828] hover:bg-[#b7102a] text-white font-bold text-xs shadow-sm transition-all">
+                        View Course
                     </a>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <div class="col-span-full p-8 text-center text-xs text-slate-500 bg-slate-50 rounded-2xl border border-slate-200">
+                You are enrolled in all available courses! Check back soon for new enterprise course additions.
+            </div>
+        @endforelse
     </div>
 </div>

@@ -46,6 +46,27 @@
                 </svg>
             </button>
 
+            <a href="{{ route('home') }}" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs border border-slate-700 transition-all">
+                🌐 Public Website
+            </a>
+
+            @if (in_array(auth()->user()?->role, ['admin', 'super_admin']))
+                <div class="hidden lg:flex items-center gap-2">
+                    <a href="{{ route('admin.courses.manage') }}" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs transition-all">
+                        📚 Courses
+                    </a>
+                    <a href="{{ route('admin.lessons.manage') }}" class="px-3 py-1.5 rounded-xl bg-[#D62828] hover:bg-red-700 text-white font-extrabold text-xs shadow-md transition-all">
+                        🎬 Videos
+                    </a>
+                    <a href="{{ route('admin.enrollments.manage') }}" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs transition-all">
+                        🎓 Enrollments
+                    </a>
+                    <a href="{{ route('admin.cms.manage') }}" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs transition-all">
+                        📝 Admin CMS
+                    </a>
+                </div>
+            @endif
+
             <!-- Student Profile Dropdown -->
             <div x-data="{ open: false }" class="relative">
                 <button @click="open = !open" class="flex items-center gap-3 p-1.5 rounded-xl hover:bg-white/10 transition-colors focus:outline-none">

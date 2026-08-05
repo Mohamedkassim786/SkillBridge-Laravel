@@ -22,12 +22,40 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Public Home Route
-Route::get('/', function () {
-    return view('welcome');
-});
+/*
+|--------------------------------------------------------------------------
+| Public Enterprise LMS Website Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/', \App\Livewire\Public\Home::class)->name('home');
+Route::get('/courses', \App\Livewire\Public\Courses\Index::class)->name('courses.index');
+Route::get('/courses/{courseId}', \App\Livewire\Public\Courses\Show::class)->name('courses.show');
 
-// Guest Authentication Routes
+Route::get('/categories', \App\Livewire\Public\Categories\Index::class)->name('categories.index');
+Route::get('/categories/{slug}', \App\Livewire\Public\Categories\Show::class)->name('categories.show');
+
+Route::get('/instructors', \App\Livewire\Public\Instructors\Index::class)->name('instructors.index');
+Route::get('/instructors/{id}', \App\Livewire\Public\Instructors\Show::class)->name('instructors.show');
+
+Route::get('/jobs', \App\Livewire\Public\Jobs\Index::class)->name('jobs.index');
+Route::get('/jobs/{id}', \App\Livewire\Public\Jobs\Show::class)->name('jobs.show');
+
+Route::get('/pricing', \App\Livewire\Public\Pricing::class)->name('pricing');
+Route::get('/success-stories', \App\Livewire\Public\SuccessStories::class)->name('success.stories');
+
+Route::get('/blog', \App\Livewire\Public\Blog\Index::class)->name('blog.index');
+Route::get('/blog/{slug}', \App\Livewire\Public\Blog\Show::class)->name('blog.show');
+
+Route::get('/events', \App\Livewire\Public\Events\Index::class)->name('events.index');
+Route::get('/about', \App\Livewire\Public\About::class)->name('about');
+Route::get('/contact', \App\Livewire\Public\Contact::class)->name('contact');
+Route::get('/faq', \App\Livewire\Public\Faq::class)->name('faq');
+
+/*
+|--------------------------------------------------------------------------
+| Guest Authentication Routes
+|--------------------------------------------------------------------------
+*/
 Route::middleware('guest')->group(function () {
     Route::get('/login', Login::class)->name('login');
     Route::get('/register', Register::class)->name('register');
@@ -49,14 +77,18 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     return redirect()->route('verification.success');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
-// Exception & System Status Notice Routes
+// System Exception & Status Notice Routes
 Route::get('/account-suspended', AccountSuspended::class)->name('account.suspended');
 Route::get('/too-many-login-attempts', TooManyAttempts::class)->name('too.many.attempts');
 Route::get('/maintenance', MaintenanceMode::class)->name('maintenance');
 Route::get('/session-expired', SessionExpired::class)->name('session.expired');
 Route::get('/403', AccessDenied::class)->name('access.denied');
 
-// Authenticated Routes
+/*
+|--------------------------------------------------------------------------
+| Authenticated Dashboard & Admin Routes
+|--------------------------------------------------------------------------
+*/
 Route::middleware('auth')->group(function () {
     Route::post('/logout', function (Request $request) {
         Auth::guard('web')->logout();
@@ -78,23 +110,40 @@ Route::middleware('auth')->group(function () {
         return redirect()->to($roleService->getRedirectPath($user));
     })->name('dashboard');
 
-    // 4 Role-Based Dashboards
+    // Admin & Super Admin Management Routes
     Route::middleware('role:super_admin')->get('/super-admin/dashboard', function () {
         return view('welcome', ['roleTitle' => 'Super Admin Dashboard']);
     })->name('super_admin.dashboard');
 
-    Route::middleware('role:admin')->get('/admin/dashboard', function () {
-        return view('welcome', ['roleTitle' => 'Admin Dashboard']);
-    })->name('admin.dashboard');
+    Route::middleware('role:admin|super_admin')->group(function () {
+        Route::get('/admin/dashboard', \App\Livewire\Admin\Dashboard::class)->name('admin.dashboard');
+        Route::get('/admin/users', \App\Livewire\Admin\Users\Index::class)->name('admin.users.index');
+        Route::get('/admin/courses', \App\Livewire\Admin\Courses\Manage::class)->name('admin.courses.manage');
+        Route::get('/admin/jobs', \App\Livewire\Admin\Jobs\Manage::class)->name('admin.jobs.manage');
+        Route::get('/admin/companies', \App\Livewire\Admin\Companies\Manage::class)->name('admin.companies.manage');
+        Route::get('/admin/applications', \App\Livewire\Admin\Applications\Manage::class)->name('admin.applications.manage');
+        Route::get('/admin/payments', \App\Livewire\Admin\Payments\Manage::class)->name('admin.payments.manage');
+        Route::get('/admin/reports', \App\Livewire\Admin\Reports\Index::class)->name('admin.reports.index');
+        Route::get('/admin/settings', \App\Livewire\Admin\Settings\Index::class)->name('admin.settings.index');
+        Route::get('/admin/backups', \App\Livewire\Admin\Backups\Index::class)->name('admin.backups.index');
+        Route::get('/admin/activity-logs', \App\Livewire\Admin\ActivityLogs\Index::class)->name('admin.activity-logs.index');
+        Route::get('/admin/lessons', \App\Livewire\Admin\Lessons\Manage::class)->name('admin.lessons.manage');
+        Route::get('/admin/enrollments', \App\Livewire\Admin\Enrollments\Manage::class)->name('admin.enrollments.manage');
+        Route::get('/admin/cms', \App\Livewire\Admin\Cms\Manage::class)->name('admin.cms.manage');
+    });
 
-    Route::middleware('role:staff,trainer')->get('/staff/dashboard', function () {
+    Route::middleware('role:staff|trainer')->get('/staff/dashboard', function () {
         return view('welcome', ['roleTitle' => 'Staff / Trainer Dashboard']);
     })->name('staff.dashboard');
 
+    // Student Dashboard & Course Player Routes
     Route::middleware(['role:student', 'profile.completed'])->group(function () {
         Route::get('/student/dashboard', \App\Livewire\Student\Dashboard::class)->name('student.dashboard');
         Route::get('/student/courses', \App\Livewire\Student\Courses\Index::class)->name('student.courses.index');
         Route::get('/student/courses/{courseId}', \App\Livewire\Student\Courses\Show::class)->name('student.courses.show');
         Route::get('/student/courses/{courseId}/learn/{lesson?}', \App\Livewire\Student\Courses\Player::class)->name('student.courses.player');
+
+        Route::get('/student/certificates/{id}/view', [\App\Http\Controllers\Student\CertificateController::class, 'view'])->name('student.certificates.view');
+        Route::get('/student/certificates/{id}/download', [\App\Http\Controllers\Student\CertificateController::class, 'download'])->name('student.certificates.download');
     });
 });

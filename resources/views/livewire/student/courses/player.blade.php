@@ -24,16 +24,97 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Left 2 Columns: Video Player & Controls -->
         <div class="lg:col-span-2 space-y-6">
-            <!-- Embedded YouTube Video Player Container -->
-            <div class="rounded-3xl bg-slate-950 overflow-hidden shadow-2xl border border-slate-800 relative">
+            <!-- Video/Media Player Container -->
+            <div class="rounded-3xl bg-slate-950 overflow-hidden shadow-2xl border border-slate-800 relative"
+                 x-data="{
+                    playing: true,
+                    currentTime: 0,
+                    togglePlay() {
+                        let v = this.$refs.videoPlayer;
+                        if (!v) return;
+                        if (v.paused) {
+                            v.play();
+                            this.playing = true;
+                        } else {
+                            v.pause();
+                            this.playing = false;
+                        }
+                    },
+                    skip(seconds) {
+                        let v = this.$refs.videoPlayer;
+                        if (!v) return;
+                        v.currentTime = Math.max(0, Math.min(v.duration || 0, v.currentTime + seconds));
+                    },
+                    handleKeydown(e) {
+                        if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+                        if (e.code === 'Space' || e.key === 'k' || e.key === 'K') {
+                            e.preventDefault();
+                            this.togglePlay();
+                        } else if (e.key === 'ArrowRight' || e.key === 'l' || e.key === 'L') {
+                            e.preventDefault();
+                            this.skip(5);
+                        } else if (e.key === 'ArrowLeft' || e.key === 'j' || e.key === 'J') {
+                            e.preventDefault();
+                            this.skip(-5);
+                        } else if (e.key === 'f' || e.key === 'F') {
+                            e.preventDefault();
+                            let v = this.$refs.videoPlayer;
+                            if (v) {
+                                if (document.fullscreenElement) document.exitFullscreen();
+                                else if (v.requestFullscreen) v.requestFullscreen();
+                            }
+                        }
+                    }
+                 }"
+                 @keydown.window="handleKeydown($event)">
                 @if ($activeLesson && $activeLesson->video_url)
-                    <div class="aspect-video w-full bg-black relative">
-                        <iframe class="w-full h-full"
-                                src="{{ $this->embedUrl }}"
-                                title="{{ $activeLesson->title }}"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
+                    <div wire:key="player-aspect-{{ $activeLesson->id }}" class="aspect-video w-full bg-black relative flex items-center justify-center group">
+                        @if ($this->isLocalMedia)
+                            @if (preg_match('/\.(mp3|wav|m4a)$/i', $activeLesson->video_url))
+                                <!-- Audio Media Player UI -->
+                                <div wire:key="audio-container-{{ $activeLesson->id }}" class="w-full h-full flex flex-col items-center justify-center p-8 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-white space-y-6">
+                                    <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-[#D62828] to-orange-500 flex items-center justify-center shadow-lg shadow-red-500/20 animate-pulse">
+                                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 .895-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 .895-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="text-center space-y-1">
+                                        <span class="px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-xs font-bold border border-red-500/20 uppercase tracking-wider">Audio Lesson</span>
+                                        <h2 class="text-lg font-bold text-slate-100">{{ $activeLesson->title }}</h2>
+                                    </div>
+                                    <audio x-ref="videoPlayer" wire:key="audio-player-{{ $activeLesson->id }}" controls autoplay class="w-full max-w-md rounded-lg shadow-md" preload="auto">
+                                        <source src="{{ $this->mediaUrl }}" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                </div>
+                            @else
+                                <!-- HTML5 Video Player -->
+                                <video x-ref="videoPlayer"
+                                       wire:key="video-player-{{ $activeLesson->id }}"
+                                       class="w-full h-full object-contain focus:outline-none"
+                                       controls
+                                       autoplay
+                                       preload="auto"
+                                       controlsList="nodownload"
+                                       @play="playing = true"
+                                       @pause="playing = false"
+                                       @timeupdate="currentTime = Math.floor($el.currentTime)"
+                                       @ended="playing = false; $wire.call('markAsComplete')">
+                                    <source src="{{ $this->mediaUrl }}" type="video/mp4">
+                                    Your browser does not support HTML5 video streaming.
+                                </video>
+                            @endif
+                        @else
+                            <!-- Embedded YouTube / External Video Player -->
+                            <iframe wire:key="iframe-player-{{ $activeLesson->id }}"
+                                    class="w-full h-full"
+                                    src="{{ $this->embedUrl }}"
+                                    title="{{ $activeLesson->title }}"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                        @endif
                     </div>
                 @else
                     <div class="aspect-video w-full bg-slate-950 flex flex-col items-center justify-center p-8 text-center text-white space-y-3">
@@ -313,11 +394,7 @@
                                         $prog = $les->progress->first();
                                         $isDone = $prog?->is_completed ?? false;
                                         $isActive = ($activeLesson?->id === $les->id);
-                                        $isUnlocked = $unlockedFlag;
-
-                                        if (!$isDone && ($prog?->watch_percentage ?? 0) < 90) {
-                                            $unlockedFlag = false;
-                                        }
+                                        $isUnlocked = true;
                                     @endphp
 
                                     @if ($isUnlocked)

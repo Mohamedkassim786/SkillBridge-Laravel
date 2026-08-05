@@ -8,17 +8,22 @@
 
     <div class="space-y-3">
         @forelse ($certificates as $cert)
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="p-4 rounded-2xl bg-[#0B1F3A] text-white border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-md">
                 <div>
-                    <div class="text-sm font-bold text-[#0B1F3A]">{{ $cert->title }}</div>
-                    <div class="text-xs text-slate-500 mt-0.5">Issued: {{ $cert->issue_date }} • UUID: <span class="font-mono text-[11px] text-slate-600">{{ substr($cert->uuid, 0, 13) }}...</span></div>
+                    <div class="text-sm font-extrabold text-white flex items-center gap-2">
+                        <span>📜 {{ $cert->course?->title ?? $cert->title ?? 'Certified Course Completion' }}</span>
+                    </div>
+                    <div class="text-xs text-slate-300 mt-1">
+                        Issued: <strong class="text-emerald-400">{{ $cert->issued_at ? \Carbon\Carbon::parse($cert->issued_at)->format('M d, Y') : ($cert->issue_date ?? 'Aug 2026') }}</strong> •
+                        UUID: <span class="font-mono text-[11px] text-slate-400">{{ substr($cert->uuid, 0, 13) }}...</span>
+                    </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <a href="#" class="px-3 py-1.5 rounded-lg bg-[#0B1F3A] hover:bg-slate-900 text-white font-semibold text-xs transition-all">
-                        Download PDF
+                    <a href="{{ route('student.certificates.view', $cert->id) }}" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition-all">
+                        View 👁️
                     </a>
-                    <a href="#" class="px-3 py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-xs transition-all">
-                        Verify QR
+                    <a href="{{ route('student.certificates.download', $cert->id) }}" class="px-4 py-2 rounded-xl bg-[#D62828] hover:bg-red-700 text-white font-extrabold text-xs shadow-sm transition-all">
+                        Download PDF ⬇️
                     </a>
                 </div>
             </div>
