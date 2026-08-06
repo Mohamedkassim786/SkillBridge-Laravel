@@ -31,7 +31,7 @@ class Home extends Component
 
         $categories = Category::take(8)->get();
 
-        $topTrainers = User::whereIn('role', ['trainer', 'staff', 'admin'])
+        $topTrainers = User::role(['staff', 'admin'])
             ->take(4)
             ->get();
 

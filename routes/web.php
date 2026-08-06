@@ -132,18 +132,66 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/cms', \App\Livewire\Admin\Cms\Manage::class)->name('admin.cms.manage');
     });
 
-    Route::middleware('role:staff|trainer')->get('/staff/dashboard', function () {
-        return view('welcome', ['roleTitle' => 'Staff / Trainer Dashboard']);
-    })->name('staff.dashboard');
+    Route::middleware('role:staff|trainer|admin|super_admin')->get('/staff/dashboard', \App\Livewire\Staff\Dashboard::class)->name('staff.dashboard');
 
     // Student Dashboard & Course Player Routes
-    Route::middleware(['role:student', 'profile.completed'])->group(function () {
+    Route::middleware(['role:student|staff|trainer|admin|super_admin', 'profile.completed'])->group(function () {
         Route::get('/student/dashboard', \App\Livewire\Student\Dashboard::class)->name('student.dashboard');
         Route::get('/student/courses', \App\Livewire\Student\Courses\Index::class)->name('student.courses.index');
         Route::get('/student/courses/{courseId}', \App\Livewire\Student\Courses\Show::class)->name('student.courses.show');
         Route::get('/student/courses/{courseId}/learn/{lesson?}', \App\Livewire\Student\Courses\Player::class)->name('student.courses.player');
 
+        Route::get('/student/live-classroom/{classId?}', \App\Livewire\Student\LiveClassroom::class)->name('student.live-classroom');
+        Route::get('/student/certificates', \App\Livewire\Student\Certificates\Index::class)->name('student.certificates.index');
+        Route::get('/student/applications', \App\Livewire\Student\Applications\Index::class)->name('student.applications.index');
+        Route::get('/student/payments', \App\Livewire\Student\Payments\Index::class)->name('student.payments.index');
+        Route::get('/student/settings', \App\Livewire\Student\Settings\Index::class)->name('student.settings.index');
+
+        // Career Suite & Practice Hub Routes
+        Route::get('/student/career/resume', \App\Livewire\Student\Career\ResumeBuilder::class)->name('student.career.resume');
+        Route::get('/student/career/saved', \App\Livewire\Student\Career\SavedJobs::class)->name('student.career.saved');
+        Route::get('/student/practice/coding', \App\Livewire\Student\Practice\CodingPractice::class)->name('student.practice.coding');
+        Route::get('/student/practice/mock', \App\Livewire\Student\Practice\MockInterviews::class)->name('student.practice.mock');
+        Route::get('/student/practice/assessments', \App\Livewire\Student\Practice\SkillAssessments::class)->name('student.practice.assessments');
+
+        // Staff & Trainer Jitsi Live Class Engine Routes
+        Route::middleware('role:staff|trainer|admin|super_admin')->group(function () {
+            Route::get('/staff/live-classes', [\App\Http\Controllers\Staff\LiveClassController::class, 'index'])->name('staff.live-classes.index');
+            Route::get('/staff/live-classes/create', [\App\Http\Controllers\Staff\LiveClassController::class, 'create'])->name('staff.live-classes.create');
+            Route::post('/staff/live-classes', [\App\Http\Controllers\Staff\LiveClassController::class, 'store'])->name('staff.live-classes.store');
+            Route::get('/staff/live-classes/{liveClass}', [\App\Http\Controllers\Staff\LiveClassController::class, 'show'])->name('staff.live-classes.show');
+            Route::get('/staff/live-classes/{liveClass}/edit', [\App\Http\Controllers\Staff\LiveClassController::class, 'edit'])->name('staff.live-classes.edit');
+            Route::put('/staff/live-classes/{liveClass}', [\App\Http\Controllers\Staff\LiveClassController::class, 'update'])->name('staff.live-classes.update');
+            Route::delete('/staff/live-classes/{liveClass}', [\App\Http\Controllers\Staff\LiveClassController::class, 'destroy'])->name('staff.live-classes.destroy');
+            Route::get('/staff/live-classes/{liveClass}/join', [\App\Http\Controllers\Staff\LiveClassController::class, 'join'])->name('staff.live-classes.join');
+            Route::post('/staff/live-classes/{liveClass}/end', [\App\Http\Controllers\Staff\LiveClassController::class, 'end'])->name('staff.live-classes.end');
+            Route::get('/staff/live-classes/{liveClass}/attendance', [\App\Http\Controllers\Staff\LiveClassController::class, 'attendance'])->name('staff.live-classes.attendance');
+            Route::get('/staff/live-classes/{liveClass}/attendance/export', [\App\Http\Controllers\Staff\LiveClassController::class, 'exportAttendanceCsv'])->name('staff.live-classes.export-attendance');
+            Route::post('/staff/live-classes/{liveClass}/recording', [\App\Http\Controllers\Staff\LiveClassController::class, 'uploadRecording'])->name('staff.live-classes.upload-recording');
+            Route::post('/staff/live-classes/{liveClass}/publish-recording', [\App\Http\Controllers\Staff\LiveClassController::class, 'publishRecording'])->name('staff.live-classes.publish-recording');
+        });
+
+        // Student Jitsi Live Class Engine Routes
+        Route::get('/student/live-classes', [\App\Http\Controllers\Student\LiveClassController::class, 'index'])->name('student.live-classes.index');
+        Route::get('/student/live-classes/{liveClass}', [\App\Http\Controllers\Student\LiveClassController::class, 'show'])->name('student.live-classes.show');
+        Route::get('/student/live-classes/{liveClass}/join', [\App\Http\Controllers\Student\LiveClassController::class, 'joinRoom'])->name('student.live-classes.join');
+        Route::post('/student/live-classes/{liveClass}/join', [\App\Http\Controllers\Student\LiveClassController::class, 'join'])->middleware('throttle:10,1')->name('student.live-classes.post-join');
+        Route::post('/student/live-classes/{liveClass}/heartbeat', [\App\Http\Controllers\Student\LiveClassController::class, 'heartbeat'])->middleware('throttle:60,1')->name('student.live-classes.heartbeat');
+        Route::post('/student/live-classes/{liveClass}/leave', [\App\Http\Controllers\Student\LiveClassController::class, 'leave'])->name('student.live-classes.leave');
+        Route::get('/student/live-classes/{liveClass}/recording', [\App\Http\Controllers\Student\LiveClassController::class, 'streamRecording'])->name('student.live-classes.recording');
+        Route::post('/student/live-classes/{liveClass}/feedback', [\App\Http\Controllers\Student\LiveClassController::class, 'submitFeedback'])->name('student.live-classes.feedback');
+
         Route::get('/student/certificates/{id}/view', [\App\Http\Controllers\Student\CertificateController::class, 'view'])->name('student.certificates.view');
         Route::get('/student/certificates/{id}/download', [\App\Http\Controllers\Student\CertificateController::class, 'download'])->name('student.certificates.download');
+    });
+
+    // Admin Jitsi Live Class Management Routes
+    Route::middleware('role:admin|super_admin')->group(function () {
+        Route::get('/admin/live-classes', [\App\Http\Controllers\Admin\LiveClassController::class, 'index'])->name('admin.live-classes.index');
+        Route::get('/admin/live-classes/{liveClass}', [\App\Http\Controllers\Admin\LiveClassController::class, 'show'])->name('admin.live-classes.show');
+        Route::get('/admin/live-classes/{liveClass}/attendance', [\App\Http\Controllers\Admin\LiveClassController::class, 'attendance'])->name('admin.live-classes.attendance');
+        Route::put('/admin/live-classes/{liveClass}/cancel', [\App\Http\Controllers\Admin\LiveClassController::class, 'cancel'])->name('admin.live-classes.cancel');
+        Route::put('/admin/live-classes/{liveClass}/reschedule', [\App\Http\Controllers\Admin\LiveClassController::class, 'reschedule'])->name('admin.live-classes.reschedule');
+        Route::get('/admin/live-classes/{liveClass}/recording', [\App\Http\Controllers\Admin\LiveClassController::class, 'streamRecording'])->name('admin.live-classes.recording');
     });
 });

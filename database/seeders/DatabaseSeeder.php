@@ -46,5 +46,8 @@ class DatabaseSeeder extends Seeder
 
         // 4. Seed My Learning Module Sample Courses & Lessons
         $this->call(MyLearningSeeder::class);
+
+        // 5. Seed Enterprise Master Real Data
+        $this->call(MasterSeeder::class);
     }
 }

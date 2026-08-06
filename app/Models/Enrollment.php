@@ -13,10 +13,13 @@ class Enrollment extends Model
     protected $fillable = [
         'user_id',
         'course_id',
+        'course_version_id',
+        'cohort_id',
         'batch_id',
         'progress_percent',
         'status',
         'completed_at',
+        'expires_at',
     ];
 
     public function user()
@@ -27,5 +30,10 @@ class Enrollment extends Model
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public function cohort()
+    {
+        return $this->belongsTo(Batch::class, 'cohort_id');
     }
 }

@@ -11,7 +11,7 @@
             </button>
 
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 text-decoration-none">
-                <div style="width: 34px; height: 34px; border-radius: 9px; background: #D62828; color: white; font-weight: 900; font-size: 15px;"
+                <div style="width: 34px; height: 34px; min-width: 34px; min-height: 34px; border-radius: 9px; background: #D62828; color: white; font-weight: 900; font-size: 15px;"
                     class="flex items-center justify-center shadow-sm shrink-0">
                     SB
                 </div>
@@ -38,21 +38,21 @@
         <div class="flex items-center gap-3 shrink-0">
 
             <!-- Notifications Bell -->
-            <div class="relative">
+            <div class="relative flex items-center h-full">
                 <button @click="notifyOpen = !notifyOpen" style="background: rgba(255,255,255,0.07);"
-                    class="p-2 rounded-xl text-slate-300 hover:text-white relative transition-all">
+                    class="p-2 rounded-xl text-slate-300 hover:text-white relative transition-all flex items-center justify-center">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                     </svg>
-                    <span style="background: #D62828; color: white;"
-                        class="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full text-[9px] font-extrabold flex items-center justify-center">5</span>
+                    <span style="background: #D62828; color: white; width: 16px; height: 16px; min-width: 16px; min-height: 16px; max-width: 16px; max-height: 16px; border-radius: 50%; font-size: 9px; font-weight: 900; line-height: 1; display: flex; align-items: center; justify-content: center;"
+                        class="absolute -top-1 -right-1 shadow-sm">5</span>
                 </button>
 
-                <!-- Notifications Dropdown -->
+                <!-- Notifications Dropdown (Positioned 58px down so it appears completely below the header) -->
                 <div x-show="notifyOpen" @click.away="notifyOpen = false" x-cloak
-                    style="background: #112240; border: 1px solid #1e3a5f;"
-                    class="absolute right-0 mt-2 w-72 rounded-2xl shadow-xl py-2 z-50 text-xs text-slate-200">
+                    style="background: #112240; border: 1px solid #1e3a5f; top: 56px;"
+                    class="absolute right-0 w-72 rounded-2xl shadow-2xl py-2 z-50 text-xs text-slate-200">
                     <div class="px-4 py-2 border-b border-slate-800 flex justify-between font-bold">
                         <span class="text-white">System Alerts</span>
                         <span class="text-rose-400">5 New</span>
@@ -76,36 +76,36 @@
                 class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-white/20 transition-all text-decoration-none">
                 <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                        d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m-9 9a9 9 0 019-9" />
                 </svg>
                 Public Website
             </a>
 
             <!-- Admin Profile Badge -->
-            <div class="relative">
+            <div class="relative flex items-center h-full">
                 <button @click="profileOpen = !profileOpen"
                     class="flex items-center gap-2 p-1 rounded-xl hover:bg-white/10 transition-all">
-                    <div style="width: 32px; height: 32px; border-radius: 50%; background: #D62828; color: white; font-weight: 800; font-size: 13px;"
-                        class="flex items-center justify-center shrink-0">
-                        {{ strtoupper(substr(auth()->user()?->name ?? 'Admin', 0, 1)) }}
+                    <div style="width: 32px; height: 32px; min-width: 32px; min-height: 32px; max-width: 32px; max-height: 32px; border-radius: 50%; background: #D62828; color: white; font-weight: 900; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; line-height: 1;"
+                        class="shrink-0 shadow-sm">
+                        {{ strtoupper(substr(auth()->user()?->first_name ?? 'A', 0, 1)) }}
                     </div>
                     <div class="text-left hidden lg:block">
                         <div class="text-xs font-bold text-white leading-tight">
                             {{ auth()->user()?->name ?? 'Admin Account' }}</div>
                         <div class="text-[10px] text-slate-400 font-semibold">Super Admin</div>
                     </div>
-                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
                 </button>
 
-                <!-- Profile Dropdown -->
+                <!-- Profile Dropdown (Explicit top: 56px to sit completely below 64px navbar) -->
                 <div x-show="profileOpen" @click.away="profileOpen = false" x-cloak
-                    style="background: #112240; border: 1px solid #1e3a5f;"
-                    class="absolute right-0 mt-2 w-48 rounded-2xl shadow-xl py-2 z-50 text-xs text-slate-200">
-                    <a href="{{ route('profile.settings') }}" class="block px-4 py-2 hover:bg-slate-800">Profile
+                    style="background: #112240; border: 1px solid #1e3a5f; top: 56px;"
+                    class="absolute right-0 w-48 rounded-2xl shadow-2xl py-2 z-50 text-xs text-slate-200">
+                    <a href="{{ route('profile.settings') }}" class="block px-4 py-2 hover:bg-slate-800 text-slate-200">Profile
                         Settings</a>
-                    <a href="{{ route('student.dashboard') }}" class="block px-4 py-2 hover:bg-slate-800">Student
+                    <a href="{{ route('student.dashboard') }}" class="block px-4 py-2 hover:bg-slate-800 text-slate-200">Student
                         Portal</a>
                     <div class="border-t border-slate-800 my-1"></div>
                     <form method="POST" action="{{ route('logout') }}">

@@ -1,4 +1,4 @@
-<div class="space-y-8" x-data="{ modalOpen: @entangle('showModal') }">
+<div class="space-y-8" x-data="{ modalOpen: @entangle('showModal'), moduleModalOpen: @entangle('showModuleModal') }">
     <!-- Admin Header & Course Selector -->
     <div class="p-6 rounded-3xl bg-gradient-to-r from-[#0B1F3A] to-slate-900 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
@@ -17,6 +17,13 @@
                     <option value="{{ $course->id }}">{{ $course->title }}</option>
                 @endforeach
             </select>
+
+            <button wire:click="openModuleModal" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-extrabold border border-slate-700 flex items-center gap-2 transition-all">
+                <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <span>Add Module</span>
+            </button>
 
             <button wire:click="openCreateModal" class="px-5 py-2.5 rounded-xl bg-[#D62828] hover:bg-red-700 text-white text-xs font-extrabold shadow-lg flex items-center gap-2 transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -88,14 +95,41 @@
                     </div>
                 </div>
             @empty
-                <div class="p-8 rounded-3xl bg-white border border-slate-200 text-center text-slate-500">
-                    No modules found for this course.
+                <div class="p-8 rounded-3xl bg-white border border-slate-200 text-center text-slate-500 space-y-4">
+                    <div class="text-3xl">📁</div>
+                    <div class="text-sm font-bold text-slate-700">No modules found for this course.</div>
+                    <button wire:click="openModuleModal" class="px-4 py-2 rounded-xl bg-[#0B1F3A] hover:bg-slate-800 text-white text-xs font-bold shadow-md">
+                        + Create First Module
+                    </button>
                 </div>
             @endforelse
         </div>
     @endif
 
-    <!-- Upload / Edit Modal -->
+    <!-- Create Module Modal -->
+    <div x-show="moduleModalOpen" x-cloak class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl space-y-6" @click.away="moduleModalOpen = false">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <h3 class="text-base font-extrabold text-[#0B1F3A]">Create New Course Module</h3>
+                <button @click="moduleModalOpen = false" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
+            </div>
+
+            <form wire:submit.prevent="createModule" class="space-y-4 text-xs font-semibold">
+                <div>
+                    <label class="block text-slate-700 font-bold mb-1">Module Title</label>
+                    <input type="text" wire:model="newModuleTitle" placeholder="e.g. Module 2: Advanced Eloquent & Database Relationships" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:ring-2 focus:ring-[#D62828]">
+                    @error('newModuleTitle') <span class="text-red-500 text-[11px] font-bold">{{ $message }}</span> @enderror
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                    <button type="button" @click="moduleModalOpen = false" class="px-4 py-2 rounded-xl border border-slate-200 text-slate-700 font-bold">Cancel</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-[#0B1F3A] text-white font-black shadow-md">Save Module</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Upload / Edit Lesson Modal -->
     <div x-show="modalOpen" x-cloak class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="w-full max-w-xl rounded-3xl bg-white p-6 sm:p-8 shadow-2xl space-y-6" @click.away="modalOpen = false">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
@@ -106,14 +140,18 @@
             </div>
 
             <form wire:submit.prevent="saveLesson" class="space-y-4">
-                <!-- Module Selection -->
+                <!-- Module Selection with inline Add Module button -->
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Module</label>
+                    <div class="flex items-center justify-between mb-1">
+                        <label class="block text-xs font-bold text-slate-700 uppercase">Module</label>
+                        <button type="button" wire:click="openModuleModal" class="text-[11px] font-bold text-rose-600 hover:underline">+ New Module</button>
+                    </div>
                     <select wire:model="module_id" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold focus:ring-2 focus:ring-[#D62828]">
                         @foreach ($modules as $mod)
                             <option value="{{ $mod->id }}">{{ $mod->title }}</option>
                         @endforeach
                     </select>
+                    @error('module_id') <span class="text-red-500 text-[11px] font-bold">{{ $message }}</span> @enderror
                 </div>
 
                 <!-- Lesson Title -->
@@ -125,8 +163,12 @@
 
                 <!-- Option A: File Upload -->
                 <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 space-y-2">
-                    <label class="block text-xs font-bold text-[#0B1F3A] uppercase">Option 1: Upload Video / Media File (.mp4, .mp3, .webm)</label>
+                    <label class="block text-xs font-bold text-[#0B1F3A] uppercase">Option 1: Upload Video / Media File (.mp4, .mp3, .webm, .mov)</label>
                     <input type="file" wire:model="videoFile" class="text-xs text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#0B1F3A] file:text-white hover:file:bg-slate-800">
+                    <div wire:loading wire:target="videoFile" class="text-xs font-bold text-amber-600 flex items-center gap-2 pt-1">
+                        <svg class="w-4 h-4 animate-spin text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        <span>Uploading video file to server... Please wait!</span>
+                    </div>
                     <p class="text-[11px] text-slate-400">Uploaded file will be saved directly into <code class="bg-slate-200 text-slate-800 px-1 rounded">storage/app/public/videos</code></p>
                     @error('videoFile') <span class="text-red-500 text-[11px] font-bold">{{ $message }}</span> @enderror
                 </div>
@@ -137,6 +179,19 @@
                     <input type="text" wire:model="video_url" placeholder="storage/videos/sample.mp4 OR https://www.youtube.com/watch?v=..." class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono focus:ring-2 focus:ring-[#D62828]">
                     @error('video_url') <span class="text-red-500 text-[11px] font-bold">{{ $message }}</span> @enderror
                 </div>
+
+                <!-- Option C: Pick Existing Video File from Storage -->
+                @if (!empty($serverVideoFiles) && count($serverVideoFiles) > 0)
+                    <div class="p-3 rounded-2xl bg-blue-50/60 border border-blue-200/80 space-y-1">
+                        <label class="block text-xs font-bold text-blue-900 uppercase">Option 3: Or Select Video File Already On Server</label>
+                        <select wire:model="video_url" class="w-full px-3 py-2 rounded-xl bg-white border border-blue-200 text-xs font-mono text-slate-800">
+                            <option value="">-- Choose Existing Server Video File --</option>
+                            @foreach ($serverVideoFiles as $svFile)
+                                <option value="{{ $svFile['url'] }}">{{ $svFile['name'] }} ({{ $svFile['size'] }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
 
                 <div class="grid grid-cols-2 gap-4">
                     <!-- Duration -->
@@ -159,8 +214,9 @@
                     <button type="button" @click="modalOpen = false" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">
                         Cancel
                     </button>
-                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#D62828] hover:bg-red-700 text-white text-xs font-extrabold shadow-md">
-                        Save Lesson & Video
+                    <button type="submit" wire:loading.attr="disabled" wire:target="videoFile" class="px-5 py-2.5 rounded-xl bg-[#D62828] hover:bg-red-700 disabled:opacity-50 text-white text-xs font-extrabold shadow-md">
+                        <span wire:loading.remove wire:target="videoFile">Save Lesson & Video</span>
+                        <span wire:loading wire:target="videoFile">Uploading Video...</span>
                     </button>
                 </div>
             </form>

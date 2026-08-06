@@ -4,7 +4,10 @@ namespace App\Livewire\Admin\Courses;
 
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\CourseReview;
 use App\Models\CourseVersion;
+use App\Models\Enrollment;
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
@@ -42,20 +45,12 @@ class Manage extends Component
 
     public function mount()
     {
-        // Auto-authenticate as admin if viewing in local preview mode
-        if (! auth()->check()) {
-            $admin = User::whereIn('role', ['admin', 'super_admin'])->first() ?? User::first();
-            if ($admin) {
-                auth()->login($admin);
-            }
-        }
-
         $firstCategory = Category::first();
         if ($firstCategory) {
             $this->category_id = $firstCategory->id;
         }
 
-        $trainer = User::whereIn('role', ['trainer', 'staff', 'admin', 'super_admin'])->first() ?? User::first();
+        $trainer = User::role(['staff', 'admin', 'super_admin'])->first() ?? User::first();
         if ($trainer) {
             $this->trainer_id = $trainer->id;
         }
@@ -113,14 +108,25 @@ class Manage extends Component
             'thumbnailFile' => 'nullable|image|max:5120',
         ]);
 
+        $thumbnailPath = null;
+        if ($this->thumbnailFile) {
+            $filename = time() . '_' . Str::slug($this->title) . '.' . $this->thumbnailFile->getClientOriginalExtension();
+            $this->thumbnailFile->storeAs('public/thumbnails', $filename);
+            $thumbnailPath = "storage/thumbnails/{$filename}";
+        }
+
         if ($this->editingCourseId) {
             $course = Course::findOrFail($this->editingCourseId);
-            $course->update([
+            $updateData = [
                 'title' => $this->title,
                 'slug' => Str::slug($this->slug),
                 'category_id' => $this->category_id,
                 'trainer_id' => $this->trainer_id,
-            ]);
+            ];
+            if ($thumbnailPath) {
+                $updateData['thumbnail_path'] = $thumbnailPath;
+            }
+            $course->update($updateData);
 
             $version = $course->currentVersion;
             if ($version) {
@@ -139,6 +145,7 @@ class Manage extends Component
                 'slug' => Str::slug($this->slug),
                 'category_id' => $this->category_id,
                 'trainer_id' => $this->trainer_id,
+                'thumbnail_path' => $thumbnailPath,
             ]);
 
             $version = CourseVersion::create([
@@ -151,6 +158,13 @@ class Manage extends Component
             ]);
 
             $course->update(['current_version_id' => $version->id]);
+
+            \App\Models\Module::create([
+                'course_version_id' => $version->id,
+                'title' => 'Module 1: Introduction & Fundamentals',
+                'sort_order' => 1,
+            ]);
+
             session()->flash('status', "New Course '{$this->title}' created successfully!");
         }
 
@@ -191,13 +205,14 @@ class Manage extends Component
 
     public function render()
     {
-        $query = Course::with(['category', 'trainer', 'currentVersion']);
+        $query = Course::with(['category', 'trainer', 'currentVersion', 'enrollments']);
 
         if ($this->search) {
-            $query->where(function($q) {
+            $query->where(function ($q) {
                 $q->where('title', 'like', '%' . $this->search . '%')
-                  ->orWhereHas('trainer', function($tQuery) {
-                      $tQuery->where('name', 'like', '%' . $this->search . '%');
+                  ->orWhereHas('trainer', function ($tQuery) {
+                      $tQuery->where('first_name', 'like', '%' . $this->search . '%')
+                             ->orWhere('last_name', 'like', '%' . $this->search . '%');
                   });
             });
         }
@@ -208,12 +223,22 @@ class Manage extends Component
 
         $courses = $query->orderBy('created_at', 'desc')->get();
         $categories = Category::all();
-        $trainers = User::whereIn('role', ['trainer', 'staff', 'admin', 'super_admin'])->get();
+        $trainers = User::role(['staff', 'admin', 'super_admin'])->get();
+
+        // Real MySQL 8 Metric Summaries
+        $totalCoursesCount = Course::count();
+        $totalEnrollmentsCount = Enrollment::count();
+        $totalRevenue = Payment::where('status', 'completed')->sum('amount');
+        $avgRating = CourseReview::avg('rating') ? round(CourseReview::avg('rating'), 1) : 4.8;
 
         return view('livewire.admin.courses.manage', [
             'courses' => $courses,
             'categories' => $categories,
             'trainers' => $trainers,
+            'totalCoursesCount' => $totalCoursesCount,
+            'totalEnrollmentsCount' => $totalEnrollmentsCount,
+            'totalRevenue' => $totalRevenue,
+            'avgRating' => $avgRating,
         ]);
     }
 }

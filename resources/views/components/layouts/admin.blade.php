@@ -27,29 +27,29 @@
         }
     </style>
 </head>
-<body class="h-full font-sans antialiased text-slate-900 bg-white" x-data="{ sidebarOpen: false }">
-    <div class="min-h-screen flex flex-col bg-white">
+<body style="background-color: #07162C;" class="h-full font-sans antialiased text-white" x-data="{ sidebarOpen: false }">
+    <div style="background-color: #07162C;" class="min-h-screen flex flex-col">
 
         <!-- Top Navbar -->
         <x-admin.navbar />
 
-        <div class="flex-1 flex overflow-hidden admin-sidebar-layout bg-white">
+        <div style="background-color: #07162C;" class="flex-1 flex overflow-hidden admin-sidebar-layout">
             <!-- Sidebar Navigation -->
             <x-admin.sidebar />
 
-            <!-- Main Content Area (Pure White Background #ffffff) -->
-            <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-white">
-                <div class="w-full space-y-6 bg-white">
+            <!-- Main Content Area (Deep Navy Dark Canvas #07162C) -->
+            <main style="background-color: #07162C;" class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+                <div class="w-full space-y-6">
                     @if (session('status'))
-                        <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center gap-2 shadow-sm">
-                            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        <div class="p-4 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center gap-2 shadow-sm">
+                            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
                             {{ session('status') }}
                         </div>
                     @endif
 
                     @if (session('error'))
-                        <div class="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold flex items-center gap-2 shadow-sm">
-                            <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                        <div class="p-4 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs font-bold flex items-center gap-2 shadow-sm">
+                            <svg class="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
                             {{ session('error') }}
                         </div>
                     @endif
@@ -59,9 +59,9 @@
             </main>
         </div>
 
-        <!-- Minimal Pure White Footer -->
-        <footer style="background: #ffffff; border-top: 1px solid #e2e8f0;" class="py-4 text-center text-xs text-slate-500 font-semibold z-20">
-            © 2026 SkillBridge Admin Panel
+        <!-- Dark Navy Footer -->
+        <footer style="background-color: #0B1F3A; border-top: 1px solid #1e3a5f;" class="py-4 text-center text-xs text-slate-400 font-semibold z-20">
+            © 2026 SkillBridge Admin Suite • Enterprise LMS & Placement Portal
         </footer>
     </div>
 

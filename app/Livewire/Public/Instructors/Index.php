@@ -13,7 +13,7 @@ class Index extends Component
 {
     public function render()
     {
-        $instructors = User::whereIn('role', ['trainer', 'staff', 'admin'])->get();
+        $instructors = User::role(['staff', 'admin'])->get();
 
         return view('livewire.public.instructors.index', compact('instructors'));
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\AI\Services;
+namespace App\Domain\Ai\Services;
 
 use App\Models\AiModel;
 use App\Models\AiTokenUsage;

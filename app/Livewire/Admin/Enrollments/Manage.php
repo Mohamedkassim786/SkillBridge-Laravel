@@ -9,7 +9,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('components.layouts.student')]
+#[Layout('components.layouts.admin')]
 #[Title('Admin - Student Enrollments Manager')]
 class Manage extends Component
 {
@@ -21,11 +21,11 @@ class Manage extends Component
     public function mount()
     {
         $user = auth()->user();
-        if (! $user || ! in_array($user->role, ['admin', 'super_admin'])) {
+        if (! $user || ! $user->hasAnyRole(['admin', 'super_admin'])) {
             abort(403, 'Unauthorized access to Enrollment Management.');
         }
 
-        $firstStudent = User::where('role', 'student')->first();
+        $firstStudent = User::role('student')->first();
         if ($firstStudent) {
             $this->user_id = $firstStudent->id;
         }
@@ -90,7 +90,7 @@ class Manage extends Component
 
         if ($this->search) {
             $query->whereHas('user', function ($q) {
-                $q->where('name', 'like', '%' . $this->search . '%')
+                $q->where('first_name', 'like', '%' . $this->search . '%')
                   ->orWhere('email', 'like', '%' . $this->search . '%');
             })->orWhereHas('course', function ($q) {
                 $q->where('title', 'like', '%' . $this->search . '%');
@@ -98,7 +98,7 @@ class Manage extends Component
         }
 
         $enrollments = $query->orderBy('created_at', 'desc')->get();
-        $students = User::where('role', 'student')->get();
+        $students = User::role('student')->get();
         $courses = Course::all();
 
         return view('livewire.admin.enrollments.manage', [

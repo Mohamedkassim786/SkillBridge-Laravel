@@ -15,8 +15,22 @@ class Course extends Model
         'trainer_id',
         'title',
         'slug',
+        'thumbnail_path',
         'current_version_id',
     ];
+
+    public function getThumbnailAttribute(): string
+    {
+        if ($this->thumbnail_path) {
+            if (str_starts_with($this->thumbnail_path, 'http://') || str_starts_with($this->thumbnail_path, 'https://')) {
+                return $this->thumbnail_path;
+            }
+
+            return asset($this->thumbnail_path);
+        }
+
+        return 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80';
+    }
 
     public function category()
     {

@@ -49,13 +49,11 @@ class Player extends Component
     public int $watchPercentage = 0;
     public bool $isCompleted = false;
 
-    public function mount(
-        string $courseId,
-        ?string $lesson = null,
-        CourseRepositoryInterface $courseRepository,
-        LessonRepositoryInterface $lessonRepository
-    ) {
+    public function mount(string $courseId, ?string $lesson = null)
+    {
         $user = auth()->user();
+        $courseRepository = app(CourseRepositoryInterface::class);
+        $lessonRepository = app(LessonRepositoryInterface::class);
 
         // Security Authorization: Student must be enrolled
         if (! $courseRepository->isEnrolled($user, $courseId)) {

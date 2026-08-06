@@ -17,10 +17,24 @@
 - **Security & Protection**: Account lockout after 5 failed login attempts (15-min lockout + email notification + audit log).
 - **User Account States**: 5 enum states (`pending_verification`, `active`, `inactive`, `suspended`, `blocked`).
 
-### 📊 2. Student Dashboard
+### 📹 2. Jitsi Live-Class Engine & Attendance System
+- **Jitsi Meet Integration**: Fully integrated with `https://meet.jit.si/external_api.js` and configurable `JITSI_DOMAIN` setting.
+- **Backend Room Generation**: Cryptographically generated unpredictable room names (`live_class_` + ULID token).
+- **Trainer Live Control (`/staff/live-classes`)**: Schedule sessions for assigned courses/cohort batches, launch Jitsi host view, track real student attendance, and upload private session MP4 recordings.
+- **Student Live Room (`/student/live-classes`)**: Access assigned live sessions, embedded Jitsi room with real display name & email, automated 60-second attendance heartbeat ping, and post-class feedback rating.
+- **Real-Time Attendance Engine**:
+  - Auto-calculated duration rules (`absent` < 10m, `partial` 10m–50%, `attended` >= 50%).
+  - CSV attendance export for trainers and admin audit overview (`/admin/live-classes`).
+  - Scheduled job (`PruneStaleAttendanceJob`) pruning abandoned heartbeat sessions.
+- **Private Video Recording & Streaming**:
+  - Secure private MP4 storage with authorization policy checks.
+  - Streaming endpoint preventing raw file path exposure.
+
+### 📊 3. Student Dashboard & Dark Navy Theme
+- **Theme**: Unified `#0B1F3A` Dark Navy card containers and `#07162C` canvas background with `#D62828` Crimson accents.
 - **14 Livewire 3 Widgets**: Real-time learning statistics, active course hero banner, upcoming live classes, pending assignments, chapter quizzes, issued certificates with QR verification, recommended courses, verified job vacancies, ATS resume score, learning calendar, and personal AI career advisor.
 
-### 📚 3. My Learning Workspace
+### 📚 4. My Learning Workspace
 - **My Courses Catalog (`/student/courses`)**: Enrolled courses with title search, status filter tabs (*All*, *In Progress*, *Completed*), Category/Trainer/Difficulty dropdown filters, sorting options (*Recently Accessed*, *Highest Progress*, *Newest*), and responsive course cards.
 - **Course Details Page (`/student/courses/{courseId}`)**: Course progress widget with certificate eligibility status, 9 tabbed sections (*Overview*, *Curriculum Accordion*, *Outcomes*, *Requirements*, *Resources*, *Instructor Profile*, *Reviews*, *FAQs*, *Certificate Eligibility*).
 - **Video Learning Player (`/student/courses/{courseId}/learn/{lesson?}`)**:
@@ -41,8 +55,9 @@
 - **Language**: PHP 8.3
 - **Database**: MySQL 8 / SQLite
 - **Frontend Stack**: Livewire 3, Alpine.js, Tailwind CSS v4
+- **Live Video Streaming Engine**: Jitsi Meet External API (`JITSI_DOMAIN=meet.jit.si`)
 - **Architecture Patterns**: Domain-Driven Design (DDD), Repository Pattern, Service Layer, Custom Middleware & Policies, SOLID Principles.
-- **Design System**: Corporate Modernism (`#0B1F3A` Midnight Blue, `#D62828` Crimson Red, Inter typography).
+- **Design System**: Corporate Dark Navy (`#0B1F3A` Midnight Blue, `#07162C` Canvas, `#D62828` Crimson Red, Inter typography).
 
 ---
 
@@ -83,20 +98,29 @@
    cp .env.example .env
    php artisan key:generate
    ```
+   Add Jitsi configuration parameters to `.env`:
+   ```env
+   JITSI_DOMAIN=meet.jit.si
+   JITSI_USE_JWT=false
+   ```
 
 4. **Run Migrations & Seeders**:
    ```bash
    php artisan migrate:fresh --seed
    ```
 
-5. **Start Local Development Servers**:
+5. **Run Automated Test Suite**:
    ```bash
-   npm run dev
-   php artisan serve
+   php artisan test tests/Feature/LiveClassTest.php
    ```
 
-6. **Access Application**:
-   Open [http-[#]127.0.0.1:8000](http://127.0.0.1:8000) in your browser and sign in using the demo student credentials above.
+6. **Start Local Development Server**:
+   ```bash
+   php artisan serve --host=0.0.0.0 --port=8000
+   ```
+
+7. **Access Application**:
+   Open [http://127.0.0.1:8000](http://127.0.0.1:8000) or `http://192.168.1.15:8000` in your browser and sign in using the demo credentials above.
 
 ---
 

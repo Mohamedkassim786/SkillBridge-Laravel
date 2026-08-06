@@ -122,68 +122,54 @@
 
                 <!-- 2. COURSE CURRICULUM -->
                 <div style="background: #112240; border: 1px solid #1e3a5f; border-radius: 24px; padding: 32px;" class="space-y-6">
-                    <div class="flex items-center justify-between">
-                        <h2 class="text-2xl font-black text-white">Course Curriculum</h2>
-                        <span class="text-xs text-slate-400 font-semibold">8 Modules • 156 Lectures • 42h Total</span>
-                    </div>
-
                     @php
-                        $modulesList = [
-                            ['title' => 'Module 1: Introduction to Laravel 12 & Environment Setup', 'lectures' => '5 lectures', 'duration' => '45 min'],
-                            ['title' => 'Module 2: PHP 8.3 Language Features & Modern OOP', 'lectures' => '8 lectures', 'duration' => '1.5 hours'],
-                            ['title' => 'Module 3: Database Design, Migrations & Eloquent ORM', 'lectures' => '10 lectures', 'duration' => '2 hours'],
-                            ['title' => 'Module 4: Authentication, Authorization & Roles', 'lectures' => '12 lectures', 'duration' => '3 hours'],
-                            ['title' => 'Module 5: Building REST APIs & Laravel Sanctum Tokens', 'lectures' => '10 lectures', 'duration' => '2.5 hours'],
-                            ['title' => 'Module 6: Livewire 3 Reactive Components & Alpine.js', 'lectures' => '14 lectures', 'duration' => '4 hours'],
-                            ['title' => 'Module 7: Redis Caching, Atomic Locks & Background Queues', 'lectures' => '8 lectures', 'duration' => '2 hours'],
-                            ['title' => 'Module 8: Production Deployment, Docker & CI/CD Pipelines', 'lectures' => '6 lectures', 'duration' => '2 hours'],
-                        ];
+                        $dbModules = $course->currentVersion?->modules ?? collect([]);
+                        $totalLecturesCount = $dbModules->pluck('lessons')->flatten()->count();
                     @endphp
 
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl font-black text-white">Course Curriculum</h2>
+                        <span class="text-xs text-slate-400 font-semibold">{{ $dbModules->count() }} Modules • {{ $totalLecturesCount }} Lectures</span>
+                    </div>
+
                     <div class="space-y-3" x-data="{ openMod: 0 }">
-                        @foreach ($modulesList as $mIdx => $m)
+                        @forelse ($dbModules as $mIdx => $mod)
                             <div style="background: #081628; border: 1px solid #1e3a5f; border-radius: 16px;" class="overflow-hidden">
                                 <button @click="openMod = openMod === {{ $mIdx }} ? null : {{ $mIdx }}" class="w-full px-5 py-4 text-left flex items-center justify-between hover:bg-slate-800/40 transition-colors">
                                     <div class="flex items-center gap-3">
                                         <span style="background: #1e3a5f; color: #60a5fa;" class="w-7 h-7 rounded-lg text-xs font-extrabold flex items-center justify-center">
                                             {{ $mIdx + 1 }}
                                         </span>
-                                        <span class="text-sm font-bold text-white">{{ $m['title'] }}</span>
+                                        <span class="text-sm font-bold text-white">{{ $mod->title }}</span>
                                     </div>
                                     <div class="flex items-center gap-4">
-                                        <span class="text-xs text-slate-400 hidden sm:inline">{{ $m['lectures'] }} • {{ $m['duration'] }}</span>
+                                        <span class="text-xs text-slate-400 hidden sm:inline">{{ $mod->lessons->count() }} {{ Str::plural('lecture', $mod->lessons->count()) }}</span>
                                         <svg class="w-4 h-4 text-slate-400 transition-transform" :class="openMod === {{ $mIdx }} ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                                     </div>
                                 </button>
                                 <div x-show="openMod === {{ $mIdx }}" x-cloak class="px-5 py-3 border-t border-slate-800 space-y-2 text-xs text-slate-300">
-                                    <div class="flex items-center justify-between py-1 border-b border-slate-800/60">
-                                        <span class="flex items-center gap-2">
-                                            <svg class="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                            Lecture 1: Course Overview & Architecture Goals
-                                        </span>
-                                        <span class="text-emerald-400 font-bold text-[10.5px]">Free Preview</span>
-                                    </div>
-                                    <div class="flex items-center justify-between py-1 border-b border-slate-800/60">
-                                        <span class="flex items-center gap-2">
-                                            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                            Lecture 2: Setting up PHP 8.3 & Composer
-                                        </span>
-                                        <span class="text-slate-500">12 min</span>
-                                    </div>
-                                    <div class="flex items-center justify-between py-1">
-                                        <span class="flex items-center gap-2">
-                                            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                            Lecture 3: Folder Structure & Enterprise Conventions
-                                        </span>
-                                        <span class="text-slate-500">18 min</span>
-                                    </div>
+                                    @forelse ($mod->lessons as $lesIdx => $les)
+                                        <div class="flex items-center justify-between py-1 border-b border-slate-800/60 last:border-0">
+                                            <span class="flex items-center gap-2">
+                                                <svg class="w-4 h-4 {{ $les->is_free_preview ? 'text-rose-400' : 'text-slate-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                                Lecture {{ $lesIdx + 1 }}: {{ $les->title }}
+                                            </span>
+                                            @if ($les->is_free_preview)
+                                                <span class="text-emerald-400 font-bold text-[10.5px]">Free Preview</span>
+                                            @else
+                                                <span class="text-slate-500">{{ (int) round($les->duration / 60) }} min</span>
+                                            @endif
+                                        </div>
+                                    @empty
+                                        <div class="text-slate-500 py-1 italic">No lessons added to this module yet.</div>
+                                    @endforelse
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
-
-                    <div class="text-center pt-2">
-                        <button class="text-xs font-bold text-rose-400 hover:underline">Show more modules (4 remaining)</button>
+                        @empty
+                            <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 text-center text-slate-400 text-xs">
+                                Course curriculum is currently being updated.
+                            </div>
+                        @endforelse
                     </div>
                 </div>
 

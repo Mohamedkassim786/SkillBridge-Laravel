@@ -2,9 +2,12 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\AuditLog;
 use App\Models\Course;
 use App\Models\Enrollment;
+use App\Models\JobApplication;
 use App\Models\JobPosting;
+use App\Models\Payment;
 use App\Models\User;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -18,24 +21,28 @@ class Dashboard extends Component
 
     public function render()
     {
-        $totalRevenue = Enrollment::sum('amount_paid') ?: 1485900;
-        $totalStudents = User::where('role', 'student')->count() ?: 12450;
-        $totalCourses = Course::count() ?: 48;
-        $totalJobs = JobPosting::count() ?: 2145;
+        $totalRevenue = Payment::where('status', 'completed')->sum('amount');
+        $totalStudents = User::role('student')->count();
+        $totalCourses = Course::count();
+        $totalJobs = JobPosting::count();
 
-        // Recent Enrollments
+        // Real Recent Enrollments from MySQL 8
         $recentEnrollments = Enrollment::with(['user', 'course'])
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
 
-        // System Activity Logs
-        $activityLogs = [
-            ['title' => 'System Backup Completed', 'desc' => 'Database & storage backup finished successfully', 'time' => '10 mins ago', 'type' => 'success'],
-            ['title' => 'New Course Published', 'desc' => 'Laravel 12 Advanced REST API Design by John Doe', 'time' => '45 mins ago', 'type' => 'info'],
-            ['title' => 'User Role Promoted', 'desc' => 'Priya Sharma promoted to Lead Instructor', 'time' => '2 hours ago', 'type' => 'warning'],
-            ['title' => 'Payment Gateway Audit', 'desc' => 'Razorpay & Stripe webhooks verified 100% active', 'time' => '5 hours ago', 'type' => 'success'],
-        ];
+        // Real Recent Job Applications from MySQL 8
+        $recentApplications = JobApplication::with(['jobPosting.company', 'user'])
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
+        // Real System Activity Logs from MySQL 8
+        $activityLogs = AuditLog::with('user')
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
 
         return view('livewire.admin.dashboard', compact(
             'totalRevenue',
@@ -43,6 +50,7 @@ class Dashboard extends Component
             'totalCourses',
             'totalJobs',
             'recentEnrollments',
+            'recentApplications',
             'activityLogs'
         ));
     }

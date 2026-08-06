@@ -17,7 +17,15 @@ class CheckRole
 
         $user = Auth::user();
 
+        // Support pipe-delimited roles e.g. "admin|super_admin"
+        $expandedRoles = [];
         foreach ($roles as $role) {
+            foreach (explode('|', $role) as $r) {
+                $expandedRoles[] = trim($r);
+            }
+        }
+
+        foreach ($expandedRoles as $role) {
             if ($user->hasRole($role)) {
                 return $next($request);
             }

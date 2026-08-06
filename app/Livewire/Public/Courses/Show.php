@@ -23,10 +23,16 @@ class Show extends Component
     {
         $user = auth()->user();
         if (! $user) {
+            session()->flash('error', 'Please sign in to enroll in this course.');
             return redirect()->route('login');
         }
 
-        $course = Course::findOrFail($this->courseId);
+        $course = Course::with('currentVersion')->findOrFail($this->courseId);
+        $price = (float) ($course->currentVersion?->price ?? 0);
+
+        if ($price > 0) {
+            return redirect()->route('checkout', ['courseId' => $course->id]);
+        }
 
         Enrollment::firstOrCreate(
             ['user_id' => $user->id, 'course_id' => $course->id],
@@ -36,6 +42,8 @@ class Show extends Component
                 'status' => 'active',
             ]
         );
+
+        session()->flash('status', "Enrolled successfully in '{$course->title}'!");
 
         return redirect()->route('student.courses.player', ['courseId' => $course->id]);
     }
