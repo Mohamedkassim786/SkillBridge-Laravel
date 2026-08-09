@@ -3,7 +3,8 @@
         <div class="flex items-center justify-between">
             <div>
                 <div class="flex items-center gap-2 text-xs font-bold text-slate-400">
-                    <a href="{{ route('student.live-classes.index') }}" class="hover:text-rose-400 text-decoration-none">My Live Classes</a>
+                    <a href="{{ route('student.live-classes.index') }}"
+                        class="hover:text-rose-400 text-decoration-none">My Live Classes</a>
                     <span>/</span>
                     <span class="text-white">{{ $liveClass->title }}</span>
                 </div>
@@ -11,12 +12,14 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30">
+                <div
+                    class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span>Attendance Active: <span id="attendance-timer">00:00</span></span>
                 </div>
 
-                <a href="{{ route('student.live-classes.show', $liveClass->id) }}" id="leave-class-btn" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-decoration-none">
+                <a href="{{ route('student.live-classes.show', $liveClass->id) }}" id="leave-class-btn"
+                    class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs text-decoration-none">
                     🚪 Leave Class
                 </a>
             </div>
@@ -25,8 +28,10 @@
 
     <div class="space-y-6">
         <!-- Embedded Jitsi Meeting Container -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-4 shadow-2xl overflow-hidden">
-            <div id="jitsi-container" class="w-full rounded-2xl overflow-hidden bg-black aspect-video min-h-[600px]"></div>
+        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;"
+            class="rounded-3xl p-4 shadow-2xl overflow-hidden">
+            <div id="jitsi-container" class="w-full rounded-2xl overflow-hidden bg-black aspect-video min-h-[600px]">
+            </div>
         </div>
     </div>
 

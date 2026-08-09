@@ -1,7 +1,8 @@
 <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl text-white shadow-xl">
     <div class="flex items-center justify-between gap-4 mb-4">
         <h3 class="text-lg font-black text-white flex items-center gap-2">
-            <span>📈 Career Placement Readiness</span>
+            <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+            <span>Career Placement Readiness</span>
         </h3>
         <a href="{{ route('student.applications.index') }}" class="text-xs font-extrabold text-[#D62828] hover:underline">Career Hub</a>
     </div>

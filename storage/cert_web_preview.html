@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillBridge Certificate - Demo Student</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@600;700;800;900&family=Great+Vibes&family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .font-script { font-family: 'Great Vibes', 'Alex Brush', cursive; }
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+        @media print {
+            body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+            .no-print { display: none !important; }
+            .cert-card-print {
+                box-shadow: none !important;
+                border: 3px solid #D4AF37 !important;
+                outline: 1px solid #D4AF37 !important;
+                outline-offset: 4px !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                margin: 0 !important;
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
+            }
+            @page { size: A4 landscape; margin: 0; }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-slate-950 min-h-screen text-slate-800 p-4 md:p-8 flex flex-col items-center justify-center font-sans antialiased">
+
+    <!-- Action Toolbar -->
+    <div class="w-full max-w-5xl mb-6 flex items-center justify-between gap-4 no-print">
+        <a href="http://localhost/student/dashboard" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-white font-bold text-xs flex items-center gap-2 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            <span>Back to Dashboard</span>
+        </a>
+
+        <div class="flex items-center gap-3">
+            <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-white font-bold text-xs flex items-center gap-2 transition-all cursor-pointer">
+                <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                <span>Print</span>
+            </button>
+
+            <button onclick="downloadExactPdf()" style="background-color: #D62828;" class="px-5 py-2 rounded-xl text-white font-black text-xs shadow-lg shadow-rose-600/30 flex items-center gap-2 transition-all hover:bg-red-700 cursor-pointer">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                <span>Download Official PDF</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Official Certificate Frame Card -->
+    <div class="w-full max-w-5xl bg-[#FCFDFF] rounded-xl p-8 md:p-12 shadow-2xl relative border-[3px] border-[#D4AF37] outline outline-1 outline-[#D4AF37] outline-offset-4 overflow-hidden cert-card-print">
+        
+        <!-- Top-Left Corner Geometric Polygon Ribbon -->
+        <div class="absolute top-0 left-0 w-36 h-36 pointer-events-none z-10">
+            <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                <!-- Navy Outer Triangle -->
+                <path d="M0 0 H140 L0 140 Z" fill="#0B1F3A"/>
+                <!-- Red Accent Polygon -->
+                <path d="M0 0 H100 L0 100 Z" fill="#D62828"/>
+                <!-- Inner Navy Accent Line -->
+                <path d="M0 120 L120 0" stroke="#0B1F3A" stroke-width="4"/>
+            </svg>
+        </div>
+
+        <!-- Bottom-Right Corner Geometric Polygon Ribbon -->
+        <div class="absolute bottom-0 right-0 w-36 h-36 pointer-events-none z-10">
+            <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                <!-- Navy Outer Triangle -->
+                <path d="M140 140 H0 L140 0 Z" fill="#0B1F3A"/>
+                <!-- Red Accent Polygon -->
+                <path d="M140 140 H40 L140 40 Z" fill="#D62828"/>
+                <!-- Inner Navy Accent Line -->
+                <path d="M140 20 L20 140" stroke="#0B1F3A" stroke-width="4"/>
+            </svg>
+        </div>
+
+        <!-- Watermark Background Emblem -->
+        <div class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+            <svg class="w-[500px] h-[500px]" viewBox="0 0 100 100" fill="currentColor">
+                <path d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z"/>
+            </svg>
+        </div>
+
+        <div class="relative z-20 space-y-6">
+            
+            <!-- HEADER ROW: Brand Logo + ID + Top-Right Golden Badge Ribbon -->
+            <div class="flex items-start justify-between pl-16 pr-4 pt-2">
+                <!-- Left: SkillBridge Brand Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-xl bg-slate-900 flex items-center justify-center p-2 shadow-md">
+                        <svg viewBox="0 0 40 40" class="w-full h-full">
+                            <path d="M20 4L34 12V28L20 36L6 28V12L20 4Z" fill="#0B1F3A"/>
+                            <path d="M14 14L26 14L20 20L14 26L26 26" stroke="#D62828" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black tracking-tight font-montserrat flex items-center">
+                            <span class="text-[#0B1F3A]">SKILL</span>
+                            <span class="text-[#D62828]">BRIDGE</span>
+                        </div>
+                        <div class="text-[9px] font-extrabold text-[#D62828] uppercase tracking-widest">
+                            LEARN TODAY • LEAD TOMORROW
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Top: Certificate ID & Golden Badge Ribbon -->
+                <div class="flex items-start gap-6">
+                    <div class="text-right">
+                        <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">CERTIFICATE ID</div>
+                        <div class="text-xs font-black font-mono text-[#0B1F3A]">
+                            SB-2026-08-06-01KZB
+                        </div>
+                    </div>
+
+                    <!-- Top-Right Rosette Badge Ribbon -->
+                    <div class="relative -mt-4">
+                        <!-- Ribbon Tails -->
+                        <div class="absolute -bottom-6 left-2 w-5 h-10 bg-[#D62828] transform -rotate-12 rounded-b-md shadow-sm"></div>
+                        <div class="absolute -bottom-6 right-2 w-5 h-10 bg-[#0B1F3A] transform rotate-12 rounded-b-md shadow-sm"></div>
+
+                        <!-- Rosette Outer Circle -->
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-500 via-yellow-400 to-amber-300 p-1 shadow-xl relative z-10 flex items-center justify-center">
+                            <div class="w-full h-full rounded-full border-2 border-dashed border-amber-200 bg-[#0B1F3A] flex flex-col items-center justify-center text-center p-1">
+                                <div class="text-[7px] text-amber-300 tracking-widest font-black uppercase">★ ★ ★ ★ ★</div>
+                                <div class="text-[8px] font-black text-white leading-none uppercase tracking-tighter my-0.5">
+                                    EMPOWERING<br>FUTURES<br>BUILDING<br>CAREERS
+                                </div>
+                                <div class="text-[7px] text-amber-300 tracking-widest font-black uppercase">★ ★ ★ ★ ★</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TITLE & SUBTITLE SECTION -->
+            <div class="text-center space-y-1.5 pt-4">
+                <h1 class="text-4xl sm:text-5xl font-black font-cinzel text-[#0B1F3A] tracking-wider uppercase">
+                    CERTIFICATE
+                </h1>
+                
+                <div class="flex items-center justify-center gap-3">
+                    <div class="h-[1.5px] w-24 bg-gradient-to-r from-transparent to-[#D4AF37]"></div>
+                    <span class="text-xs sm:text-sm font-black text-[#D62828] uppercase tracking-[0.3em]">
+                        • OF COMPLETION •
+                    </span>
+                    <div class="h-[1.5px] w-24 bg-gradient-to-l from-transparent to-[#D4AF37]"></div>
+                </div>
+
+                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest pt-2">
+                    THIS IS TO CERTIFY THAT
+                </p>
+            </div>
+
+            <!-- CANDIDATE NAME -->
+            <div class="text-center my-6">
+                <div class="inline-block border-b-2 border-slate-300 px-12 pb-2">
+                    <span class="text-4xl sm:text-6xl font-script text-[#0B1F3A] font-bold">
+                        Demo Student
+                    </span>
+                </div>
+            </div>
+
+            <!-- COURSE & ACCREDITATION STATEMENT -->
+            <div class="text-center space-y-2 max-w-3xl mx-auto px-4">
+                <p class="text-xs sm:text-sm text-slate-600 font-medium">
+                    has successfully completed the <strong class="text-base sm:text-lg font-black text-[#0B1F3A] inline-block mx-1">Full-Stack Software Architecture with Laravel 12 &amp; Livewire 3</strong> course
+                </p>
+                <p class="text-xs sm:text-sm text-slate-600 font-medium">
+                    conducted by <strong class="text-[#D62828] font-bold">SkillBridge</strong> Learning Platform.
+                </p>
+                <p class="text-xs text-slate-500 max-w-xl mx-auto italic font-serif pt-1">
+                    The candidate has demonstrated dedication, technical proficiency and a strong understanding of the subject.
+                </p>
+            </div>
+
+            <!-- 3 METRICS BADGES ROW -->
+            <div class="max-w-2xl mx-auto grid grid-cols-3 gap-4 pt-4 border-t border-slate-100">
+                <!-- Course Duration -->
+                <div class="flex items-center gap-3 justify-center border-r border-slate-200 pr-2">
+                    <div class="w-9 h-9 rounded-full bg-[#0B1F3A] text-white flex items-center justify-center shrink-0">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    </div>
+                    <div class="text-left">
+                        <div class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider">COURSE DURATION</div>
+                        <div class="text-xs font-black text-[#0B1F3A]">60 Hours</div>
+                    </div>
+                </div>
+
+                <!-- Completion Date -->
+                <div class="flex items-center gap-3 justify-center border-r border-slate-200 pr-2">
+                    <div class="w-9 h-9 rounded-full bg-[#0B1F3A] text-white flex items-center justify-center shrink-0">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                    <div class="text-left">
+                        <div class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider">COMPLETED ON</div>
+                        <div class="text-xs font-black text-[#0B1F3A]">
+                            06 Aug 2026
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grade -->
+                <div class="flex items-center gap-3 justify-center">
+                    <div class="w-9 h-9 rounded-full bg-[#0B1F3A] text-white flex items-center justify-center shrink-0">
+                        <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                    </div>
+                    <div class="text-left">
+                        <div class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider">GRADE</div>
+                        <div class="text-xs font-black text-[#0B1F3A]">A+</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER ROW: Signatures + Wreath Seal + Live Verification QR Box -->
+            <div class="pt-8 pb-4 grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
+                
+                <!-- Left Signature: Kassim -->
+                <div class="text-center space-y-1">
+                    <div class="text-2xl font-script text-[#0B1F3A] font-bold">Kassim</div>
+                    <div class="h-[1px] w-36 bg-slate-300 mx-auto"></div>
+                    <div class="text-xs font-black text-[#0B1F3A] uppercase">KASSIM</div>
+                    <div class="text-[9px] font-extrabold text-[#D62828] uppercase">FOUNDER & CEO</div>
+                </div>
+
+                <!-- Center Laurel Wreath Emblem -->
+                <div class="flex items-center justify-center">
+                    <div class="relative w-20 h-20 flex items-center justify-center">
+                        <!-- Outer Gold Wreath Border -->
+                        <div class="absolute inset-0 rounded-full border-2 border-amber-500 border-dashed animate-spin-slow"></div>
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-600 to-yellow-400 p-0.5 shadow-md flex items-center justify-center">
+                            <div class="w-full h-full rounded-full bg-white flex items-center justify-center p-2">
+                                <svg viewBox="0 0 40 40" class="w-full h-full">
+                                    <path d="M20 4L34 12V28L20 36L6 28V12L20 4Z" fill="#0B1F3A"/>
+                                    <path d="M14 14L26 14L20 20L14 26L26 26" stroke="#D62828" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Signature: Fahad Ahmed -->
+                <div class="text-center space-y-1">
+                    <div class="text-2xl font-script text-[#0B1F3A] font-bold">Fahad Ahmed</div>
+                    <div class="h-[1px] w-36 bg-slate-300 mx-auto"></div>
+                    <div class="text-xs font-black text-[#0B1F3A] uppercase">FAHAD AHMED</div>
+                    <div class="text-[9px] font-extrabold text-[#D62828] uppercase">DIRECTOR</div>
+                    <div class="text-[8px] text-slate-400 leading-tight max-w-[140px] mx-auto">
+                        Director is responsible for managing operations, teams, and ensuring goals are achieved.
+                    </div>
+                </div>
+
+                <!-- Far Right: Live Verification QR Code Box -->
+                <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-md text-center space-y-1.5">
+                    <div class="text-[9px] font-extrabold text-[#0B1F3A] uppercase tracking-widest border-b border-slate-100 pb-1">
+                        VERIFY CERTIFICATE
+                    </div>
+
+                    
+                    <div class="flex items-center justify-center">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&amp;data=http%3A%2F%2Flocalhost%2Fverify%2F8a7b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d" alt="Certificate Verification QR Code" class="w-24 h-24 rounded border border-slate-200 p-1">
+                    </div>
+
+                    <div class="text-[8px] text-slate-500 leading-tight">
+                        Scan the QR code or visit<br>
+                        <strong class="text-[#D62828]">skillbridge.com/verify</strong><br>
+                        to verify this certificate.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function downloadExactPdf() {
+            const element = document.querySelector('.cert-card-print');
+            const opt = {
+                margin: 0,
+                filename: 'SkillBridge_Certificate_Demo_Student.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 3, useCORS: true, logging: false },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+            };
+            html2pdf().set(opt).from(element).save().catch(function() {
+                window.location.href = "http://localhost/student/certificates/01kzbv4ef2jnpdvraz68j8gnk6/download";
+            });
+        }
+    </script>
+</body>
+</html>

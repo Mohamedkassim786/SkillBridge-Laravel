@@ -29,13 +29,20 @@ class Certificate extends Model
         return $this->belongsTo(CourseVersion::class);
     }
 
-    public function getCourseAttribute()
+    public function course()
     {
-        return $this->courseVersion?->course;
+        return $this->hasOneThrough(
+            Course::class,
+            CourseVersion::class,
+            'id',                // Foreign key on course_versions table...
+            'id',                // Foreign key on courses table...
+            'course_version_id', // Local key on certificates table...
+            'course_id'          // Local key on course_versions table...
+        );
     }
 
     public function getTitleAttribute()
     {
-        return $this->courseVersion?->course?->title ?? 'Certified Software Engineer';
+        return $this->course?->title ?? $this->courseVersion?->course?->title ?? 'Certified Software Engineer';
     }
 }

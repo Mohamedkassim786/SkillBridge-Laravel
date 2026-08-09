@@ -36,11 +36,19 @@ class Home extends Component
             ->get();
 
         $successStories = SuccessStory::where('is_featured', true)->take(4)->get();
+        if ($successStories->isEmpty()) {
+            $successStories = SuccessStory::take(4)->get();
+        }
+
         $companies = Company::take(6)->get();
-        $latestJobs = JobPosting::with('company')->take(4)->get();
+        $latestJobs = JobPosting::with('company')->latest()->take(5)->get();
         $upcomingEvents = PublicEvent::where('is_upcoming', true)->take(2)->get();
         $latestBlogs = BlogPost::where('is_published', true)->take(3)->get();
         $faqs = Faq::where('is_published', true)->orderBy('sort_order')->take(5)->get();
+
+        $totalStudents = User::role('student')->count();
+        $totalCourses = Course::count();
+        $totalJobs = JobPosting::count();
 
         return view('livewire.public.home', [
             'heroHeadline' => $heroHeadline,
@@ -54,6 +62,9 @@ class Home extends Component
             'upcomingEvents' => $upcomingEvents,
             'latestBlogs' => $latestBlogs,
             'faqs' => $faqs,
+            'totalStudents' => $totalStudents,
+            'totalCourses' => $totalCourses,
+            'totalJobs' => $totalJobs,
         ]);
     }
 }

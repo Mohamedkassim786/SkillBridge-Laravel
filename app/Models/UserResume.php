@@ -14,6 +14,7 @@ class UserResume extends Model
         'user_id',
         'title',
         'file_path',
+        'parsed_text',
         'parsed_skills',
         'is_default',
     ];

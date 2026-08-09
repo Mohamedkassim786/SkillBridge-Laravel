@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreLiveClassRequest;
-use App\Http\Requests\UpdateLiveClassRequest;
-use App\Http\Requests\UploadRecordingRequest;
+use App\Http\Requests\LiveClasses\StoreLiveClassRequest;
+use App\Http\Requests\LiveClasses\UpdateLiveClassRequest;
+use App\Http\Requests\LiveClasses\UploadRecordingRequest;
 use App\Models\Batch;
 use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\LiveClass;
 use App\Models\LiveClassMaterial;
-use App\Notifications\LiveClassCreatedNotification;
-use App\Services\JitsiLiveClassService;
+use App\Notifications\LiveClasses\LiveClassCreatedNotification;
+use App\Domain\LiveClasses\Services\JitsiLiveClassService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -333,7 +333,7 @@ class LiveClassController extends Controller
             ->filter();
 
         if ($students->isNotEmpty()) {
-            Notification::send($students, new \App\Notifications\RecordingPublishedNotification($liveClass));
+            Notification::send($students, new \App\Notifications\LiveClasses\RecordingPublishedNotification($liveClass));
         }
 
         return redirect()->route('staff.live-classes.show', $liveClass->id)

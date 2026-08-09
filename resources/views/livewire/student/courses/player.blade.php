@@ -29,8 +29,11 @@
                  x-data="{
                     playing: true,
                     currentTime: 0,
+                    getVideo() {
+                        return this.$el.querySelector('video') || this.$el.querySelector('audio') || this.$refs.videoPlayer;
+                    },
                     togglePlay() {
-                        let v = this.$refs.videoPlayer;
+                        let v = this.getVideo();
                         if (!v) return;
                         if (v.paused) {
                             v.play();
@@ -41,7 +44,7 @@
                         }
                     },
                     skip(seconds) {
-                        let v = this.$refs.videoPlayer;
+                        let v = this.getVideo();
                         if (!v) return;
                         v.currentTime = Math.max(0, Math.min(v.duration || 0, v.currentTime + seconds));
                     },
@@ -59,7 +62,7 @@
                             this.skip(-5);
                         } else if (e.key === 'f' || e.key === 'F') {
                             e.preventDefault();
-                            let v = this.$refs.videoPlayer;
+                            let v = this.getVideo();
                             if (v) {
                                 if (document.fullscreenElement) document.exitFullscreen();
                                 else if (v.requestFullscreen) v.requestFullscreen();
@@ -83,7 +86,14 @@
                                         <span class="px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-xs font-bold border border-red-500/20 uppercase tracking-wider">Audio Lesson</span>
                                         <h2 class="text-lg font-bold text-slate-100">{{ $activeLesson->title }}</h2>
                                     </div>
-                                    <audio x-ref="videoPlayer" wire:key="audio-player-{{ $activeLesson->id }}" controls autoplay class="w-full max-w-md rounded-lg shadow-md" preload="auto">
+                                    <audio x-ref="videoPlayer"
+                                           src="{{ $this->mediaUrl }}"
+                                           wire:key="audio-player-{{ $activeLesson->id }}"
+                                           controls
+                                           autoplay
+                                           class="w-full max-w-md rounded-lg shadow-md"
+                                           preload="auto"
+                                           @loadedmetadata="if ({{ (int)$watchTimeSeconds }} > 0 && {{ (int)$watchTimeSeconds }} < $el.duration) { $el.currentTime = {{ (int)$watchTimeSeconds }}; }">
                                         <source src="{{ $this->mediaUrl }}" type="audio/mpeg">
                                         Your browser does not support the audio element.
                                     </audio>
@@ -91,14 +101,17 @@
                             @else
                                 <!-- HTML5 Video Player -->
                                 <video x-ref="videoPlayer"
+                                       src="{{ $this->mediaUrl }}"
                                        wire:key="video-player-{{ $activeLesson->id }}"
-                                       class="w-full h-full object-contain focus:outline-none"
+                                       wire:ignore.self
+                                       class="w-full h-full object-contain focus:outline-none relative z-10"
                                        controls
                                        autoplay
                                        preload="auto"
                                        controlsList="nodownload"
                                        @play="playing = true"
                                        @pause="playing = false"
+                                       @loadedmetadata="if ({{ (int)$watchTimeSeconds }} > 0 && {{ (int)$watchTimeSeconds }} < $el.duration) { $el.currentTime = {{ (int)$watchTimeSeconds }}; }"
                                        @timeupdate="currentTime = Math.floor($el.currentTime)"
                                        @ended="playing = false; $wire.call('markAsComplete')">
                                     <source src="{{ $this->mediaUrl }}" type="video/mp4">
@@ -129,7 +142,8 @@
             <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-4 rounded-2xl shadow-xl flex flex-wrap items-center justify-between gap-3 text-white">
                 <!-- Previous Lesson -->
                 @if ($previousLesson)
-                    <button wire:click="selectLesson('{{ $previousLesson->id }}')"
+                    <button type="button"
+                            wire:click="selectLesson('{{ $previousLesson->id }}')"
                             class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center gap-1.5 transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -137,7 +151,7 @@
                         <span>Previous Lesson</span>
                     </button>
                 @else
-                    <button disabled class="px-4 py-2.5 rounded-xl bg-slate-900 text-slate-600 font-bold text-xs opacity-50 cursor-not-allowed">
+                    <button type="button" disabled class="px-4 py-2.5 rounded-xl bg-slate-900 text-slate-600 font-bold text-xs opacity-50 cursor-not-allowed">
                         Previous Lesson
                     </button>
                 @endif
@@ -150,7 +164,8 @@
                         </span>
                     @endif
 
-                    <button wire:click="markAsComplete"
+                    <button type="button"
+                            wire:click="markAsComplete"
                             style="background-color: #D62828;"
                             class="px-5 py-2.5 rounded-xl font-black text-xs shadow-md transition-all flex items-center gap-2 text-white">
                         @if ($isCompleted)
@@ -160,7 +175,7 @@
                         @endif
                     </button>
 
-                    <button wire:click="toggleBookmark" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs" title="Add Bookmark">
+                    <button type="button" wire:click="toggleBookmark" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs" title="Add Bookmark">
                         🔖
                     </button>
                 </div>
@@ -168,7 +183,8 @@
                 <!-- Next Lesson / Continue Learning -->
                 @if ($nextLesson)
                     @if ($isNextUnlocked)
-                        <button wire:click="selectLesson('{{ $nextLesson->id }}')"
+                        <button type="button"
+                                wire:click="selectLesson('{{ $nextLesson->id }}')"
                                 style="background-color: #D62828;"
                                 class="px-4 py-2.5 rounded-xl text-white font-black text-xs shadow-md transition-all flex items-center gap-1.5">
                             <span>Next Lesson</span>
@@ -177,7 +193,7 @@
                             </svg>
                         </button>
                     @else
-                        <button disabled class="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-500 font-bold text-xs cursor-not-allowed flex items-center gap-1.5" title="Complete current lesson to unlock">
+                        <button type="button" disabled class="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-500 font-bold text-xs cursor-not-allowed flex items-center gap-1.5" title="Complete current lesson to unlock">
                             <span>Next Lesson 🔒</span>
                         </button>
                     @endif
@@ -400,7 +416,7 @@
                                     @php
                                         $prog = $les->progress->first();
                                         $isDone = $prog?->is_completed ?? false;
-                                        $isActive = ($activeLesson?->id === $les->id);
+                                        $isActive = ((string) $activeLesson?->id === (string) $les->id);
                                         $isUnlocked = true;
                                     @endphp
 

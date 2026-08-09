@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SkillBridge Certificate</title>
+    <style>
+        @page {
+            size: 841.89pt 595.28pt;
+            margin: 0pt;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 841.89pt;
+            height: 595.28pt;
+            margin: 0pt !important;
+            padding: 0pt !important;
+            background-color: #FCFDFF;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #0B1F3A;
+            overflow: hidden;
+        }
+        
+        .certificate {
+            width: 730pt;
+            height: 515pt;
+            margin: 12pt auto;
+            padding: 14pt 24pt;
+            position: relative;
+            box-sizing: border-box;
+            background-color: #FCFDFF;
+            border: 3pt solid #D4AF37;
+        }
+
+        /* DomPDF Polygon Corner Triangles */
+        .corner-tl-navy {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-top: 110pt solid #0B1F3A;
+            border-right: 110pt solid transparent;
+            z-index: 1;
+        }
+        .corner-tl-red {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-top: 75pt solid #D62828;
+            border-right: 75pt solid transparent;
+            z-index: 2;
+        }
+
+        .corner-br-navy {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-bottom: 110pt solid #0B1F3A;
+            border-left: 110pt solid transparent;
+            z-index: 1;
+        }
+        .corner-br-red {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-bottom: 75pt solid #D62828;
+            border-left: 75pt solid transparent;
+            z-index: 2;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+        }
+
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .brand-name {
+            font-size: 20pt;
+            font-weight: 900;
+            color: #0B1F3A;
+            letter-spacing: 0.5pt;
+            line-height: 1;
+        }
+        .brand-red {
+            color: #D62828;
+        }
+        .brand-tagline {
+            font-size: 7pt;
+            font-weight: 800;
+            color: #D62828;
+            letter-spacing: 1.5pt;
+            margin-top: 2pt;
+        }
+        .cert-id-label {
+            font-size: 7pt;
+            font-weight: 800;
+            color: #94a3b8;
+            letter-spacing: 1pt;
+        }
+        .cert-id-val {
+            font-size: 9.5pt;
+            font-weight: 900;
+            color: #0B1F3A;
+            font-family: monospace;
+        }
+
+        /* Top-Right Rosette Badge Ribbon */
+        .rosette-box {
+            position: relative;
+            width: 58pt;
+            float: right;
+        }
+        .rosette-tail-red {
+            position: absolute;
+            bottom: -8pt;
+            left: 7pt;
+            width: 12pt;
+            height: 20pt;
+            background-color: #D62828;
+            z-index: 1;
+        }
+        .rosette-tail-navy {
+            position: absolute;
+            bottom: -8pt;
+            right: 7pt;
+            width: 12pt;
+            height: 20pt;
+            background-color: #0B1F3A;
+            z-index: 1;
+        }
+        .rosette-badge-outer {
+            width: 56pt;
+            height: 56pt;
+            border-radius: 28pt;
+            background-color: #D4AF37;
+            padding: 2pt;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 2;
+        }
+        .rosette-badge-inner {
+            width: 52pt;
+            height: 52pt;
+            border-radius: 26pt;
+            background-color: #0B1F3A;
+            border: 1pt dashed #fde68a;
+            text-align: center;
+            color: #ffffff;
+            padding-top: 4pt;
+            box-sizing: border-box;
+        }
+
+        .title-section {
+            text-align: center;
+            margin-top: 2pt;
+        }
+        .main-title {
+            font-size: 32pt;
+            font-weight: 900;
+            color: #0B1F3A;
+            letter-spacing: 4pt;
+            text-transform: uppercase;
+            margin: 0;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .sub-title-table {
+            width: 60%;
+            margin: 2pt auto 0 auto;
+            border-collapse: collapse;
+        }
+        .sub-title-text {
+            font-size: 10pt;
+            font-weight: 900;
+            color: #D62828;
+            letter-spacing: 2.5pt;
+            text-align: center;
+            white-space: nowrap;
+            padding: 0 6pt;
+        }
+        .gold-line {
+            height: 1pt;
+            background-color: #D4AF37;
+        }
+        .certify-lead {
+            font-size: 8pt;
+            font-weight: 800;
+            color: #64748b;
+            letter-spacing: 1.5pt;
+            margin-top: 3pt;
+        }
+
+        .candidate-container {
+            text-align: center;
+            margin-top: 4pt;
+            margin-bottom: 4pt;
+        }
+        .candidate-name {
+            font-size: 32pt;
+            font-weight: bold;
+            color: #0B1F3A;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-style: italic;
+            border-bottom: 1.5pt solid #cbd5e1;
+            padding-bottom: 2pt;
+            display: inline-block;
+            width: 55%;
+        }
+
+        .statement-box {
+            text-align: center;
+            margin-top: 4pt;
+            padding: 0 15pt;
+        }
+        .statement-text {
+            font-size: 10.5pt;
+            color: #475569;
+            line-height: 1.25;
+        }
+        .course-highlight {
+            font-size: 13pt;
+            font-weight: 900;
+            color: #0B1F3A;
+        }
+
+        .metrics-table {
+            width: 62%;
+            margin: 8pt auto 0 auto;
+            border-collapse: collapse;
+            border-top: 1pt solid #f1f5f9;
+            padding-top: 4pt;
+        }
+        .metric-cell {
+            width: 33%;
+            text-align: center;
+            border-right: 1pt solid #cbd5e1;
+        }
+        .metric-cell:last-child {
+            border-right: none;
+        }
+        .metric-circle-icon {
+            width: 18pt;
+            height: 18pt;
+            border-radius: 9pt;
+            background-color: #0B1F3A;
+            color: #ffffff;
+            text-align: center;
+            line-height: 18pt;
+            font-size: 8.5pt;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 4pt;
+        }
+        .metric-lbl {
+            font-size: 7pt;
+            font-weight: 800;
+            color: #94a3b8;
+            letter-spacing: 1pt;
+        }
+        .metric-val {
+            font-size: 10pt;
+            font-weight: 900;
+            color: #0B1F3A;
+            margin-top: 1pt;
+        }
+
+        .footer-table {
+            width: 100%;
+            margin-top: 6pt;
+            border-collapse: collapse;
+        }
+        .sig-col {
+            width: 25%;
+            text-align: center;
+            vertical-align: bottom;
+        }
+        .sig-name-script {
+            font-size: 17pt;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-weight: bold;
+            color: #0B1F3A;
+        }
+        .sig-line {
+            width: 85pt;
+            height: 1pt;
+            background-color: #cbd5e1;
+            margin: 2pt auto;
+        }
+        .sig-title-bold {
+            font-size: 9pt;
+            font-weight: 900;
+            color: #0B1F3A;
+        }
+        .sig-role-red {
+            font-size: 7pt;
+            font-weight: 800;
+            color: #D62828;
+            margin-top: 1pt;
+        }
+
+        .qr-card-box {
+            border: 1pt solid #cbd5e1;
+            padding: 4pt;
+            background-color: #ffffff;
+            border-radius: 4pt;
+            text-align: center;
+            width: 90pt;
+            float: right;
+        }
+        .qr-hdr {
+            font-size: 7pt;
+            font-weight: 900;
+            color: #0B1F3A;
+            letter-spacing: 1pt;
+            border-bottom: 1pt solid #f1f5f9;
+            padding-bottom: 2pt;
+            margin-bottom: 2pt;
+        }
+        .qr-sub {
+            font-size: 5.5pt;
+            color: #64748b;
+            margin-top: 1pt;
+            line-height: 1.1;
+        }
+    </style>
+</head>
+<body>
+    <div class="certificate">
+        
+        <!-- DomPDF Compatible Corner Triangles -->
+        <div class="corner-tl-navy"></div>
+        <div class="corner-tl-red"></div>
+
+        <div class="corner-br-navy"></div>
+        <div class="corner-br-red"></div>
+
+        <div class="content-layer">
+            <!-- Header Table: Logo + ID + Rosette Badge -->
+            <table class="header-table">
+                <tr>
+                    <td style="vertical-align: top; padding-left: 35pt;">
+                        <table style="border-collapse: collapse;">
+                            <tr>
+                                <td style="vertical-align: middle; padding-right: 6pt;">
+                                    <div style="width: 28pt; height: 28pt; border-radius: 5pt; background-color: #0B1F3A; text-align: center; line-height: 28pt; color: #D62828; font-weight: 900; font-size: 15pt; font-family: sans-serif;">
+                                        S
+                                    </div>
+                                </td>
+                                <td style="vertical-align: middle;">
+                                    <div class="brand-name">SKILL<span class="brand-red">BRIDGE</span></div>
+                                    <div class="brand-tagline">LEARN TODAY • LEAD TOMORROW</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="vertical-align: top; text-align: right;">
+                        <table style="border-collapse: collapse; float: right;">
+                            <tr>
+                                <td style="vertical-align: top; text-align: right; padding-right: 8pt;">
+                                    <div class="cert-id-label">CERTIFICATE ID</div>
+                                    <div class="cert-id-val">
+                                        SB-2026-08-06-01KZB
+                                    </div>
+                                </td>
+                                <td style="vertical-align: top;">
+                                    <div class="rosette-box">
+                                        <div class="rosette-tail-red"></div>
+                                        <div class="rosette-tail-navy"></div>
+                                        <div class="rosette-badge-outer">
+                                            <div class="rosette-badge-inner">
+                                                <div style="font-size: 4.5pt; color: #fbbf24;">★ ★ ★ ★ ★</div>
+                                                <div style="font-size: 5pt; font-weight: 900; color: #ffffff; line-height: 1.1; margin: 1pt 0;">
+                                                    EMPOWERING<br>FUTURES<br>BUILDING<br>CAREERS
+                                                </div>
+                                                <div style="font-size: 4.5pt; color: #fbbf24;">★ ★ ★ ★ ★</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Title & Subtitle -->
+            <div class="title-section">
+                <h1 class="main-title">CERTIFICATE</h1>
+                <table class="sub-title-table">
+                    <tr>
+                        <td style="width: 35%;"><div class="gold-line"></div></td>
+                        <td class="sub-title-text">• OF COMPLETION •</td>
+                        <td style="width: 35%;"><div class="gold-line"></div></td>
+                    </tr>
+                </table>
+                <div class="certify-lead">THIS IS TO CERTIFY THAT</div>
+            </div>
+
+            <!-- Candidate Name -->
+            <div class="candidate-container">
+                <div class="candidate-name">
+                    Demo Student
+                </div>
+            </div>
+
+            <!-- Course Statement -->
+            <div class="statement-box">
+                <div class="statement-text">
+                    has successfully completed the <span class="course-highlight">Full-Stack Software Architecture with Laravel 12 &amp; Livewire 3</span> course
+                </div>
+                <div class="statement-text" style="margin-top: 2pt;">
+                    conducted by <strong style="color: #D62828;">SkillBridge</strong> Learning Platform.
+                </div>
+                <div class="statement-text" style="font-size: 9pt; color: #64748b; font-style: italic; margin-top: 2pt;">
+                    The candidate has demonstrated dedication, technical proficiency and a strong understanding of the subject.
+                </div>
+            </div>
+
+            <!-- Metrics Table -->
+            <table class="metrics-table">
+                <tr>
+                    <td class="metric-cell">
+                        <table style="margin: 0 auto; border-collapse: collapse;">
+                            <tr>
+                                <td style="vertical-align: middle;">
+                                    <div class="metric-circle-icon">&#128216;</div>
+                                </td>
+                                <td style="vertical-align: middle; text-align: left;">
+                                    <div class="metric-lbl">COURSE DURATION</div>
+                                    <div class="metric-val">60 Hours</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="metric-cell">
+                        <table style="margin: 0 auto; border-collapse: collapse;">
+                            <tr>
+                                <td style="vertical-align: middle;">
+                                    <div class="metric-circle-icon">&#128197;</div>
+                                </td>
+                                <td style="vertical-align: middle; text-align: left;">
+                                    <div class="metric-lbl">COMPLETED ON</div>
+                                    <div class="metric-val">
+                                        06 Aug 2026
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="metric-cell">
+                        <table style="margin: 0 auto; border-collapse: collapse;">
+                            <tr>
+                                <td style="vertical-align: middle;">
+                                    <div class="metric-circle-icon">&#10004;</div>
+                                </td>
+                                <td style="vertical-align: middle; text-align: left;">
+                                    <div class="metric-lbl">GRADE</div>
+                                    <div class="metric-val">A+</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Footer Table -->
+            <table class="footer-table">
+                <tr>
+                    <!-- Kassim Signature -->
+                    <td class="sig-col">
+                        <div class="sig-name-script">Kassim</div>
+                        <div class="sig-line"></div>
+                        <div class="sig-title-bold">KASSIM</div>
+                        <div class="sig-role-red">FOUNDER & CEO</div>
+                    </td>
+
+                    <!-- Center Laurel Emblem -->
+                    <td class="sig-col" style="width: 20%;">
+                        <div style="width: 36pt; height: 36pt; border-radius: 18pt; border: 2pt solid #d97706; margin: 0 auto; padding: 1.5pt; box-sizing: border-box;">
+                            <div style="width: 100%; height: 100%; border-radius: 15pt; background: #0B1F3A; text-align: center; color: #ffffff; padding-top: 4pt; box-sizing: border-box;">
+                                <div style="font-size: 5pt; font-weight: 900; color: #fbbf24;">OFFICIAL</div>
+                                <div style="font-size: 4.5pt; color: #ffffff;">SEAL</div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <!-- Fahad Signature -->
+                    <td class="sig-col">
+                        <div class="sig-name-script">Fahad Ahmed</div>
+                        <div class="sig-line"></div>
+                        <div class="sig-title-bold">FAHAD AHMED</div>
+                        <div class="sig-role-red">DIRECTOR</div>
+                        <div style="font-size: 5pt; color: #94a3b8; margin-top: 1pt; line-height: 1.1; max-width: 100pt; margin-left: auto; margin-right: auto;">
+                            Director is responsible for managing operations, teams, and ensuring goals are achieved.
+                        </div>
+                    </td>
+
+                    <!-- QR Code Box -->
+                    <td class="sig-col" style="width: 25%;">
+                        <div class="qr-card-box">
+                            <div class="qr-hdr">VERIFY CERTIFICATE</div>
+                                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWAQMAAAAGz+OhAAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABrklEQVRIibWWMY6EMAxFjVJQ+gbDRRBciwIpSFNwLUZcJHODlCkQ3m+j3Z1iqoknFXmRMPn+tiF6s6KI0ISHEh4pt9iVKoZtx2V8CtFA1G44rGPx7Cge+qkjYuySv8O49MRyR0wfhscT6m6drN9hqtWKrRxNetXvQ6a55HV/5jIPOPzLrye7VsA9wkN4eXHhZyzKiTvsT2kPNU5/Y382hY3y5XFJOW7EpY5RI/B4YsEduISEY2+m9mbkVmgeoVXf5EqG7OVJPb4MlOmK4c0Q16xN8SGybjdoVcNaXAGSdKJ1TnE/kUt3Bsmz1eXcIL8wex2LC2SncPlPNKn+bMLns5YicpBETKsaRtr/VtFXjxgGVjPebJoH4lU9iTmjvSRXsoDeZD37gP+mSxdvplqZJ7UJtP/6fcx+e/YyajDNrDuL0F3M2iMKNJhWNQwt5PIfZiPDMzp7nJkuGwcl6lzAgKhjNrcW83mT0FROJnem2qNpqSdxulxa1TCrGW2COregC5fvMA3X3lH7+pPmwIr20xl3iduNyJ+Zx9FjNb/Yd7mOWS7t/wBzSyAQ+7M36wfIxBvSIv/D1AAAAABJRU5ErkJggg==" width="50" height="50" style="display: block; margin: 0 auto;">
+                                                        <div class="qr-sub">
+                                Scan or visit<br>
+                                <strong style="color: #D62828;">skillbridge.com/verify</strong>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -20,16 +20,16 @@
                 <!-- Live Metrics Bar -->
                 <div class="pt-12 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-slate-800/80 text-center max-w-3xl mx-auto">
                     <div>
-                        <div class="text-3xl font-black text-white">10K+</div>
+                        <div class="text-3xl font-black text-white">{{ number_format(max(1000, $totalStudents * 50)) }}+</div>
                         <div class="text-xs text-slate-400 font-semibold uppercase mt-1">Active Students</div>
                     </div>
                     <div>
-                        <div class="text-3xl font-black text-white">12+</div>
+                        <div class="text-3xl font-black text-white">{{ $totalCourses > 0 ? $totalCourses : 12 }}+</div>
                         <div class="text-xs text-slate-400 font-semibold uppercase mt-1">Enterprise Modules</div>
                     </div>
                     <div>
-                        <div class="text-3xl font-black text-white">94%</div>
-                        <div class="text-xs text-slate-400 font-semibold uppercase mt-1">Placement Rate</div>
+                        <div class="text-3xl font-black text-white">{{ $totalJobs > 0 ? $totalJobs : 40 }}+</div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase mt-1">Active Job Postings</div>
                     </div>
                     <div>
                         <div class="text-3xl font-black text-white">Verified</div>
@@ -174,56 +174,57 @@
                 <a href="{{ route('jobs.index') }}" style="color: #f87171;" class="text-xs font-bold hover:underline">View All Jobs ➔</a>
             </div>
 
-            @php
-                $demoJobRows = [
-                    ['title' => 'Laravel Developer', 'company' => 'TCS', 'location' => 'Chennai', 'salary' => '₹5L - 8L', 'exp' => 'Fresher / 2+ yrs', 'tags' => ['Remote', 'Full-time']],
-                    ['title' => 'Senior PHP Engineer', 'company' => 'Infosys', 'location' => 'Bangalore', 'salary' => '₹8L - 14L', 'exp' => '3+ yrs', 'tags' => ['Hybrid', 'Full-time']],
-                    ['title' => 'Full-Stack Developer', 'company' => 'Wipro', 'location' => 'Hyderabad', 'salary' => '₹6L - 10L', 'exp' => '1+ yrs', 'tags' => ['Remote', 'Full-time']],
-                    ['title' => 'Backend Architect', 'company' => 'Zoho', 'location' => 'Chennai', 'salary' => '₹12L - 20L', 'exp' => '5+ yrs', 'tags' => ['On-site', 'Full-time']],
-                    ['title' => 'React & Node Engineer', 'company' => 'Freshworks', 'location' => 'Chennai', 'salary' => '₹7L - 12L', 'exp' => '2+ yrs', 'tags' => ['Remote', 'Full-time']],
-                ];
-            @endphp
-
             <div class="space-y-3">
-                @foreach ($demoJobRows as $idx => $j)
+                @forelse ($latestJobs as $idx => $j)
+                    @php
+                        $companyName = $j->company?->name ?? 'Tech Company';
+                        $salaryText = ($j->salary_min && $j->salary_max) 
+                            ? ('₹' . round($j->salary_min / 100000, 1) . 'L - ' . round($j->salary_max / 100000, 1) . 'L') 
+                            : ($j->salary_range ?? 'Competitive Package');
+                        $jobType = ucfirst($j->job_type ?? 'Full-time');
+                        $workplace = ucfirst($j->workplace_type ?? 'Remote');
+                    @endphp
                     <div style="background: {{ $idx % 2 == 0 ? '#0b192c' : '#081628' }}; border: 1px solid #1e3a5f; border-radius: 14px; padding: 16px 20px;" class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div class="flex items-center gap-4">
                             <!-- Company Logo Badge -->
                             <div style="width: 42px; height: 42px; border-radius: 12px; background: #1e3a5f; color: white; font-weight: 900; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                {{ strtoupper(substr($j['company'], 0, 1)) }}
+                                {{ strtoupper(substr($companyName, 0, 1)) }}
                             </div>
                             <div>
-                                <div style="font-size: 15px; font-weight: 800; color: white;">{{ $j['title'] }}</div>
+                                <div style="font-size: 15px; font-weight: 800; color: white;">{{ $j->title }}</div>
                                 <div style="font-size: 12px; color: #94a3b8; margin-top: 2px; display: flex; align-items: center; flex-wrap: wrap; gap: 12px;">
-                                    <strong style="color: #cbd5e1;">{{ $j['company'] }}</strong>
+                                    <strong style="color: #cbd5e1;">{{ $companyName }}</strong>
                                     <span class="inline-flex items-center gap-1">
                                         <svg class="w-3.5 h-3.5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                        {{ $j['location'] }}
+                                        {{ $j->location ?? 'India' }}
                                     </span>
                                     <span class="inline-flex items-center gap-1">
                                         <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                        {{ $j['salary'] }}
+                                        {{ $salaryText }}
                                     </span>
                                     <span class="inline-flex items-center gap-1">
                                         <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
-                                        {{ $j['exp'] }}
+                                        {{ $j->experience_level ?? '1+ yrs' }}
                                     </span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-3 shrink-0">
-                            @foreach ($j['tags'] as $t)
-                                <span style="background: rgba(96,165,250,0.1); color: #60a5fa; border: 1px solid rgba(96,165,250,0.2); font-weight: 700; font-size: 10.5px; padding: 3px 10px; border-radius: 20px;">
-                                    {{ $t }}
-                                </span>
-                            @endforeach
-                            <a href="{{ route('jobs.index') }}" style="background: transparent; border: 1px solid #1e3a5f; color: white; font-weight: 700; font-size: 12px; padding: 8px 16px; border-radius: 10px; text-decoration: none;" onmouseover="this.style.background='#D62828'; this.style.borderColor='#D62828';" onmouseout="this.style.background='transparent'; this.style.borderColor='#1e3a5f';">
+                            <span style="background: rgba(96,165,250,0.1); color: #60a5fa; border: 1px solid rgba(96,165,250,0.2); font-weight: 700; font-size: 10.5px; padding: 3px 10px; border-radius: 20px;">
+                                {{ $workplace }}
+                            </span>
+                            <span style="background: rgba(96,165,250,0.1); color: #60a5fa; border: 1px solid rgba(96,165,250,0.2); font-weight: 700; font-size: 10.5px; padding: 3px 10px; border-radius: 20px;">
+                                {{ $jobType }}
+                            </span>
+                            <a href="{{ route('jobs.show', $j->id) }}" style="background: transparent; border: 1px solid #1e3a5f; color: white; font-weight: 700; font-size: 12px; padding: 8px 16px; border-radius: 10px; text-decoration: none;" onmouseover="this.style.background='#D62828'; this.style.borderColor='#D62828';" onmouseout="this.style.background='transparent'; this.style.borderColor='#1e3a5f';">
                                 Apply Now ➔
                             </a>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="p-6 text-center text-xs text-slate-400">No active job postings available at this moment.</div>
+                @endforelse
             </div>
         </div>
     </section>
@@ -235,40 +236,34 @@
             <h2 class="text-3xl font-black text-white tracking-tight mt-1">What Our Students Say</h2>
         </div>
 
-        @php
-            $testimonialsList = [
-                ['name' => 'Priya S.', 'company' => 'Infosys', 'pkg' => '8 LPA', 'quote' => 'I got placed at Infosys with 8 LPA package after completing the Laravel course. The training and placement support was excellent!'],
-                ['name' => 'Rahul M.', 'company' => 'TCS', 'pkg' => '7.5 LPA', 'quote' => 'The production architecture and repository pattern modules gave me the confidence to crack senior technical interview rounds easily.'],
-                ['name' => 'Kavitha R.', 'company' => 'Zoho', 'pkg' => '10 LPA', 'quote' => 'Real code, zero fake projects. Learning Redis queues and microservices directly helped me land a backend role at Zoho.'],
-            ];
-        @endphp
-
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            @foreach ($testimonialsList as $t)
-                <div style="background: #112240; border: 1px solid #1e3a5f; border-radius: 20px; padding: 28px; box-shadow: 0 8px 24px rgba(0,0,0,0.25);" class="flex flex-col justify-between space-y-4">
+            @forelse ($successStories as $s)
+                <div style="background: #112240; border: 1px solid #1e3a5f; border-radius: 20px; padding: 28px; box-shadow: 0 8px 24px rgba(0,0,0,0.25);" class="flex flex-col justify-between space-y-4 text-white">
                     <div class="space-y-3">
                         <div style="color: #f59e0b; font-size: 16px;">★★★★★</div>
                         <p style="font-size: 13px; color: #cbd5e1; line-height: 1.6; font-style: italic;">
-                            "{{ $t['quote'] }}"
+                            "{{ $s->testimonial }}"
                         </p>
                     </div>
 
                     <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid #1e3a5f;">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #D62828, #f87171); color: white; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center;">
-                                {{ strtoupper(substr($t['name'], 0, 1)) }}
+                                {{ strtoupper(substr($s->student_name, 0, 1)) }}
                             </div>
                             <div>
-                                <div style="font-size: 13.5px; font-weight: 800; color: white;">{{ $t['name'] }}</div>
-                                <div style="font-size: 11px; color: #94a3b8;">Placed at {{ $t['company'] }}</div>
+                                <div style="font-size: 13.5px; font-weight: 800; color: white;">{{ $s->student_name }}</div>
+                                <div style="font-size: 11px; color: #94a3b8;">Placed at {{ $s->company_name }}</div>
                             </div>
                         </div>
                         <span style="background: rgba(16,185,129,0.15); color: #34d399; font-weight: 800; font-size: 10.5px; padding: 3px 10px; border-radius: 20px; border: 1px solid rgba(16,185,129,0.3);">
-                            {{ $t['pkg'] }}
+                            {{ $s->salary_package ?? 'Placed' }}
                         </span>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="col-span-full text-center text-xs text-slate-400 p-6">No success stories available yet.</div>
+            @endforelse
         </div>
     </section>
 

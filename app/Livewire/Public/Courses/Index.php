@@ -37,7 +37,8 @@ class Index extends Component
 
     public function render()
     {
-        $query = Course::with(['category', 'currentVersion', 'trainer']);
+        $query = Course::with(['category', 'currentVersion.modules.lessons', 'trainer'])
+            ->withCount('enrollments');
 
         if ($this->search) {
             $query->where('title', 'like', '%' . $this->search . '%');

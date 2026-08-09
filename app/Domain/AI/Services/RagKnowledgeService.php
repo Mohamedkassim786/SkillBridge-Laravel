@@ -2,79 +2,144 @@
 
 namespace App\Domain\Ai\Services;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class RagKnowledgeService
 {
-    /**
-     * Knowledge Base vector/text chunks for multi-technology domains.
-     */
-    protected array $knowledgeBase = [
-        'laravel' => [
-            'tech' => 'PHP 8.3 & Laravel 12',
-            'keywords' => ['php', 'laravel', 'livewire', 'eloquent', 'artisan', 'blade', 'horizon', 'sanctum', 'mysql', 'redis'],
-            'docs' => 'Laravel 12 supports Concurrency::run(), native WorkOS auth, queue Horizon scaling, Eloquent Ulids, and PSR-12 architecture.',
-            'qa' => [
-                'Explain Laravel queue worker optimization.' => 'Use Redis driver, Horizon supervisor monitoring, and idempotent job classes with backoff retry limits.',
-                'What is the benefit of Eloquent ULID primary keys?' => 'Ulids are lexicographically sortable 128-bit identifiers that prevent B-Tree index fragmentation in MySQL 8.',
-            ],
-        ],
-        'react' => [
-            'tech' => 'JavaScript, React 19 & Next.js',
-            'keywords' => ['react', 'javascript', 'typescript', 'next.js', 'redux', 'tailwind', 'node.js', 'express', 'mongodb'],
-            'docs' => 'React 19 introduces Server Components, useActionState, useOptimistic, and automatic memoization via React Compiler.',
-            'qa' => [
-                'Explain React 19 Server Components vs Client Components.' => 'Server Components render on the server without sending JS bundle to the browser, while Client Components handle interactivity with useActionState and hooks.',
-            ],
-        ],
-        'python' => [
-            'tech' => 'Python 3.12, FastApi & Data Science',
-            'keywords' => ['python', 'django', 'fastapi', 'pytorch', 'pandas', 'numpy', 'postgresql', 'docker'],
-            'docs' => 'Python 3.12 features sub-interpreters, improved error tracebacks, async GIL improvements, and FastAPI async endpoints.',
-            'qa' => [
-                'How does FastAPI achieve high performance?' => 'FastAPI uses Starlette for web routing, Pydantic for data validation, and Python asyncio event loops for concurrent execution.',
-            ],
-        ],
-        'devops' => [
-            'tech' => 'DevOps, Docker & AWS Cloud',
-            'keywords' => ['docker', 'kubernetes', 'aws', 'terraform', 'ci/cd', 'github actions', 'nginx', 'linux'],
-            'docs' => 'Production containerization relies on multi-stage Dockerfiles, alpine minimal base images, non-root security contexts, and Terraform IaC.',
-            'qa' => [
-                'How do multi-stage Docker builds reduce image size?' => 'Multi-stage builds separate compile-time build tools from final runtime artifacts, creating lightweight production images under 30MB.',
-            ],
-        ],
-    ];
+    protected ?array $knowledgeBaseCache = null;
 
     /**
-     * RAG Step 1 & 2: Retrieve Relevant Knowledge Context based on Tech Query.
+     * Get path to the RAG knowledge base JSON file.
      */
-    public function retrieveContext(string $query): array
+    protected function getKnowledgeFilePath(): string
     {
-        $queryLower = strtolower($query);
-        $matchedTech = 'laravel'; // Default domain
+        return storage_path('app/rag/resume_ats_knowledge_base.json');
+    }
 
-        foreach ($this->knowledgeBase as $key => $domain) {
-            foreach ($domain['keywords'] as $keyword) {
-                if (str_contains($queryLower, $keyword)) {
-                    $matchedTech = $key;
-                    break 2;
-                }
+    /**
+     * Load Knowledge Base vector/text chunks from JSON file or fallback memory.
+     */
+    protected function loadKnowledgeBase(): array
+    {
+        if ($this->knowledgeBaseCache !== null) {
+            return $this->knowledgeBaseCache;
+        }
+
+        $filePath = $this->getKnowledgeFilePath();
+        if (File::exists($filePath)) {
+            $jsonContent = File::get($filePath);
+            $decoded = json_decode($jsonContent, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                $this->knowledgeBaseCache = $decoded;
+                return $this->knowledgeBaseCache;
             }
         }
 
-        $knowledge = $this->knowledgeBase[$matchedTech];
+        // Fallback default structure
+        $this->knowledgeBaseCache = [
+            'java_fullstack' => [
+                'tech' => 'Java Full-Stack Development',
+                'keywords' => ['java', 'spring boot', 'microservices', 'hibernate', 'postgresql', 'react'],
+                'docs' => 'Java Full-Stack ATS standards require Spring Boot 3, RESTful APIs, Microservices, Hibernate ORM, and React.',
+                'action_verbs' => ['Architected', 'Engineered', 'Developed', 'Optimized'],
+                'recommended_certifications' => ['Oracle Certified Professional: Java SE 17 Developer'],
+                'recommended_soft_skills' => ['Problem Solving', 'System Architecture Thinking', 'Code Quality'],
+                'project_templates' => ['E-Commerce Microservices Platform — Java Spring Boot, React, PostgreSQL'],
+            ],
+            'general_career' => [
+                'tech' => 'Software Development & Technology',
+                'keywords' => ['software', 'developer', 'coding', 'web', 'database', 'projects'],
+                'docs' => 'General Technology ATS standards require clean professional summary, categorized technical skills, and bullet points with action verbs.',
+                'action_verbs' => ['Developed', 'Built', 'Designed', 'Optimized'],
+                'recommended_certifications' => ['Full-Stack Web Development Certification'],
+                'recommended_soft_skills' => ['Problem Solving', 'Team Collaboration', 'Quick Learning'],
+                'project_templates' => ['Full-Stack Web Application — Web Technologies, SQL'],
+            ],
+        ];
+
+        return $this->knowledgeBaseCache;
+    }
+
+    /**
+     * RAG Step 1 & 2: Retrieve Relevant Knowledge Context based on Query.
+     */
+    public function retrieveContext(string $query): array
+    {
+        $kb = $this->loadKnowledgeBase();
+        $queryLower = strtolower($query);
+
+        $bestMatchedKey = null;
+        $highestMatchCount = 0;
+
+        foreach ($kb as $key => $domain) {
+            $count = 0;
+            if (!empty($domain['keywords'])) {
+                foreach ($domain['keywords'] as $keyword) {
+                    if (str_contains($queryLower, strtolower($keyword))) {
+                        $count++;
+                    }
+                }
+            }
+            if ($count > $highestMatchCount) {
+                $highestMatchCount = $count;
+                $bestMatchedKey = $key;
+            }
+        }
+
+        $hasExactMatch = ($bestMatchedKey !== null && $highestMatchCount > 0);
+        $matchedKey = $bestMatchedKey ?: 'general_career';
+        $knowledge = $kb[$matchedKey] ?? $kb['general_career'];
 
         return [
-            'matched_domain' => $matchedTech,
-            'tech_title' => $knowledge['tech'],
-            'retrieved_docs' => $knowledge['docs'],
-            'retrieved_qa' => $knowledge['qa'],
-            'keywords' => $knowledge['keywords'],
+            'matched_domain' => $matchedKey,
+            'has_exact_rag_match' => $hasExactMatch,
+            'tech_title' => $knowledge['tech'] ?? 'Software Technology',
+            'retrieved_docs' => $knowledge['docs'] ?? '',
+            'keywords' => $knowledge['keywords'] ?? [],
+            'action_verbs' => $knowledge['action_verbs'] ?? ['Developed', 'Built', 'Designed'],
+            'recommended_certifications' => $knowledge['recommended_certifications'] ?? [],
+            'recommended_soft_skills' => $knowledge['recommended_soft_skills'] ?? ['Problem Solving', 'Teamwork', 'Communication'],
+            'project_templates' => $knowledge['project_templates'] ?? [],
         ];
     }
 
     /**
-     * RAG Step 3: Generate Augmented Evaluation & ATS Scoring.
+     * SELF-LEARNING RAG: Dynamically appends newly LLM-learned domain knowledge
+     * back into storage/app/rag/resume_ats_knowledge_base.json for instant future retrieval.
+     */
+    public function saveLearnedDomainKnowledge(string $domainTitle, array $knowledgeData): void
+    {
+        $kb = $this->loadKnowledgeBase();
+        $domainKey = Str::slug($domainTitle, '_');
+
+        if (empty($domainKey)) return;
+
+        // Merge or update domain knowledge in repository
+        $kb[$domainKey] = [
+            'tech' => $domainTitle,
+            'keywords' => array_values(array_unique(array_merge($knowledgeData['keywords'] ?? [], [strtolower($domainTitle)]))),
+            'docs' => $knowledgeData['docs'] ?? "{$domainTitle} ATS standards and best practices.",
+            'action_verbs' => $knowledgeData['action_verbs'] ?? ['Engineered', 'Developed', 'Optimized'],
+            'recommended_certifications' => $knowledgeData['recommended_certifications'] ?? [],
+            'recommended_soft_skills' => $knowledgeData['recommended_soft_skills'] ?? ['Problem Solving', 'Technical Competency'],
+            'project_templates' => $knowledgeData['project_templates'] ?? [],
+        ];
+
+        $this->knowledgeBaseCache = $kb;
+
+        // Persist to JSON file
+        try {
+            $filePath = $this->getKnowledgeFilePath();
+            File::ensureDirectoryExists(dirname($filePath));
+            File::put($filePath, json_encode($kb, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        } catch (\Throwable $e) {
+            // Fail safe if file write is locked
+        }
+    }
+
+    /**
+     * RAG ATS Score calculation.
      */
     public function generateAugmentedAtsScore(string $skillsInput, string $jobDescription): array
     {
@@ -92,34 +157,14 @@ class RagKnowledgeService
             }
         }
 
-        $score = min(98, max(75, 70 + (count($matched) * 4)));
+        $score = min(98, max(65, 60 + (count($matched) * 5)));
 
         return [
             'domain' => $context['tech_title'],
             'retrieved_context' => $context['retrieved_docs'],
             'score' => $score,
             'matched_keywords' => $matched ?: [strtoupper($context['matched_domain'])],
-            'missing_keywords' => array_slice($missing, 0, 3),
-        ];
-    }
-
-    /**
-     * RAG Step 3: Generate Augmented AI Mock Interview Response.
-     */
-    public function generateAugmentedInterviewFeedback(string $question, string $answer): array
-    {
-        $context = $this->retrieveContext($question . ' ' . $answer);
-
-        $feedback = "🔍 RAG Vector Retrieval Context: [Domain: {$context['tech_title']}]\n";
-        $feedback .= "📚 Retrieved Knowledge: \"{$context['retrieved_docs']}\"\n\n";
-        $feedback .= "🤖 AI Examiner RAG Feedback:\n";
-        $feedback .= "Score: 94/100 (Strong Technical Competency)\n\n";
-        $feedback .= "Key Technical Highlights: Demonstrated solid understanding of {$context['tech_title']} best practices.";
-
-        return [
-            'score' => 94,
-            'feedback' => $feedback,
-            'retrieved_context' => $context['retrieved_docs'],
+            'missing_keywords' => array_slice($missing, 0, 4),
         ];
     }
 }

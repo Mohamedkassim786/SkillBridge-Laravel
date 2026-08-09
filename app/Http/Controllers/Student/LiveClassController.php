@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SubmitFeedbackRequest;
+use App\Http\Requests\LiveClasses\SubmitFeedbackRequest;
 use App\Models\Enrollment;
 use App\Models\LiveClass;
 use App\Models\LiveClassFeedback;
-use App\Services\JitsiLiveClassService;
+use App\Domain\LiveClasses\Services\JitsiLiveClassService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,9 +24,9 @@ class LiveClassController extends Controller
     {
         $user = auth()->user();
 
-        // Get enrolled course IDs and cohort IDs
+        // Get enrolled course IDs and cohort IDs (active & completed)
         $enrollments = Enrollment::where('user_id', $user->id)
-            ->where('status', 'active')
+            ->whereIn('status', ['active', 'completed'])
             ->get();
 
         $enrolledCourseIds = $enrollments->pluck('course_id');
@@ -34,12 +34,21 @@ class LiveClassController extends Controller
 
         $query = LiveClass::with(['course', 'batch', 'trainer', 'attendees' => function ($q) use ($user) {
             $q->where('student_id', $user->id);
-        }])
-        ->whereIn('course_id', $enrolledCourseIds)
-        ->where(function ($q) use ($enrolledCohortIds) {
-            $q->whereNull('batch_id')
-              ->orWhereIn('batch_id', $enrolledCohortIds);
-        });
+        }]);
+
+        if ($enrolledCourseIds->isNotEmpty()) {
+            $query->where(function ($q) use ($enrolledCourseIds) {
+                $q->whereIn('course_id', $enrolledCourseIds)
+                  ->orWhereNull('course_id');
+            });
+        }
+
+        if ($enrolledCohortIds->isNotEmpty()) {
+            $query->where(function ($q) use ($enrolledCohortIds) {
+                $q->whereNull('batch_id')
+                  ->orWhereIn('batch_id', $enrolledCohortIds);
+            });
+        }
 
         if ($request->filled('status')) {
             $query->where('status', $request->status);

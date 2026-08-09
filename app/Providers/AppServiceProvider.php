@@ -50,6 +50,14 @@ class AppServiceProvider extends ServiceProvider
             \App\Domain\Student\Contracts\CourseReviewRepositoryInterface::class,
             \App\Domain\Student\Repositories\CourseReviewRepository::class
         );
+        $this->app->bind(
+            \App\Domain\Ai\Interview\Contracts\VoiceInterviewProviderInterface::class,
+            \App\Domain\Ai\Interview\Providers\NvidiaNemotronVoiceChatProvider::class
+        );
+        $this->app->bind(
+            \App\Domain\Ai\Interview\Contracts\InterviewEvaluationServiceInterface::class,
+            \App\Domain\Ai\Interview\Services\InterviewEvaluationService::class
+        );
     }
 
     /**

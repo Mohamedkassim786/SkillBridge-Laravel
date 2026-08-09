@@ -19,12 +19,12 @@
         <!-- Top Navbar -->
         <x-student.navbar />
 
-        <div class="flex-1 flex overflow-hidden" style="background-color: #07162C !important;">
+        <div class="flex-1 flex" style="background-color: #07162C !important;">
             <!-- Sidebar Navigation -->
             <x-student.sidebar />
 
             <!-- Main Dashboard Canvas -->
-            <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8" style="background-color: #07162C !important;">
+            <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8" style="background-color: #07162C !important;">
                 <div class="max-w-7xl mx-auto space-y-8" style="background-color: #07162C !important;">
                     @if (session('status'))
                         <div class="p-4 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-sm font-bold shadow-sm">

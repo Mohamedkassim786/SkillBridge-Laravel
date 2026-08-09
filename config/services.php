@@ -42,4 +42,13 @@ return [
         'app_secret' => env('JITSI_APP_SECRET', ''),
     ],
 
+    'nvidia' => [
+        'api_key' => env('NVIDIA_API_KEY'),
+        'base_url' => env('NVIDIA_BASE_URL', 'https://integrate.api.nvidia.com/v1'),
+        'llm_model' => env('NVIDIA_LLM_MODEL', 'meta/llama-3.3-70b-instruct'),
+        'asr_model' => env('NVIDIA_ASR_MODEL', 'nvidia/parakeet-ctc-1.1b'),
+        'tts_model' => env('NVIDIA_TTS_MODEL', 'nvidia/magpie-tts'),
+        'tts_voice' => env('NVIDIA_TTS_VOICE', 'Magpie-Multilingual.EN-US.Aria'),
+    ],
+
 ];

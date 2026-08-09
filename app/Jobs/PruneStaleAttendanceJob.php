@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\LiveClassAttendee;
-use App\Services\JitsiLiveClassService;
+use App\Domain\LiveClasses\Services\JitsiLiveClassService;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

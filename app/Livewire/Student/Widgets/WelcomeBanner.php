@@ -2,24 +2,25 @@
 
 namespace App\Livewire\Student\Widgets;
 
-use App\Domain\Student\Services\StudentDashboardService;
+use App\Models\Enrollment;
 use Livewire\Component;
 
 class WelcomeBanner extends Component
 {
-    public string $greeting = '';
-    public string $name = '';
-    public int $streak = 5;
-    public string $batch = 'Cohort 2026 - Enterprise Software Architecture';
-
-    public function mount(StudentDashboardService $service)
-    {
-        $this->greeting = $service->getGreetingTime();
-        $this->name = auth()->user()?->first_name ?? 'Student';
-    }
-
     public function render()
     {
-        return view('livewire.student.widgets.welcome-banner');
+        $user = auth()->user();
+        $hour = (int) date('H');
+        $greeting = $hour < 12 ? 'Good Morning' : ($hour < 18 ? 'Good Afternoon' : 'Good Evening');
+        $enrollment = Enrollment::with('cohort')->where('user_id', $user?->id)->first();
+        $batch = $enrollment?->cohort?->name ?? 'Cohort 2026';
+
+        return view('livewire.student.widgets.welcome-banner', [
+            'user' => $user,
+            'name' => $user?->name ?? 'Student',
+            'greeting' => $greeting,
+            'streak' => 1,
+            'batch' => $batch,
+        ]);
     }
 }

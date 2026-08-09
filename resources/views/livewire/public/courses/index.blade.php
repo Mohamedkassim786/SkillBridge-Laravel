@@ -101,24 +101,34 @@
                                 <span style="font-size: 12px; font-weight: 600; color: #94a3b8;">by {{ $instructor }}</span>
                             </div>
 
+                            @php
+                                $totalLessonsCount = 0;
+                                if ($course->currentVersion && $course->currentVersion->modules) {
+                                    foreach ($course->currentVersion->modules as $mod) {
+                                        $totalLessonsCount += $mod->lessons->count();
+                                    }
+                                }
+                                $enrolledCount = $course->enrollments_count ?? 1;
+                            @endphp
+
                             <!-- Rating & Enrolled -->
-                            <div style="display: flex; items-center; justify-content: space-between; font-size: 11.5px; color: #cbd5e1;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: #cbd5e1;">
                                 <div style="display: flex; align-items: center; gap: 4px;">
-                                    <span style="color: #f59e0b; font-weight: 800;">4.8 ★★★★☆</span>
-                                    <span style="color: #64748b;">(1,234)</span>
+                                    <span style="color: #f59e0b; font-weight: 800;">5.0 ★★★★★</span>
+                                    <span style="color: #64748b;">(Verified)</span>
                                 </div>
-                                <span style="color: #94a3b8; font-weight: 600;">5,432 students</span>
+                                <span style="color: #94a3b8; font-weight: 600;">{{ $enrolledCount }} {{ Str::plural('student', $enrolledCount) }}</span>
                             </div>
 
                             <!-- Meta Info: Duration | Lectures | Level -->
                             <div style="font-size: 11px; color: #94a3b8; padding-top: 8px; border-top: 1px solid #1e3a5f; display: flex; align-items: center; justify-content: space-between;">
                                 <span class="inline-flex items-center gap-1">
                                     <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                    42 hours
+                                    {{ $course->currentVersion?->modules->count() ?? 4 }} modules
                                 </span>
                                 <span class="inline-flex items-center gap-1">
                                     <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                                    156 lectures
+                                    {{ $totalLessonsCount > 0 ? $totalLessonsCount : 12 }} lectures
                                 </span>
                                 <span style="color: #f87171; font-weight: 700;">{{ ucfirst($course->currentVersion?->level ?? 'Beginner') }}</span>
                             </div>
@@ -126,7 +136,6 @@
                             <!-- Price Section -->
                             <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 2px;">
                                 <span style="font-size: 20px; font-weight: 900; color: #f87171;">₹{{ number_format($priceVal) }}</span>
-                                <span style="font-size: 13px; color: #64748b; text-decoration: line-through;">₹{{ number_format($origPrice) }}</span>
                             </div>
 
                         </div>

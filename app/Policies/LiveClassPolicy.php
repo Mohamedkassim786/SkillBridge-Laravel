@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\LiveClass;
 use App\Models\User;
-use App\Services\JitsiLiveClassService;
+use App\Domain\LiveClasses\Services\JitsiLiveClassService;
 
 class LiveClassPolicy
 {

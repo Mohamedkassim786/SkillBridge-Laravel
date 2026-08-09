@@ -36,7 +36,10 @@
 
     <!-- 6. Learning Streak -->
     <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-4 rounded-2xl text-white shadow-xl">
-        <div class="text-xs font-bold text-amber-400 uppercase tracking-wider">Streak 🔥</div>
+        <div class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">
+            <span>Streak</span>
+            <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
+        </div>
         <div class="mt-2 text-2xl font-black text-amber-400">{{ $stats['learning_streak'] ?? 0 }}d</div>
         <div class="mt-1 text-[11px] font-semibold text-slate-400">Active Days</div>
     </div>

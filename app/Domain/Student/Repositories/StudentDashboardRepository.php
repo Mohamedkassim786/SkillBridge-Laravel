@@ -80,18 +80,48 @@ class StudentDashboardRepository implements StudentDashboardRepositoryInterface
 
     public function getUpcomingClasses(User $user, int $limit = 3): Collection
     {
-        // Generate live class objects from real enrolled courses & real trainer
-        $enrollments = Enrollment::with(['course.trainer'])->where('user_id', $user->id)->take($limit)->get();
+        $enrolledCourseIds = Enrollment::where('user_id', $user->id)
+            ->whereIn('status', ['active', 'completed'])
+            ->pluck('course_id');
 
-        return $enrollments->map(function ($en) {
-            $trainerName = $en->course?->trainer ? ($en->course->trainer->first_name . ' ' . $en->course->trainer->last_name) : 'Senior Instructor';
+        $cohortIds = Enrollment::where('user_id', $user->id)
+            ->whereIn('status', ['active', 'completed'])
+            ->pluck('cohort_id')
+            ->filter();
+
+        $liveClasses = \App\Models\LiveClass::with(['course', 'trainer'])
+            ->where(function ($q) use ($enrolledCourseIds) {
+                $q->whereIn('course_id', $enrolledCourseIds)
+                  ->orWhereNull('course_id');
+            })
+            ->where(function ($q) use ($cohortIds) {
+                $q->whereNull('batch_id')
+                  ->orWhereIn('batch_id', $cohortIds);
+            })
+            ->whereIn('status', ['scheduled', 'starting_soon', 'live'])
+            ->orderBy('start_at', 'asc')
+            ->take($limit)
+            ->get();
+
+        if ($liveClasses->isEmpty()) {
+            $liveClasses = \App\Models\LiveClass::with(['course', 'trainer'])
+                ->whereIn('status', ['scheduled', 'starting_soon', 'live'])
+                ->orderBy('start_at', 'asc')
+                ->take($limit)
+                ->get();
+        }
+
+        return $liveClasses->map(function ($lc) {
+            $trainerName = $lc->trainer ? ($lc->trainer->name ?? ($lc->trainer->first_name . ' ' . $lc->trainer->last_name)) : 'Senior Instructor';
             return (object) [
-                'id' => $en->course_id,
-                'title' => 'Live Architecture Workshop: ' . ($en->course?->title ?? 'Laravel Masterclass'),
+                'id' => $lc->id,
+                'title' => $lc->title,
                 'trainer_name' => $trainerName,
                 'trainer_avatar' => 'https://ui-avatars.com/api/?name=' . urlencode($trainerName) . '&background=0D8ABC&color=fff',
-                'formatted_time' => 'Today @ 6:00 PM',
-                'duration' => '60 mins',
+                'formatted_time' => $lc->start_at ? $lc->start_at->format('M d @ h:i A') : 'Upcoming',
+                'duration' => $lc->duration_minutes . ' mins',
+                'status' => $lc->status,
+                'join_url' => route('student.live-classes.join', $lc->id),
             ];
         });
     }
@@ -100,10 +130,25 @@ class StudentDashboardRepository implements StudentDashboardRepositoryInterface
     {
         $enrollments = Enrollment::with('course')->where('user_id', $user->id)->take($limit)->get();
 
+        if ($enrollments->isEmpty()) {
+            return collect([
+                (object) [
+                    'id' => 'assign-1',
+                    'title' => 'Practical Project: Software System Design',
+                    'priority' => 'High',
+                    'course' => 'Enterprise System Architecture',
+                    'due_date' => now()->addDays(2)->format('M d, Y'),
+                    'status' => 'Pending Review',
+                ],
+            ]);
+        }
+
         return $enrollments->map(function ($en, $i) {
             return (object) [
                 'id' => 'assign-' . ($i + 1),
                 'title' => 'Practical Project: ' . ($en->course?->title ?? 'System Implementation'),
+                'priority' => $i % 2 === 0 ? 'High' : 'Medium',
+                'course' => $en->course?->title ?? 'Software Engineering',
                 'due_date' => now()->addDays($i + 2)->format('M d, Y'),
                 'status' => 'Pending Review',
             ];
@@ -114,10 +159,27 @@ class StudentDashboardRepository implements StudentDashboardRepositoryInterface
     {
         $enrollments = Enrollment::with('course')->where('user_id', $user->id)->take($limit)->get();
 
+        if ($enrollments->isEmpty()) {
+            return collect([
+                (object) [
+                    'id' => 'quiz-1',
+                    'title' => 'Assessment Quiz: System Architecture',
+                    'course' => 'Full-Stack Engineering',
+                    'duration' => '15 mins',
+                    'attempts_left' => 2,
+                    'questions_count' => 10,
+                    'time_limit' => '15 mins',
+                ],
+            ]);
+        }
+
         return $enrollments->map(function ($en, $i) {
             return (object) [
                 'id' => 'quiz-' . ($i + 1),
                 'title' => 'Assessment Quiz: ' . ($en->course?->title ?? 'Software Engineering'),
+                'course' => $en->course?->title ?? 'Full-Stack Engineering',
+                'duration' => '15 mins',
+                'attempts_left' => 2,
                 'questions_count' => 10,
                 'time_limit' => '15 mins',
             ];
@@ -126,7 +188,7 @@ class StudentDashboardRepository implements StudentDashboardRepositoryInterface
 
     public function getRecentCertificates(User $user, int $limit = 3): Collection
     {
-        return Certificate::with('course')
+        return Certificate::with(['course', 'courseVersion.course'])
             ->where('user_id', $user->id)
             ->orderBy('created_at', 'desc')
             ->take($limit)
@@ -145,7 +207,40 @@ class StudentDashboardRepository implements StudentDashboardRepositoryInterface
 
     public function getRecommendedJobs(User $user, int $limit = 3): Collection
     {
-        return JobPosting::with('company')->take($limit)->get();
+        $jobs = JobPosting::with('company')->take($limit)->get();
+
+        if ($jobs->isEmpty()) {
+            return collect([
+                (object) [
+                    'title' => 'Senior Full Stack Engineer',
+                    'company_name' => 'SkillBridge Tech',
+                    'location' => 'Remote / Hybrid',
+                    'salary' => '₹12,00,000 - ₹18,00,000 / yr',
+                    'match_percent' => 95,
+                    'skills' => ['Laravel', 'Livewire', 'MySQL', 'Tailwind CSS'],
+                ],
+                (object) [
+                    'title' => 'Backend Laravel Developer',
+                    'company_name' => 'Enterprise Systems Ltd',
+                    'location' => 'Bengaluru, KA',
+                    'salary' => '₹10,00,000 - ₹15,00,000 / yr',
+                    'match_percent' => 90,
+                    'skills' => ['PHP 8.3', 'REST API', 'Redis', 'Docker'],
+                ],
+            ]);
+        }
+
+        return $jobs->map(function ($j) {
+            return (object) [
+                'id' => $j->id,
+                'title' => $j->title,
+                'company_name' => $j->company?->name ?? 'Enterprise Tech',
+                'location' => $j->location ?? 'Remote',
+                'salary' => $j->salary_range ?? $j->salary ?? 'Competitive Salary',
+                'match_percent' => 92,
+                'skills' => is_array($j->skills) ? $j->skills : ['Laravel', 'MySQL', 'REST API'],
+            ];
+        });
     }
 
     public function getCareerProgress(User $user): array
@@ -169,11 +264,29 @@ class StudentDashboardRepository implements StudentDashboardRepositoryInterface
     {
         $interviews = InterviewSchedule::where('user_id', $user->id)->get();
 
+        if ($interviews->isEmpty()) {
+            return collect([
+                (object) [
+                    'title' => 'System Architecture Masterclass',
+                    'date' => now()->format('M d'),
+                    'time' => '10:00 AM',
+                    'type' => 'Live Session',
+                ],
+                (object) [
+                    'title' => 'Frontend Performance Review',
+                    'date' => now()->addDays(2)->format('M d'),
+                    'time' => '02:00 PM',
+                    'type' => 'Deadline',
+                ],
+            ]);
+        }
+
         return $interviews->map(function ($int) {
             return (object) [
-                'title' => 'Interview: ' . $int->company_name,
-                'date' => $int->scheduled_at?->format('Y-m-d') ?? date('Y-m-d'),
-                'type' => 'interview',
+                'title' => 'Interview: ' . ($int->company_name ?? 'Tech Corp'),
+                'date' => $int->scheduled_at?->format('M d') ?? now()->format('M d'),
+                'time' => $int->scheduled_at?->format('h:i A') ?? '10:00 AM',
+                'type' => 'Interview',
             ];
         });
     }
@@ -182,10 +295,24 @@ class StudentDashboardRepository implements StudentDashboardRepositoryInterface
     {
         $applications = JobApplication::where('user_id', $user->id)->take(3)->get();
 
+        if ($applications->isEmpty()) {
+            return collect([
+                (object) [
+                    'title' => 'Welcome to SkillBridge Platform! 🎉',
+                    'message' => 'Your student account is active. Explore courses to begin your software learning journey.',
+                    'read' => false,
+                    'time' => 'Just now',
+                    'created_at' => 'Just now',
+                ],
+            ]);
+        }
+
         return $applications->map(function ($app) {
             return (object) [
                 'title' => 'Application Status Update',
                 'message' => 'Your application for ' . ($app->jobPosting?->title ?? 'Developer Role') . ' is marked as ' . strtoupper($app->status),
+                'read' => false,
+                'time' => $app->created_at->diffForHumans(),
                 'created_at' => $app->created_at->diffForHumans(),
             ];
         });

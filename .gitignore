@@ -28,3 +28,4 @@ Thumbs.db
 *.sqlite
 *.sqlite-journal
 database/database.sqlite
+project_structure.txt

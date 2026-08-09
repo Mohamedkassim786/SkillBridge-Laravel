@@ -21,11 +21,35 @@ class LiveClassroom extends Component
         $this->classId = $classId;
 
         if ($this->classId) {
-            $this->event = PublicEvent::find($this->classId);
+            $liveClass = \App\Models\LiveClass::find($this->classId);
+            if ($liveClass) {
+                $this->event = (object) [
+                    'id' => $liveClass->id,
+                    'title' => $liveClass->title,
+                    'description' => $liveClass->description,
+                    'instructor_name' => $liveClass->trainer?->name ?? 'Instructor',
+                    'duration_mins' => $liveClass->duration_minutes,
+                    'meeting_url' => "https://meet.jit.si/" . $liveClass->room_name,
+                ];
+            } else {
+                $this->event = PublicEvent::find($this->classId);
+            }
         }
 
         if (! $this->event) {
-            $this->event = PublicEvent::where('is_upcoming', true)->first();
+            $liveClass = \App\Models\LiveClass::whereIn('status', ['scheduled', 'starting_soon', 'live'])->first();
+            if ($liveClass) {
+                $this->event = (object) [
+                    'id' => $liveClass->id,
+                    'title' => $liveClass->title,
+                    'description' => $liveClass->description,
+                    'instructor_name' => $liveClass->trainer?->name ?? 'Instructor',
+                    'duration_mins' => $liveClass->duration_minutes,
+                    'meeting_url' => "https://meet.jit.si/" . $liveClass->room_name,
+                ];
+            } else {
+                $this->event = PublicEvent::where('is_upcoming', true)->first();
+            }
         }
 
         $this->chatMessages = [

@@ -110,10 +110,40 @@ Route::middleware('auth')->group(function () {
         return redirect()->to($roleService->getRedirectPath($user));
     })->name('dashboard');
 
-    // Admin & Super Admin Management Routes
-    Route::middleware('role:super_admin')->get('/super-admin/dashboard', function () {
-        return view('welcome', ['roleTitle' => 'Super Admin Dashboard']);
-    })->name('super_admin.dashboard');
+    // Super Admin Complete Root Portal Routes
+    Route::middleware('role:super_admin')->prefix('super-admin')->name('super_admin.')->group(function () {
+        Route::get('/dashboard', \App\Livewire\SuperAdmin\Dashboard::class)->name('dashboard');
+
+        // Platform Management
+        Route::get('/users', \App\Livewire\SuperAdmin\Users\Manage::class)->name('users.manage');
+        Route::get('/trainers', \App\Livewire\SuperAdmin\Trainers\Workflow::class)->name('trainers.workflow');
+        Route::get('/admins', \App\Livewire\SuperAdmin\Admins\Manage::class)->name('admins.manage');
+        Route::get('/courses', \App\Livewire\SuperAdmin\Courses\Workflow::class)->name('courses.workflow');
+        Route::get('/jobs', \App\Livewire\SuperAdmin\Jobs\Manage::class)->name('jobs.manage');
+        Route::get('/companies', \App\Livewire\SuperAdmin\Companies\Manage::class)->name('companies.manage');
+        Route::get('/applications', \App\Livewire\SuperAdmin\Applications\Manage::class)->name('applications.manage');
+
+        // Live Classes & WebRTC
+        Route::get('/live-classes', \App\Livewire\SuperAdmin\LiveClasses\Manage::class)->name('live-classes.manage');
+        Route::get('/live-classes/jitsi-config', \App\Livewire\SuperAdmin\LiveClasses\JitsiConfig::class)->name('live-classes.jitsi-config');
+
+        // Finance
+        Route::get('/finance/transactions', \App\Livewire\SuperAdmin\Finance\Transactions::class)->name('finance.transactions');
+        Route::get('/finance/gateway-settings', \App\Livewire\SuperAdmin\Finance\GatewaySettings::class)->name('finance.gateway-settings');
+
+        // Configuration & SEO
+        Route::get('/configuration/website', \App\Livewire\SuperAdmin\Configuration\WebsiteSettings::class)->name('configuration.website');
+        Route::get('/configuration/seo', \App\Livewire\SuperAdmin\Configuration\SeoSettings::class)->name('configuration.seo');
+        Route::get('/configuration/integrations', \App\Livewire\SuperAdmin\Configuration\Integrations::class)->name('configuration.integrations');
+
+        // Security & System
+        Route::get('/roles', \App\Livewire\SuperAdmin\Roles\Manage::class)->name('roles.manage');
+        Route::get('/security/settings', \App\Livewire\SuperAdmin\Security\SecuritySettings::class)->name('security.settings');
+        Route::get('/security/audit-logs', \App\Livewire\SuperAdmin\Security\AuditLogs::class)->name('security.audit-logs');
+        Route::get('/system/health', \App\Livewire\SuperAdmin\System\SystemHealth::class)->name('system.health');
+        Route::get('/system/backups', \App\Livewire\SuperAdmin\System\BackupsManage::class)->name('system.backups');
+        Route::get('/reports/analytics', \App\Livewire\SuperAdmin\Reports\Analytics::class)->name('reports.analytics');
+    });
 
     Route::middleware('role:admin|super_admin')->group(function () {
         Route::get('/admin/dashboard', \App\Livewire\Admin\Dashboard::class)->name('admin.dashboard');
@@ -149,9 +179,15 @@ Route::middleware('auth')->group(function () {
 
         // Career Suite & Practice Hub Routes
         Route::get('/student/career/resume', \App\Livewire\Student\Career\ResumeBuilder::class)->name('student.career.resume');
+        Route::get('/student/career/resume/download-pdf', [\App\Http\Controllers\Student\ResumeDownloadController::class, 'downloadPdf'])->name('student.career.resume.download-pdf');
+        Route::get('/student/career/cover-letter', \App\Livewire\Student\Career\CoverLetterGenerator::class)->name('student.career.cover-letter');
+        Route::get('/student/career/cover-letter/download-pdf', [\App\Http\Controllers\Student\CoverLetterDownloadController::class, 'downloadPdf'])->name('student.career.cover-letter.download-pdf');
         Route::get('/student/career/saved', \App\Livewire\Student\Career\SavedJobs::class)->name('student.career.saved');
         Route::get('/student/practice/coding', \App\Livewire\Student\Practice\CodingPractice::class)->name('student.practice.coding');
         Route::get('/student/practice/mock', \App\Livewire\Student\Practice\MockInterviews::class)->name('student.practice.mock');
+        Route::get('/student/practice/mock/{id}/room', \App\Livewire\Student\Practice\MockInterviewVoiceRoom::class)->name('student.practice.mock.room');
+        Route::get('/student/practice/mock/{id}/report', \App\Livewire\Student\Practice\MockInterviewReport::class)->name('student.practice.mock.report');
+        Route::get('/student/practice/mock/{id}/practice/{questionId}', \App\Livewire\Student\Practice\MockInterviewQuestionPractice::class)->name('student.practice.mock.practice');
         Route::get('/student/practice/assessments', \App\Livewire\Student\Practice\SkillAssessments::class)->name('student.practice.assessments');
 
         // Staff & Trainer Jitsi Live Class Engine Routes
@@ -184,6 +220,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/student/certificates/{id}/view', [\App\Http\Controllers\Student\CertificateController::class, 'view'])->name('student.certificates.view');
         Route::get('/student/certificates/{id}/download', [\App\Http\Controllers\Student\CertificateController::class, 'download'])->name('student.certificates.download');
     });
+
+    // Public Certificate Verification Route
+    Route::get('/verify/{uuid}', [\App\Http\Controllers\Student\CertificateController::class, 'verifyPublic'])->name('certificates.verify');
 
     // Admin Jitsi Live Class Management Routes
     Route::middleware('role:admin|super_admin')->group(function () {

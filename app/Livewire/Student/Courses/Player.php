@@ -301,10 +301,14 @@ class Player extends Component
         $resources = $courseRepo->getCourseResources($this->course->id);
         $analytics = $analyticsService->getStudentAnalytics($user, $this->course);
 
+        if ($this->course && $this->course->currentVersion) {
+            $this->course->currentVersion->loadMissing(['modules.lessons']);
+        }
+
         $modules = $this->course->currentVersion?->modules ?? collect([]);
         $allLessons = $modules->pluck('lessons')->flatten();
 
-        $currentIndex = $allLessons->search(fn ($l) => $l->id === $this->activeLesson?->id);
+        $currentIndex = $allLessons->search(fn ($l) => (string) $l->id === (string) $this->activeLesson?->id);
         $previousLesson = ($currentIndex !== false && $currentIndex > 0) ? $allLessons->get($currentIndex - 1) : null;
         $nextLesson = ($currentIndex !== false && $currentIndex < $allLessons->count() - 1) ? $allLessons->get($currentIndex + 1) : null;
 
