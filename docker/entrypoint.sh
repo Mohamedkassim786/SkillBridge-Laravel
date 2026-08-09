@@ -7,8 +7,9 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-# Run database migrations automatically
+# Run database migrations and seeds automatically
 php artisan migrate --force
+php artisan db:seed --force || true
 
 # Start PHP-FPM in background and Nginx in foreground
 php-fpm -D
