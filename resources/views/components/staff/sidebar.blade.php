@@ -21,7 +21,7 @@
     ];
 @endphp
 
-<aside style="background-color: #0B1F3A;" class="w-64 p-4 flex flex-col justify-between space-y-6 overflow-y-auto shrink-0 border-r border-slate-800">
+<aside style="background-color: #0B1F3A;" class="w-64 p-4 flex flex-col justify-between space-y-6 overflow-y-auto shrink-0 border-r border-slate-800 sticky top-16 h-[calc(100vh-4rem)] self-start z-20">
     <div class="space-y-5">
 
         <!-- GROUP 1: CORE INSTRUCTION -->

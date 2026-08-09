@@ -104,4 +104,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(AuditLog::class);
     }
+
+    public function assignedCourses()
+    {
+        return $this->hasMany(Course::class, 'trainer_id');
+    }
 }

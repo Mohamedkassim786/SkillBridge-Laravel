@@ -46,6 +46,55 @@
   }
 }
 
+/* 
+ * SkillBridge Custom Theme Scrollbars
+ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b1f3a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e3a5f;
+  border-radius: 9999px;
+  border: 1px solid rgba(214, 40, 40, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d62828;
+}
+
+::-webkit-scrollbar-corner {
+  background: #0b1f3a;
+}
+
+/* Firefox Custom Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1e3a5f #0b1f3a;
+}
+
+/* 
+ * SkillBridge Global Select Dropdown & Option Theme Styling
+ */
+select option {
+  background-color: #0b1f3a !important;
+  color: #ffffff !important;
+  padding: 8px 12px;
+}
+
+select option:hover,
+select option:focus,
+select option:active,
+select option:checked {
+  background-color: #d62828 !important;
+  color: #ffffff !important;
+}
+
 /* Custom Stitch Utility Classes */
 
 /* Primary CTA Buttons */

@@ -96,8 +96,9 @@ class Player extends Component
         }
     }
 
-    public function selectLesson(string $lessonId, LessonRepositoryInterface $lessonRepository)
+    public function selectLesson(string $lessonId)
     {
+        $lessonRepository = app(LessonRepositoryInterface::class);
         $lesson = $lessonRepository->findById($lessonId);
         if (! $lesson) {
             return;
@@ -113,11 +114,8 @@ class Player extends Component
         $this->loadLessonProgress($lessonRepository);
     }
 
-    public function markAsComplete(
-        LessonCompletionService $completionService,
-        CourseProgressService $progressService,
-        LessonRepositoryInterface $lessonRepository
-    ) {
+    public function markAsComplete()
+    {
         if (! $this->activeLesson) {
             return;
         }
@@ -144,18 +142,20 @@ class Player extends Component
             ->where('is_completed', true)
             ->count();
 
+        $progressService = app(CourseProgressService::class);
         $progressService->recalculateCourseProgress($user->id, $this->course->id, $completedCount, $totalLessons);
 
         session()->flash('status', 'Lesson marked as complete! Next lesson unlocked 🎉');
     }
 
-    public function addNote(NotesService $notesService)
+    public function addNote()
     {
         $this->validate([
             'newNoteText' => 'required|string|min:3|max:1000',
         ]);
 
         if ($this->activeLesson) {
+            $notesService = app(NotesService::class);
             $notesService->addNote(auth()->user(), $this->activeLesson->id, $this->noteTimestamp, $this->newNoteText);
             $this->newNoteText = '';
             session()->flash('status', 'Note saved at current timestamp!');
@@ -168,13 +168,14 @@ class Player extends Component
         $this->editingNoteText = $currentText;
     }
 
-    public function updateNote(NotesService $notesService, LessonNotesRepositoryInterface $notesRepo)
+    public function updateNote()
     {
         $this->validate([
             'editingNoteText' => 'required|string|min:3|max:1000',
         ]);
 
         if ($this->editingNoteId) {
+            $notesRepo = app(LessonNotesRepositoryInterface::class);
             $notesRepo->updateNote(auth()->user(), $this->editingNoteId, $this->editingNoteText);
             $this->editingNoteId = null;
             $this->editingNoteText = '';
@@ -182,22 +183,25 @@ class Player extends Component
         }
     }
 
-    public function deleteNote(string $noteId, NotesService $notesService)
+    public function deleteNote(string $noteId)
     {
+        $notesService = app(NotesService::class);
         $notesService->removeNote(auth()->user(), $noteId);
         session()->flash('status', 'Note deleted.');
     }
 
-    public function toggleBookmark(BookmarkService $bookmarkService)
+    public function toggleBookmark()
     {
         if ($this->activeLesson) {
+            $bookmarkService = app(BookmarkService::class);
             $bookmarkService->toggleBookmark(auth()->user(), $this->activeLesson->id, $this->noteTimestamp);
             session()->flash('status', 'Bookmark added at timecode!');
         }
     }
 
-    public function removeBookmark(string $bookmarkId, BookmarkService $bookmarkService)
+    public function removeBookmark(string $bookmarkId)
     {
+        $bookmarkService = app(BookmarkService::class);
         $bookmarkService->removeBookmark(auth()->user(), $bookmarkId);
         session()->flash('status', 'Bookmark removed.');
     }
@@ -211,7 +215,7 @@ class Player extends Component
         }
     }
 
-    public function submitReview(ReviewService $reviewService)
+    public function submitReview()
     {
         $this->validate([
             'reviewText' => 'required|string|min:10',
@@ -219,6 +223,7 @@ class Player extends Component
         ]);
 
         try {
+            $reviewService = app(ReviewService::class);
             $reviewService->submitReview(auth()->user(), $this->course->id, $this->reviewRating, $this->reviewText);
             session()->flash('status', 'Course review submitted successfully!');
             $this->reviewText = '';
@@ -227,8 +232,9 @@ class Player extends Component
         }
     }
 
-    public function deleteReview(string $reviewId, ReviewService $reviewService)
+    public function deleteReview(string $reviewId)
     {
+        $reviewService = app(ReviewService::class);
         $reviewService->deleteReview(auth()->user(), $reviewId);
         session()->flash('status', 'Review deleted.');
     }
@@ -263,7 +269,9 @@ class Player extends Component
             return $url;
         }
 
-        return asset($url);
+        $cleanPath = ltrim(str_replace(['public/', 'storage/'], '', $url), '/');
+
+        return route('media.stream', ['path' => $cleanPath]);
     }
 
     public function getEmbedUrlProperty(): string

@@ -15,10 +15,38 @@
     @livewireStyles
 
     <style>
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #07162C;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e3a5f;
+            border-radius: 9999px;
+            border: 1px solid rgba(214, 40, 40, 0.2);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D62828;
+        }
+        ::-webkit-scrollbar-corner {
+            background: #07162C;
+        }
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #1e3a5f #07162C;
+        }
+        select option {
+            background-color: #0B1F3A !important;
+            color: #FFFFFF !important;
+        }
+
         .staff-sidebar-layout {
             display: grid;
-            grid-template-columns: 260px 1fr;
+            grid-template-columns: 256px 1fr;
             min-height: calc(100vh - 64px);
+            align-items: start;
         }
         @media (max-width: 1024px) {
             .staff-sidebar-layout {
@@ -72,12 +100,12 @@
         </header>
 
         <!-- LAYOUT GRID: SIDEBAR + MAIN CONTENT -->
-        <div style="background-color: #07162C;" class="flex-1 flex overflow-hidden staff-sidebar-layout">
+        <div style="background-color: #07162C;" class="flex-1 flex staff-sidebar-layout">
 
             <x-staff.sidebar />
 
             <!-- MAIN CONTENT AREA -->
-            <main style="background-color: #07162C;" class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+            <main style="background-color: #07162C;" class="flex-1 p-4 sm:p-6 lg:p-8">
                 <div class="w-full space-y-6">
                     @if (isset($header))
                         <div class="mb-6">

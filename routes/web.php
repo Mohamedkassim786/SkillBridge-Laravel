@@ -50,6 +50,7 @@ Route::get('/events', \App\Livewire\Public\Events\Index::class)->name('events.in
 Route::get('/about', \App\Livewire\Public\About::class)->name('about');
 Route::get('/contact', \App\Livewire\Public\Contact::class)->name('contact');
 Route::get('/faq', \App\Livewire\Public\Faq::class)->name('faq');
+Route::get('/media/stream/{path}', [\App\Http\Controllers\MediaStreamController::class, 'stream'])->where('path', '.*')->name('media.stream');
 
 /*
 |--------------------------------------------------------------------------

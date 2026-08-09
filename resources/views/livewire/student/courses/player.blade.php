@@ -23,30 +23,162 @@
     <!-- Main Player Split Layout -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Left 2 Columns: Video Player & Controls -->
-        <div class="lg:col-span-2 space-y-6">
-            <!-- Video/Media Player Container -->
-            <div class="rounded-3xl bg-black overflow-hidden shadow-2xl border border-slate-800 relative"
+        <div class="lg:col-span-2 space-y-6"            <!-- Video/Media Player Container -->
+            <div class="rounded-3xl bg-black overflow-hidden shadow-2xl border border-slate-800 relative select-none"
                  x-data="{
-                    playing: true,
+                    playing: false,
                     currentTime: 0,
+                    duration: 0,
+                    isSeeking: false,
+                    seekingPercent: 0,
+                    volume: 1,
+                    muted: false,
+                    showControls: true,
+                    hideTimer: null,
+                    userActivity() {
+                        this.showControls = true;
+                        clearTimeout(this.hideTimer);
+                        if (this.playing) {
+                            this.hideTimer = setTimeout(() => {
+                                this.showControls = false;
+                            }, 2500);
+                        }
+                    },
                     getVideo() {
-                        return this.$el.querySelector('video') || this.$el.querySelector('audio') || this.$refs.videoPlayer;
+                        return this.$refs.videoPlayer || this.$el.querySelector('video') || this.$el.querySelector('audio');
+                    },
+                    formatTime(sec) {
+                        if (isNaN(sec) || sec < 0) return '00:00';
+                        let h = Math.floor(sec / 3600);
+                        let m = Math.floor((sec % 3600) / 60);
+                        let s = Math.floor(sec % 60);
+                        if (h > 0) {
+                            return `${h}:${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+                        }
+                        return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
                     },
                     togglePlay() {
                         let v = this.getVideo();
                         if (!v) return;
                         if (v.paused) {
-                            v.play();
-                            this.playing = true;
+                            v.play().then(() => {
+                                this.playing = true;
+                                this.userActivity();
+                            }).catch(() => {});
                         } else {
                             v.pause();
                             this.playing = false;
+                            this.showControls = true;
                         }
                     },
                     skip(seconds) {
                         let v = this.getVideo();
                         if (!v) return;
-                        v.currentTime = Math.max(0, Math.min(v.duration || 0, v.currentTime + seconds));
+                        let d = v.duration || this.duration || 0;
+                        let target = Math.max(0, Math.min(d, (v.currentTime || 0) + seconds));
+                        v.currentTime = target;
+                        this.currentTime = target;
+                        this.userActivity();
+                    },
+                    updateSeekPosition(e) {
+                        let v = this.getVideo();
+                        let bar = this.$refs.progressBar;
+                        if (!v || !bar) return;
+                        let rect = bar.getBoundingClientRect();
+                        let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                        let pos = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+                        let d = v.duration || this.duration || 0;
+                        let targetTime = pos * d;
+                        this.seekingPercent = pos * 100;
+                        if (this.isSeeking) {
+                            this.currentTime = targetTime;
+                        } else {
+                            v.currentTime = targetTime;
+                            this.currentTime = targetTime;
+                        }
+                    },
+                    startSeeking(e) {
+                        e.preventDefault();
+                        this.isSeeking = true;
+                        this.userActivity();
+                        this.updateSeekPosition(e);
+
+                        let onMove = (evt) => {
+                            if (this.isSeeking) {
+                                this.updateSeekPosition(evt);
+                            }
+                        };
+
+                        let onEnd = (evt) => {
+                            if (this.isSeeking) {
+                                let v = this.getVideo();
+                                let bar = this.$refs.progressBar;
+                                if (v && bar) {
+                                    let rect = bar.getBoundingClientRect();
+                                    let clientX = evt.changedTouches ? evt.changedTouches[0].clientX : (evt.clientX || e.clientX);
+                                    let pos = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+                                    let d = v.duration || this.duration || 0;
+                                    v.currentTime = pos * d;
+                                    this.currentTime = pos * d;
+                                }
+                                this.isSeeking = false;
+                                this.userActivity();
+                            }
+                            window.removeEventListener('mousemove', onMove);
+                            window.removeEventListener('touchmove', onMove);
+                            window.removeEventListener('pointermove', onMove);
+                            window.removeEventListener('mouseup', onEnd);
+                            window.removeEventListener('touchend', onEnd);
+                            window.removeEventListener('pointerup', onEnd);
+                        };
+
+                        window.addEventListener('mousemove', onMove, { passive: false });
+                        window.addEventListener('touchmove', onMove, { passive: false });
+                        window.addEventListener('pointermove', onMove, { passive: false });
+                        window.addEventListener('mouseup', onEnd);
+                        window.addEventListener('touchend', onEnd);
+                        window.addEventListener('pointerup', onEnd);
+                    },
+                    setVolume(val) {
+                        let v = this.getVideo();
+                        if (!v) return;
+                        this.volume = Math.max(0, Math.min(1, val));
+                        v.volume = this.volume;
+                        this.muted = (this.volume === 0);
+                    },
+                    toggleMute() {
+                        let v = this.getVideo();
+                        if (!v) return;
+                        this.muted = !this.muted;
+                        v.muted = this.muted;
+                    },
+                    toggleFullscreen() {
+                        let elem = this.$refs.playerAspect || this.$el.querySelector('.aspect-video') || this.$el;
+                        let v = this.getVideo();
+                        if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+                            if (elem && elem.requestFullscreen) {
+                                elem.requestFullscreen();
+                            } else if (elem && elem.webkitRequestFullscreen) {
+                                elem.webkitRequestFullscreen();
+                            } else if (elem && elem.mozRequestFullScreen) {
+                                elem.mozRequestFullScreen();
+                            } else if (elem && elem.msRequestFullscreen) {
+                                elem.msRequestFullscreen();
+                            } else if (v) {
+                                if (v.requestFullscreen) v.requestFullscreen();
+                                else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+                            }
+                        } else {
+                            if (document.exitFullscreen) {
+                                document.exitFullscreen();
+                            } else if (document.webkitExitFullscreen) {
+                                document.webkitExitFullscreen();
+                            } else if (document.mozCancelFullScreen) {
+                                document.mozCancelFullScreen();
+                            } else if (document.msExitFullscreen) {
+                                document.msExitFullscreen();
+                            }
+                        }
                     },
                     handleKeydown(e) {
                         if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
@@ -56,23 +188,27 @@
                             this.togglePlay();
                         } else if (e.key === 'ArrowRight' || e.key === 'l' || e.key === 'L') {
                             e.preventDefault();
-                            this.skip(5);
+                            this.skip(10);
                         } else if (e.key === 'ArrowLeft' || e.key === 'j' || e.key === 'J') {
                             e.preventDefault();
-                            this.skip(-5);
+                            this.skip(-10);
                         } else if (e.key === 'f' || e.key === 'F') {
                             e.preventDefault();
-                            let v = this.getVideo();
-                            if (v) {
-                                if (document.fullscreenElement) document.exitFullscreen();
-                                else if (v.requestFullscreen) v.requestFullscreen();
-                            }
+                            this.toggleFullscreen();
+                        } else if (e.key === 'm' || e.key === 'M') {
+                            e.preventDefault();
+                            this.toggleMute();
                         }
                     }
                  }"
                  @keydown.window="handleKeydown($event)">
                 @if ($activeLesson && $activeLesson->video_url)
-                    <div wire:key="player-aspect-{{ $activeLesson->id }}" class="aspect-video w-full bg-black relative flex items-center justify-center group">
+                    <div x-ref="playerAspect"
+                         wire:key="player-aspect-{{ $activeLesson->id }}"
+                         @mousemove="userActivity()"
+                         @mouseleave="if (playing) showControls = false"
+                         @touchstart="userActivity()"
+                         class="relative w-full aspect-video bg-black overflow-hidden select-none group">
                         @if ($this->isLocalMedia)
                             @if (preg_match('/\.(mp3|wav|m4a)$/i', $activeLesson->video_url))
                                 <!-- Audio Media Player UI -->
@@ -104,19 +240,149 @@
                                        src="{{ $this->mediaUrl }}"
                                        wire:key="video-player-{{ $activeLesson->id }}"
                                        wire:ignore.self
-                                       class="w-full h-full object-contain focus:outline-none relative z-10"
-                                       controls
+                                       class="w-full h-full object-contain block focus:outline-none cursor-pointer"
                                        autoplay
                                        preload="auto"
+                                       playsinline
                                        controlsList="nodownload"
-                                       @play="playing = true"
-                                       @pause="playing = false"
-                                       @loadedmetadata="if ({{ (int)$watchTimeSeconds }} > 0 && {{ (int)$watchTimeSeconds }} < $el.duration) { $el.currentTime = {{ (int)$watchTimeSeconds }}; }"
-                                       @timeupdate="currentTime = Math.floor($el.currentTime)"
-                                       @ended="playing = false; $wire.call('markAsComplete')">
+                                       @play="playing = true; userActivity()"
+                                       @pause="playing = false; showControls = true"
+                                       @loadedmetadata="
+                                           duration = $el.duration || 0;
+                                           if ({{ (int)$watchTimeSeconds }} > 0 && {{ (int)$watchTimeSeconds }} < $el.duration) {
+                                               $el.currentTime = {{ (int)$watchTimeSeconds }};
+                                           }
+                                           currentTime = $el.currentTime || 0;
+                                       "
+                                       @timeupdate="
+                                           if (!isSeeking) {
+                                               currentTime = $el.currentTime || 0;
+                                               duration = $el.duration || 0;
+                                           }
+                                       "
+                                       @ended="playing = false; showControls = true; $wire.call('markAsComplete')"
+                                       @click="togglePlay()">
                                     <source src="{{ $this->mediaUrl }}" type="video/mp4">
                                     Your browser does not support HTML5 video streaming.
                                 </video>
+
+                                <!-- Video Overlay Play Button (Center overlay when paused) -->
+                                <div @click="togglePlay()"
+                                     x-show="!playing"
+                                     x-transition:enter="transition ease-out duration-150"
+                                     x-transition:enter-start="opacity-0 scale-90"
+                                     x-transition:enter-end="opacity-100 scale-100"
+                                     x-transition:leave="transition ease-in duration-150"
+                                     x-transition:leave-start="opacity-100 scale-100"
+                                     x-transition:leave-end="opacity-0 scale-90"
+                                     class="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-auto z-20 cursor-pointer">
+                                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#D62828] text-white flex items-center justify-center shadow-2xl transform hover:scale-110 transition-transform">
+                                        <svg class="w-7 h-7 sm:w-8 sm:h-8 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- ABSOLUTE BOTTOM CONTROLS BAR (Anchored strictly to bottom:0, left:0, right:0 of the video wrapper) -->
+                                <div x-show="!playing || showControls"
+                                     x-transition:enter="transition ease-out duration-200"
+                                     x-transition:enter-start="opacity-0 translate-y-2"
+                                     x-transition:enter-end="opacity-100 translate-y-0"
+                                     x-transition:leave="transition ease-in duration-200"
+                                     x-transition:leave-start="opacity-100 translate-y-0"
+                                     x-transition:leave-end="opacity-0 translate-y-2"
+                                     style="position: absolute; bottom: 0; left: 0; right: 0; z-index: 30;"
+                                     class="bg-gradient-to-t from-black/95 via-black/70 to-transparent px-3 sm:px-5 pb-3 pt-8 space-y-2 pointer-events-auto">
+                                    
+                                    <!-- 1. Interactive Seek Timeline at top of control bar -->
+                                    <div x-ref="progressBar"
+                                         @pointerdown="startSeeking($event)"
+                                         @mousedown="startSeeking($event)"
+                                         @touchstart="startSeeking($event)"
+                                         class="w-full h-3 flex items-center cursor-pointer group/bar relative touch-none py-1">
+                                        <!-- Track Background -->
+                                        <div class="w-full h-1 group-hover/bar:h-2 rounded-full bg-white/20 relative overflow-hidden transition-all">
+                                            <!-- Played Fill -->
+                                            <div class="h-full bg-[#D62828] rounded-full transition-all duration-75 relative"
+                                                 :style="`width: ${isSeeking ? seekingPercent : (duration > 0 ? (currentTime / duration) * 100 : 0)}%`">
+                                            </div>
+                                        </div>
+                                        <!-- Progress Thumb Handle -->
+                                        <div class="absolute w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-white shadow-lg border-2 border-[#D62828] transform -translate-x-1/2 transition-all duration-150"
+                                             :class="isSeeking ? 'opacity-100 scale-125' : 'opacity-0 group-hover/bar:opacity-100'"
+                                             :style="`left: ${isSeeking ? seekingPercent : (duration > 0 ? (currentTime / duration) * 100 : 0)}%`">
+                                        </div>
+                                    </div>
+
+                                    <!-- 2. Controls Row: [Play] [-10s] [+10s] [Current Time / Duration] [Flexible Space] [Volume] [Volume Slider] [Fullscreen] -->
+                                    <div class="flex items-center justify-between gap-2 text-white text-xs font-semibold">
+                                        
+                                        <!-- Left Group: Play, -10s, +10s, Timestamp -->
+                                        <div class="flex items-center gap-1.5 sm:gap-3">
+                                            <!-- Play / Pause Button -->
+                                            <button type="button" @click.stop="togglePlay()" class="p-1.5 rounded-lg hover:bg-white/20 text-white transition cursor-pointer" :title="playing ? 'Pause (Space)' : 'Play (Space)'">
+                                                <template x-if="playing">
+                                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                                                </template>
+                                                <template x-if="!playing">
+                                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                                </template>
+                                            </button>
+
+                                            <!-- 10s Rewind Button -->
+                                            <button type="button" @click.stop="skip(-10)" class="px-2 py-1 rounded-lg hover:bg-white/20 text-white transition cursor-pointer flex items-center gap-1 text-xs font-mono font-bold" title="Rewind 10s (Left Arrow / J)">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0019 16V8a1 1 0 00-1.6-.8l-5.334 4zM4.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0011 16V8a1 1 0 00-1.6-.8l-5.334 4z"></path>
+                                                </svg>
+                                                <span>-10s</span>
+                                            </button>
+
+                                            <!-- 10s Forward Button -->
+                                            <button type="button" @click.stop="skip(10)" class="px-2 py-1 rounded-lg hover:bg-white/20 text-white transition cursor-pointer flex items-center gap-1 text-xs font-mono font-bold" title="Forward 10s (Right Arrow / L)">
+                                                <span>+10s</span>
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.934 12.8a1 1 0 000-1.6l-5.334-4A1 1 0 005 8v8a1 1 0 001.6.8l5.334-4zM19.934 12.8a1 1 0 000-1.6l-5.334-4A1 1 0 0013 8v8a1 1 0 001.6.8l5.334-4z"></path>
+                                                </svg>
+                                            </button>
+
+                                            <!-- Current Time / Duration Counter -->
+                                            <div class="text-xs font-mono font-bold text-slate-100 whitespace-nowrap ml-1">
+                                                <span x-text="formatTime(currentTime)">00:00</span>
+                                                <span class="text-slate-400">/</span>
+                                                <span x-text="formatTime(duration)" class="text-slate-400">00:00</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Flexible Space -->
+                                        <div class="flex-1"></div>
+
+                                        <!-- Right Group: Volume Icon, Volume Slider, Fullscreen Button -->
+                                        <div class="flex items-center gap-2 sm:gap-3">
+                                            <!-- Volume / Mute Button -->
+                                            <button type="button" @click.stop="toggleMute()" class="p-1.5 rounded-lg hover:bg-white/20 text-white transition cursor-pointer" title="Mute/Unmute (M)">
+                                                <template x-if="muted || volume === 0">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>
+                                                </template>
+                                                <template x-if="!muted && volume > 0">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+                                                </template>
+                                            </button>
+
+                                            <!-- Volume Range Slider -->
+                                            <input type="range" min="0" max="1" step="0.05" :value="muted ? 0 : volume"
+                                                   @input="setVolume($event.target.value)"
+                                                   class="w-16 sm:w-20 accent-[#D62828] cursor-pointer h-1.5 bg-slate-700 rounded-lg hidden sm:block">
+
+                                            <!-- Fullscreen Button -->
+                                            <button type="button" @click.stop="toggleFullscreen()" class="p-1.5 rounded-lg hover:bg-white/20 text-white transition cursor-pointer" title="Toggle Fullscreen (F)">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
                             @endif
                         @else
                             <!-- Embedded YouTube / External Video Player -->

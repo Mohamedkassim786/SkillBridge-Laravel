@@ -1,4 +1,4 @@
-<aside style="background-color: #0B1F3A; border-right: 1px solid rgba(255,255,255,0.08);" class="w-64 p-4 flex flex-col justify-between space-y-6 overflow-y-auto shrink-0">
+<aside style="background-color: #0B1F3A; border-right: 1px solid rgba(255,255,255,0.08);" class="w-64 p-4 flex flex-col justify-between space-y-6 overflow-y-auto shrink-0 sticky top-16 h-[calc(100vh-4rem)] self-start z-20">
 
     <div class="space-y-6">
 

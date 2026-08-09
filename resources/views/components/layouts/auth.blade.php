@@ -79,18 +79,28 @@
         </div>
 
         <!-- Right / Mobile Primary Column: Auth Form Area -->
-        <div class="w-full lg:w-7/12 xl:w-1/2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-16 xl:px-24 bg-white">
-            <!-- Mobile Brand Bar -->
-            <div class="flex lg:hidden items-center justify-between mb-8 pb-4 border-b border-slate-200">
-                <a href="/" class="flex items-center gap-3">
+        <div class="w-full lg:w-7/12 xl:w-1/2 flex flex-col justify-between min-h-screen py-8 px-4 sm:px-6 lg:px-16 xl:px-24 bg-white">
+            
+            <!-- Top Right Nav Bar -->
+            <div class="flex items-center justify-between w-full mb-8">
+                <!-- Mobile Brand Bar -->
+                <a href="{{ route('home') }}" class="flex items-center gap-3 lg:hidden">
                     <div class="w-9 h-9 rounded-lg bg-[#D62828] flex items-center justify-center font-bold text-lg text-white">
                         SB
                     </div>
                     <span class="text-xl font-bold text-[#0B1F3A]">SkillBridge</span>
                 </a>
+
+                <!-- Back to Website Button (Pushed to far right) -->
+                <a href="{{ route('home') }}" style="margin-left: auto !important;" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-[#0B1F3A] text-[#0B1F3A] hover:text-white font-extrabold text-xs transition-all text-decoration-none border border-slate-200 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                    <span>Back to Website</span>
+                </a>
             </div>
 
-            <div class="mx-auto w-full max-w-md">
+            <div class="mx-auto w-full max-w-md my-auto">
                 @if (session('status'))
                     <div class="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium">
                         {{ session('status') }}
@@ -111,6 +121,8 @@
 
                 {{ $slot }}
             </div>
+
+            <div class="h-6"></div>
         </div>
     </div>
 

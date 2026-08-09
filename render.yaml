@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: skillbridge-web
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    region: singapore
+    envVars:
+      - key: APP_NAME
+        value: SkillBridge
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        sync: false
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: 3306
+      - key: DB_DATABASE
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: NVIDIA_API_KEY
+        sync: false
+
+databases:
+  - name: skillbridge-db
+    databaseName: skillbridge_prod
+    user: skillbridge_user
+    plan: free

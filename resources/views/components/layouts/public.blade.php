@@ -23,6 +23,32 @@
 
     <style>
         [x-cloak] { display: none !important; }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #07162C;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e3a5f;
+            border-radius: 9999px;
+            border: 1px solid rgba(214, 40, 40, 0.2);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D62828;
+        }
+        ::-webkit-scrollbar-corner {
+            background: #07162C;
+        }
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #1e3a5f #07162C;
+        }
+        select option {
+            background-color: #0B1F3A !important;
+            color: #FFFFFF !important;
+        }
     </style>
 </head>
 <body style="background-color: #0B1F3A; margin: 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between;" class="font-sans antialiased text-slate-100 selection:bg-[#D62828] selection:text-white">
