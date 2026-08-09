@@ -12,6 +12,7 @@
             <!-- 3. Continue Learning -->
             <livewire:student.widgets.continue-learning />
 
+
             <!-- 4. Upcoming Live Classes -->
             <livewire:student.widgets.upcoming-classes />
 
@@ -27,8 +28,7 @@
             <!-- 7. Quick Actions Shortcuts -->
             <livewire:student.widgets.quick-actions />
 
-            <!-- 8. AI Insight Card -->
-            <livewire:student.widgets.ai-insight-card />
+            <!-- 8. AI Insight 
 
             <!-- 9. Career Placement Progress -->
             <livewire:student.widgets.career-progress />
