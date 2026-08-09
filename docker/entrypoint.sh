@@ -1,16 +1,20 @@
 #!/bin/sh
 set -e
 
-# Cache configuration & routes in production
+# Run storage link if missing
 php artisan storage:link || true
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
 
-# Run database migrations and seeds automatically
-php artisan migrate --force
+# Run migrations and seeds
+php artisan migrate --force || true
 php artisan db:seed --force || true
 
-# Start PHP-FPM in background and Nginx in foreground
+# Cache configuration, routes, and views
+php artisan config:cache || true
+php artisan route:cache || true
+php artisan view:cache || true
+
+# Start PHP-FPM daemon
 php-fpm -D
-nginx -g "daemon off;"
+
+# Exec Nginx in foreground
+exec nginx -g "daemon off;"
