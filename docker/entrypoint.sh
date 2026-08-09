@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
 
+# Replace PORT in Nginx config if PORT env is set by Render
+PORT="${PORT:-80}"
+sed -i "s/listen 80;/listen ${PORT};/g" /etc/nginx/http.d/default.conf 2>/dev/null || true
+
 # Run storage link if missing
 php artisan storage:link || true
 
