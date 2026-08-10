@@ -56,12 +56,12 @@ class Player extends Component
         $lessonRepository = app(LessonRepositoryInterface::class);
 
         // Security Authorization: Student must be enrolled
-        if (! $courseRepository->isEnrolled($user, $courseId)) {
+        if (!$courseRepository->isEnrolled($user, $courseId)) {
             abort(403, 'Unauthorized access. You are not enrolled in this course.');
         }
 
         $found = $courseRepository->findWithDetails($courseId, $user);
-        if (! $found) {
+        if (!$found) {
             abort(404, 'Course not found');
         }
 
@@ -72,12 +72,12 @@ class Player extends Component
             $this->activeLesson = $lessonRepository->findById($lesson);
         }
 
-        if (! $this->activeLesson) {
+        if (!$this->activeLesson) {
             $firstModule = $this->course->currentVersion?->modules?->first();
             $this->activeLesson = $firstModule?->lessons?->first();
         }
 
-        if ($this->activeLesson && ! $lessonRepository->isLessonUnlocked($user, $this->activeLesson)) {
+        if ($this->activeLesson && !$lessonRepository->isLessonUnlocked($user, $this->activeLesson)) {
             session()->flash('warning', 'That lesson is locked. Complete previous lessons to unlock.');
             $firstModule = $this->course->currentVersion?->modules?->first();
             $this->activeLesson = $firstModule?->lessons?->first();
@@ -100,11 +100,11 @@ class Player extends Component
     {
         $lessonRepository = app(LessonRepositoryInterface::class);
         $lesson = $lessonRepository->findById($lessonId);
-        if (! $lesson) {
+        if (!$lesson) {
             return;
         }
 
-        if (! $lessonRepository->isLessonUnlocked(auth()->user(), $lesson)) {
+        if (!$lessonRepository->isLessonUnlocked(auth()->user(), $lesson)) {
             session()->flash('warning', 'Lesson 🔒 is locked. Complete the previous lesson to unlock.');
 
             return;
@@ -116,7 +116,7 @@ class Player extends Component
 
     public function markAsComplete()
     {
-        if (! $this->activeLesson) {
+        if (!$this->activeLesson) {
             return;
         }
 
@@ -241,7 +241,7 @@ class Player extends Component
 
     public function getIsLocalMediaProperty(): bool
     {
-        if (! $this->activeLesson || ! $this->activeLesson->video_url) {
+        if (!$this->activeLesson || !$this->activeLesson->video_url) {
             return false;
         }
 
@@ -252,14 +252,14 @@ class Player extends Component
         }
 
         return str_starts_with($url, 'storage/') ||
-               str_starts_with($url, 'videos/') ||
-               str_contains($url, '/storage/') ||
-               preg_match('/\.(mp4|mp3|webm|ogg|wav|m4a)$/i', $url) === 1;
+            str_starts_with($url, 'videos/') ||
+            str_contains($url, '/storage/') ||
+            preg_match('/\.(mp4|mp3|webm|ogg|wav|m4a)$/i', $url) === 1;
     }
 
     public function getMediaUrlProperty(): string
     {
-        if (! $this->activeLesson || ! $this->activeLesson->video_url) {
+        if (!$this->activeLesson || !$this->activeLesson->video_url) {
             return '';
         }
 
@@ -276,7 +276,7 @@ class Player extends Component
 
     public function getEmbedUrlProperty(): string
     {
-        if (! $this->activeLesson || ! $this->activeLesson->video_url) {
+        if (!$this->activeLesson || !$this->activeLesson->video_url) {
             return 'https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?enablejsapi=1&rel=0&modestbranding=1';
         }
 
@@ -316,7 +316,7 @@ class Player extends Component
         $modules = $this->course->currentVersion?->modules ?? collect([]);
         $allLessons = $modules->pluck('lessons')->flatten();
 
-        $currentIndex = $allLessons->search(fn ($l) => (string) $l->id === (string) $this->activeLesson?->id);
+        $currentIndex = $allLessons->search(fn($l) => (string) $l->id === (string) $this->activeLesson?->id);
         $previousLesson = ($currentIndex !== false && $currentIndex > 0) ? $allLessons->get($currentIndex - 1) : null;
         $nextLesson = ($currentIndex !== false && $currentIndex < $allLessons->count() - 1) ? $allLessons->get($currentIndex + 1) : null;
 

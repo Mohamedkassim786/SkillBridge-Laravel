@@ -69,14 +69,14 @@ class MyLearningSeeder extends Seeder
             ['module_id' => $m1->id, 'sort_order' => 1],
             [
                 'title' => 'Lesson 1: Full Stack Web Development Course Introduction',
-                'video_url' => 'storage/videos/full-stack-laravel-architecture/module-1-fundamentals/Full Stack Web Development Course Introduction_720p60.mp4',
+                'video_url' => 'https://res.cloudinary.com/ayivfpud/video/upload/v1786345355/Full_Stack_Web_Development_Course_Introduction_720p60.mp4',
                 'duration' => 278,
                 'is_free_preview' => true,
             ]
         );
         $l1->update([
             'title' => 'Lesson 1: Full Stack Web Development Course Introduction',
-            'video_url' => 'storage/videos/full-stack-laravel-architecture/module-1-fundamentals/Full Stack Web Development Course Introduction_720p60.mp4',
+            'video_url' => 'https://res.cloudinary.com/ayivfpud/video/upload/v1786345355/Full_Stack_Web_Development_Course_Introduction_720p60.mp4',
             'duration' => 278,
             'is_free_preview' => true,
         ]);
@@ -85,14 +85,14 @@ class MyLearningSeeder extends Seeder
             ['module_id' => $m1->id, 'sort_order' => 2],
             [
                 'title' => 'Lesson 2: How The Backend Works',
-                'video_url' => 'storage/videos/full-stack-laravel-architecture/module-1-fundamentals/How The Backend Works_720p.mp4',
+                'video_url' => 'https://res.cloudinary.com/ayivfpud/video/upload/v1786345351/How_The_Backend_Works_720p.mp4',
                 'duration' => 954,
                 'is_free_preview' => true,
             ]
         );
         $l2->update([
             'title' => 'Lesson 2: How The Backend Works',
-            'video_url' => 'storage/videos/full-stack-laravel-architecture/module-1-fundamentals/How The Backend Works_720p.mp4',
+            'video_url' => 'https://res.cloudinary.com/ayivfpud/video/upload/v1786345351/How_The_Backend_Works_720p.mp4',
             'duration' => 954,
             'is_free_preview' => true,
         ]);
@@ -101,14 +101,14 @@ class MyLearningSeeder extends Seeder
             ['module_id' => $m2->id, 'sort_order' => 1],
             [
                 'title' => 'Lesson 3: MVC Pattern Explained in 4 Minutes',
-                'video_url' => 'storage/videos/full-stack-laravel-architecture/module-2-mvc-rest/MVC Explained in 4 Minutes_720p60.mp4',
+                'video_url' => 'https://res.cloudinary.com/ayivfpud/video/upload/v1786345352/MVC_Explained_in_4_Minutes_720p60.mp4',
                 'duration' => 253,
                 'is_free_preview' => true,
             ]
         );
         $l3->update([
             'title' => 'Lesson 3: MVC Pattern Explained in 4 Minutes',
-            'video_url' => 'storage/videos/full-stack-laravel-architecture/module-2-mvc-rest/MVC Explained in 4 Minutes_720p60.mp4',
+            'video_url' => 'https://res.cloudinary.com/ayivfpud/video/upload/v1786345352/MVC_Explained_in_4_Minutes_720p60.mp4',
             'duration' => 253,
             'is_free_preview' => true,
         ]);
@@ -116,15 +116,15 @@ class MyLearningSeeder extends Seeder
         $l4 = Lesson::firstOrCreate(
             ['module_id' => $m2->id, 'sort_order' => 2],
             [
-                'title' => 'Lesson 4: What is REST API Architecture',
-                'video_url' => 'storage/videos/full-stack-laravel-architecture/module-2-mvc-rest/What is REST _720p60.mp4',
+                'title' => 'Lesson 4: How The Backend Works (Part 2)',
+                'video_url' => 'https://res.cloudinary.com/ayivfpud/video/upload/v1786345351/How_The_Backend_Works_720p.mp4',
                 'duration' => 762,
                 'is_free_preview' => true,
             ]
         );
         $l4->update([
-            'title' => 'Lesson 4: What is REST API Architecture',
-            'video_url' => 'storage/videos/full-stack-laravel-architecture/module-2-mvc-rest/What is REST _720p60.mp4',
+            'title' => 'Lesson 4: How The Backend Works (Part 2)',
+            'video_url' => 'https://res.cloudinary.com/ayivfpud/video/upload/v1786345351/How_The_Backend_Works_720p.mp4',
             'duration' => 762,
             'is_free_preview' => true,
         ]);
