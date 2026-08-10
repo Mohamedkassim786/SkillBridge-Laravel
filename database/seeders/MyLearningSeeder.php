@@ -129,6 +129,20 @@ class MyLearningSeeder extends Seeder
             'is_free_preview' => true,
         ]);
 
+        // Force update all lessons with storage/ paths to Cloudinary URLs
+        Lesson::where('video_url', 'LIKE', '%storage/%')
+            ->orWhere('video_url', 'LIKE', '%videos/%')
+            ->get()
+            ->each(function ($les) {
+                if (str_contains(strtolower($les->title), 'intro') || str_contains(strtolower($les->title), '1')) {
+                    $les->update(['video_url' => 'https://res.cloudinary.com/ayivfpud/video/upload/v1786345355/Full_Stack_Web_Development_Course_Introduction_720p60.mp4']);
+                } elseif (str_contains(strtolower($les->title), 'mvc') || str_contains(strtolower($les->title), '3')) {
+                    $les->update(['video_url' => 'https://res.cloudinary.com/ayivfpud/video/upload/v1786345352/MVC_Explained_in_4_Minutes_720p60.mp4']);
+                } else {
+                    $les->update(['video_url' => 'https://res.cloudinary.com/ayivfpud/video/upload/v1786345351/How_The_Backend_Works_720p.mp4']);
+                }
+            });
+
         // Enroll Student
         $enr = Enrollment::firstOrCreate(
             ['user_id' => $student->id, 'course_id' => $course1->id],
