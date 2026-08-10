@@ -47,7 +47,7 @@
                         <input type="text" wire:model.live.debounce.300ms="fullName" placeholder="e.g. Rafeeq Ahamed" style="background: #112240; border: {{ in_array('Full Name', $missingRequiredFields) ? '2px solid #ef4444' : '1px solid #1e3a5f' }}; color: white;" class="w-full px-3.5 py-2 rounded-xl text-xs font-semibold focus:outline-none focus:border-rose-500">
                         
                         <!-- INLINE SUGGESTION CARD FOR FULL NAME -->
-                        @if (isset($fieldSuggestions['fullName']) && $fieldSuggestions['fullName']['can_apply'])
+                        @if (isset($fieldSuggestions['fullName']) && !empty($fieldSuggestions['fullName']['suggested']))
                             <div class="mt-2.5 p-3.5 rounded-2xl bg-indigo-500/10 border border-indigo-500/40 text-xs space-y-2 shadow-lg">
                                 <div class="flex items-center justify-between">
                                     <span class="px-2.5 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 font-black text-[10px] uppercase tracking-wider">✨ {{ $fieldSuggestions['fullName']['title'] ?? 'Name Capitalization' }}</span>
@@ -74,7 +74,7 @@
                         <input type="text" wire:model.live.debounce.300ms="headlineTitle" placeholder="e.g. Java Full-Stack Developer | React.js | Spring Boot" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-3.5 py-2 rounded-xl text-xs font-semibold focus:outline-none focus:border-rose-500">
                         
                         <!-- INLINE SUGGESTION CARD FOR HEADLINE -->
-                        @if (isset($fieldSuggestions['headlineTitle']) && $fieldSuggestions['headlineTitle']['can_apply'])
+                        @if (isset($fieldSuggestions['headlineTitle']) && !empty($fieldSuggestions['headlineTitle']['suggested']))
                             <div class="mt-2.5 p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/40 text-xs space-y-2 shadow-lg">
                                 <div class="flex items-center justify-between">
                                     <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-black text-[10px] uppercase tracking-wider">✨ {{ $fieldSuggestions['headlineTitle']['title'] ?? 'Headline ATS Enhancement' }}</span>
@@ -116,7 +116,7 @@
                         <label class="block text-[11px] font-bold text-slate-300 mb-1">City & State / Location</label>
                         <input type="text" wire:model.live.debounce.300ms="location" placeholder="e.g. Coimbatore, Tamil Nadu" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-3.5 py-2 rounded-xl text-xs font-semibold focus:outline-none focus:border-rose-500">
                         
-                        @if (isset($fieldSuggestions['location']) && $fieldSuggestions['location']['can_apply'])
+                        @if (isset($fieldSuggestions['location']) && !empty($fieldSuggestions['location']['suggested']))
                             <div class="mt-2.5 p-3.5 rounded-2xl bg-sky-500/10 border border-sky-500/40 text-xs space-y-2 shadow-lg">
                                 <div class="flex items-center justify-between">
                                     <span class="px-2.5 py-0.5 rounded-md bg-sky-500/20 text-sky-300 font-black text-[10px] uppercase tracking-wider">✨ {{ $fieldSuggestions['location']['title'] ?? 'Location Format' }}</span>
@@ -159,7 +159,7 @@
                         <textarea wire:model.live.debounce.300ms="experienceSummary" rows="3" placeholder="Describe your experience, background, and career goals..." style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-3.5 py-2 rounded-xl text-xs font-semibold focus:outline-none focus:border-rose-500"></textarea>
                         
                         <!-- INLINE AI CARD FOR SUMMARY -->
-                        @if (isset($fieldSuggestions['experienceSummary']) && $fieldSuggestions['experienceSummary']['can_apply'])
+                        @if (isset($fieldSuggestions['experienceSummary']) && !empty($fieldSuggestions['experienceSummary']['suggested']))
                             <div class="mt-2.5 p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/40 text-xs space-y-2 shadow-lg">
                                 <div class="flex items-center justify-between">
                                     <span class="px-2.5 py-0.5 rounded-md bg-rose-500/20 text-rose-300 font-black text-[10px] uppercase tracking-wider">✨ {{ $fieldSuggestions['experienceSummary']['title'] ?? 'Summary Enhancement' }}</span>
@@ -188,7 +188,7 @@
                         <textarea wire:model.live.debounce.300ms="educationRaw" rows="2" placeholder="B.E. Computer Science | ABC College | CGPA 8.1 | 2026" style="background: #112240; border: {{ in_array('Education Details', $missingRequiredFields) ? '2px solid #ef4444' : '1px solid #1e3a5f' }}; color: white;" class="w-full px-3.5 py-2 rounded-xl text-xs font-semibold focus:outline-none focus:border-rose-500"></textarea>
                         
                         <!-- INLINE AI CARD FOR EDUCATION -->
-                        @if (isset($fieldSuggestions['educationRaw']) && $fieldSuggestions['educationRaw']['can_apply'])
+                        @if (isset($fieldSuggestions['educationRaw']) && !empty($fieldSuggestions['educationRaw']['suggested']))
                             <div class="mt-2.5 p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/40 text-xs space-y-2 shadow-lg">
                                 <div class="flex items-center justify-between">
                                     <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-black text-[10px] uppercase tracking-wider">✨ {{ $fieldSuggestions['educationRaw']['title'] ?? 'Education Formatting' }}</span>
@@ -217,7 +217,7 @@
                         <textarea wire:model.live.debounce.300ms="skillsInput" rows="3" placeholder="Languages: Java, Python, SQL&#10;Frontend: React, HTML5, CSS3&#10;Backend: Node.js, Spring Boot" style="background: #112240; border: {{ in_array('Technical Skills or Projects', $missingRequiredFields) ? '2px solid #ef4444' : '1px solid #1e3a5f' }}; color: white;" class="w-full px-3.5 py-2 rounded-xl text-xs font-semibold focus:outline-none focus:border-rose-500"></textarea>
                         
                         <!-- INLINE AI CARD FOR SKILLS -->
-                        @if (isset($fieldSuggestions['skillsInput']) && $fieldSuggestions['skillsInput']['can_apply'])
+                        @if (isset($fieldSuggestions['skillsInput']) && !empty($fieldSuggestions['skillsInput']['suggested']))
                             <div class="mt-2.5 p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/40 text-xs space-y-2 shadow-lg">
                                 <div class="flex items-center justify-between">
                                     <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-black text-[10px] uppercase tracking-wider">✨ {{ $fieldSuggestions['skillsInput']['title'] ?? 'Skills Categorization' }}</span>
@@ -238,13 +238,42 @@
                         @endif
                     </div>
 
+                    <!-- WORK EXPERIENCE & INTERNSHIPS -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">
+                            Work Experience & Internships (Optional)
+                        </label>
+                        <textarea wire:model.live.debounce.300ms="workExperienceRaw" rows="3" placeholder="Software Developer Intern — ABC Technologies | June 2025 – Aug 2025&#10;- Developed reusable React components for web application.&#10;- Created RESTful APIs using Node.js and Express." style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-3.5 py-2 rounded-xl text-xs font-semibold focus:outline-none focus:border-rose-500"></textarea>
+                        
+                        <!-- INLINE AI CARD FOR WORK EXPERIENCE -->
+                        @if (isset($fieldSuggestions['workExperienceRaw']) && !empty($fieldSuggestions['workExperienceRaw']['suggested']))
+                            <div class="mt-2.5 p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/40 text-xs space-y-2 shadow-lg">
+                                <div class="flex items-center justify-between">
+                                    <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-black text-[10px] uppercase tracking-wider">✨ {{ $fieldSuggestions['workExperienceRaw']['title'] ?? 'Work Experience Enhancement' }}</span>
+                                    <span class="text-[10px] font-bold text-amber-200 uppercase">{{ strtoupper($fieldSuggestions['workExperienceRaw']['severity'] ?? 'WARNING') }}</span>
+                                </div>
+                                <p class="text-[11px] text-slate-300 leading-relaxed font-medium">{{ is_array($fieldSuggestions['workExperienceRaw']['reason'] ?? null) ? implode(' ', $fieldSuggestions['workExperienceRaw']['reason']) : ($fieldSuggestions['workExperienceRaw']['reason'] ?? '') }}</p>
+                                <div class="p-2.5 rounded-xl bg-slate-900/90 text-amber-300 font-mono text-[11px] leading-relaxed whitespace-pre-line border border-amber-500/20">{{ is_array($fieldSuggestions['workExperienceRaw']['suggested'] ?? null) ? implode("\n", $fieldSuggestions['workExperienceRaw']['suggested']) : ($fieldSuggestions['workExperienceRaw']['suggested'] ?? '') }}</div>
+                                <div class="flex items-center gap-2 pt-1">
+                                    @if (!empty($appliedSuggestions['workExperienceRaw']))
+                                        <span class="px-3 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 font-bold text-[10px]">✓ Applied to Field</span>
+                                        <button wire:click="undoSuggestion('workExperienceRaw')" class="px-3 py-1 rounded-xl bg-slate-700 text-slate-200 text-[10px] font-bold hover:bg-slate-600">↶ Undo</button>
+                                    @else
+                                        <button wire:click="applySuggestion('workExperienceRaw')" style="background-color: #059669;" class="px-3.5 py-1.5 rounded-xl text-white text-[10px] font-black shadow-md hover:bg-emerald-600 transition-all">✓ Apply Suggestion</button>
+                                        <button wire:click="dismissSuggestion('workExperienceRaw')" class="px-2.5 py-1.5 rounded-xl bg-slate-700 text-slate-400 text-[10px] font-bold hover:bg-slate-600">× Keep Original</button>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
                     <!-- PROJECTS -->
                     <div>
                         <label class="block text-[11px] font-bold text-slate-300 mb-1">Projects (Title — Tech Stack, then bullet points with -)</label>
                         <textarea wire:model.live.debounce.300ms="projectsRaw" rows="4" placeholder="College Management System — Java, SQL (Academic Project):&#10;- Developed modules for student records and attendance" style="background: #112240; border: {{ in_array('Technical Skills or Projects', $missingRequiredFields) ? '2px solid #ef4444' : '1px solid #1e3a5f' }}; color: white;" class="w-full px-3.5 py-2 rounded-xl text-xs font-semibold focus:outline-none focus:border-rose-500"></textarea>
                         
                         <!-- INLINE AI CARD FOR PROJECTS -->
-                        @if (isset($fieldSuggestions['projectsRaw']) && $fieldSuggestions['projectsRaw']['can_apply'])
+                        @if (isset($fieldSuggestions['projectsRaw']) && !empty($fieldSuggestions['projectsRaw']['suggested']))
                             <div class="mt-2.5 p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/40 text-xs space-y-2 shadow-lg">
                                 <div class="flex items-center justify-between">
                                     <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-black text-[10px] uppercase tracking-wider">✨ {{ $fieldSuggestions['projectsRaw']['title'] ?? 'Projects Enhancement' }}</span>
@@ -271,7 +300,7 @@
                         <textarea wire:model.live.debounce.300ms="certificationsRaw" rows="2" placeholder="Java Programming Course — Udemy&#10;First Prize — Hackathon 2025" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-3.5 py-2 rounded-xl text-xs font-semibold focus:outline-none focus:border-rose-500"></textarea>
                         
                         <!-- INLINE AI CARD FOR CERTIFICATIONS -->
-                        @if (isset($fieldSuggestions['certificationsRaw']) && $fieldSuggestions['certificationsRaw']['can_apply'])
+                        @if (isset($fieldSuggestions['certificationsRaw']) && !empty($fieldSuggestions['certificationsRaw']['suggested']))
                             <div class="mt-2.5 p-3.5 rounded-2xl bg-sky-500/10 border border-sky-500/40 text-xs space-y-2 shadow-lg">
                                 <div class="flex items-center justify-between">
                                     <span class="px-2.5 py-0.5 rounded-md bg-sky-500/20 text-sky-300 font-black text-[10px] uppercase tracking-wider">✨ {{ $fieldSuggestions['certificationsRaw']['title'] ?? 'Certifications Formatting' }}</span>
@@ -297,7 +326,7 @@
                         <label class="block text-[11px] font-bold text-slate-300 mb-1">Soft Skills (Comma Separated)</label>
                         <input type="text" wire:model.live.debounce.300ms="softSkillsInput" placeholder="Problem Solving, Team Work, Communication" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-3.5 py-2 rounded-xl text-xs font-semibold focus:outline-none focus:border-rose-500">
                         
-                        @if (isset($fieldSuggestions['softSkillsInput']) && $fieldSuggestions['softSkillsInput']['can_apply'])
+                        @if (isset($fieldSuggestions['softSkillsInput']) && !empty($fieldSuggestions['softSkillsInput']['suggested']))
                             <div class="mt-2.5 p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/40 text-xs space-y-2 shadow-lg">
                                 <div class="flex items-center justify-between">
                                     <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-black text-[10px] uppercase tracking-wider">✨ {{ $fieldSuggestions['softSkillsInput']['title'] ?? 'Soft Skills Wording' }}</span>
@@ -480,6 +509,35 @@
                                     </div>
                                 @endforeach
                             </div>
+                        </div>
+                    @endif
+
+                    <!-- WORK EXPERIENCE -->
+                    @if (!empty($generatedResume['work_experience']) && count($generatedResume['work_experience']) > 0)
+                        <div>
+                            <div style="color: #000000 !important; border-top: 2px solid #000000 !important;" class="text-xs font-bold uppercase tracking-wider pt-1 mb-1">WORK EXPERIENCE</div>
+                            @foreach ($generatedResume['work_experience'] as $we)
+                                <div style="color: #000000 !important;" class="flex justify-between items-baseline text-xs">
+                                    <span style="color: #000000 !important;" class="font-bold">
+                                        {{ $we['title'] ?? '' }}
+                                        @if (!empty($we['company'])) — <span style="color: #374151 !important;" class="font-normal">{{ $we['company'] }}</span> @endif
+                                        @if (!empty($we['employment_type']) && strtolower($we['employment_type']) !== 'full-time')
+                                            <span style="color: #6b7280 !important;" class="italic text-[11px]">({{ $we['employment_type'] }})</span>
+                                        @endif
+                                    </span>
+                                    @if (!empty($we['period'])) <span style="color: #374151 !important;" class="italic font-normal text-[11px]">{{ $we['period'] }}</span> @endif
+                                </div>
+                                @if (!empty($we['location']))
+                                    <div style="color: #4b5563 !important;" class="text-[11px] italic mb-1">{{ $we['location'] }}</div>
+                                @endif
+                                @if (!empty($we['bullets']))
+                                    <ul style="color: #1f2937 !important;" class="list-disc list-inside text-xs pl-2 my-1 space-y-0.5">
+                                        @foreach ($we['bullets'] as $b)
+                                            <li style="color: #1f2937 !important;">{{ $b }}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            @endforeach
                         </div>
                     @endif
 

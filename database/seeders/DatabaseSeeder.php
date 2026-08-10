@@ -49,5 +49,8 @@ class DatabaseSeeder extends Seeder
 
         // 5. Seed Enterprise Master Real Data
         $this->call(MasterSeeder::class);
+
+        // 6. Seed CMS Content (Success Stories, FAQs, Blog Posts, Pricing Plans)
+        $this->call(CmsSeeder::class);
     }
 }

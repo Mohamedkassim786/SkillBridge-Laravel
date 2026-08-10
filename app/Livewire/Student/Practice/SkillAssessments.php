@@ -98,6 +98,6 @@ class SkillAssessments extends Component
 
     public function render()
     {
-        return view('livewire.student.practice.skill-assessments');
+        return view('livewire.student.practice.skill-assessments', get_object_vars($this));
     }
 }

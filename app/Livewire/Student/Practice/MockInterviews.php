@@ -119,10 +119,10 @@ class MockInterviews extends Component
         $resumes = UserResume::where('user_id', auth()->id())->get();
         $jobs = JobPosting::latest()->take(10)->get();
 
-        return view('livewire.student.practice.mock-interviews', [
+        return view('livewire.student.practice.mock-interviews', array_merge(get_object_vars($this), [
             'pastInterviews' => $pastInterviews,
             'resumes' => $resumes,
             'jobs' => $jobs,
-        ]);
+        ]));
     }
 }

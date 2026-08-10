@@ -97,6 +97,9 @@ class ResumeDownloadController extends Controller
             ];
         }
 
+        $normalizer = app(\App\Domain\Ai\Resume\ResumeNormalizer::class);
+        $data = $normalizer->normalize($data);
+
         $pdf = Pdf::loadView('pdf.ats-resume', compact('data'))
             ->setPaper('a4', 'portrait');
 

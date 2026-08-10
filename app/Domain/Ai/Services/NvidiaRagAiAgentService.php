@@ -192,6 +192,8 @@ PROMPT;
             timeout: 12
         );
 
+        $normalizer = app(\App\Domain\Ai\Resume\ResumeNormalizer::class);
+
         if ($apiResult && isset($apiResult['professional_summary'])) {
             // Preserve contact details from user input (AI shouldn't change these)
             $apiResult['name'] = $userInput['fullName'] ?: ($apiResult['name'] ?? '');
@@ -201,11 +203,13 @@ PROMPT;
             $apiResult['linkedin'] = $userInput['linkedin'] ?: ($apiResult['linkedin'] ?? '');
             $apiResult['github'] = $userInput['github'] ?: ($apiResult['github'] ?? '');
             $apiResult['portfolio'] = $userInput['portfolio'] ?: ($apiResult['portfolio'] ?? '');
-            return $apiResult;
+            
+            return $normalizer->normalize($apiResult);
         }
 
         // Intelligent Fallback: Parse user's actual data instead of hardcoded defaults
-        return $this->buildFallbackResume($userInput, $ragContext);
+        $fallback = $this->buildFallbackResume($userInput, $ragContext);
+        return $normalizer->normalize($fallback);
     }
 
     /**

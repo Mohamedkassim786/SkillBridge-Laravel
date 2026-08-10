@@ -60,7 +60,7 @@
 
             <!-- Student Profile Dropdown -->
             <div x-data="{ open: false }" class="relative">
-                <button @click="open = !open" class="flex items-center gap-3 p-1.5 rounded-xl hover:bg-white/10 transition-colors focus:outline-none">
+                <button @click.stop="open = !open" class="flex items-center gap-3 p-1.5 rounded-xl hover:bg-white/10 transition-colors focus:outline-none">
                     <div class="w-8 h-8 rounded-full bg-[#D62828] text-white font-bold text-xs flex items-center justify-center border border-white/20">
                         {{ strtoupper(substr(auth()->user()->first_name ?? 'S', 0, 1)) }}
                     </div>
@@ -73,7 +73,7 @@
                     </svg>
                 </button>
 
-                <div x-show="open" @click.away="open = false" x-transition style="top: 56px; background-color: #0B1F3A; border: 1px solid #1e3a5f;"
+                <div x-show="open" @click.outside="open = false" x-cloak style="display: none; top: 56px; background-color: #0B1F3A; border: 1px solid #1e3a5f;"
                      class="absolute right-0 w-56 rounded-2xl shadow-2xl py-2 text-white z-50">
                     <div class="px-4 py-3 border-b border-slate-800">
                         <p class="text-xs font-bold text-slate-400">Signed in as</p>

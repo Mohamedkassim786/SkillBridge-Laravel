@@ -14,22 +14,29 @@ class CoverLetterDownloadController extends Controller
         $user = auth()->user();
         $data = session('generated_cover_letter');
 
-        if (!$data) {
+        if (!$data || empty($data['letter_body'])) {
             $data = [
-                'name' => $user?->name ?? 'MOHAMED KASSIM M',
-                'email' => $user?->email ?? 'haafizkassim786@gmail.com',
+                'name' => $user?->name ?? 'Demo Student',
+                'email' => $user?->email ?? 'student@skillbridge.com',
                 'phone' => '+91 8610065701',
                 'location' => 'Pudukkottai, Tamil Nadu',
-                'target_role' => 'Software Development Intern',
-                'company_name' => 'Singapore Logistics Corp',
+                'target_role' => 'Full Stack Developer',
+                'company_name' => 'Cognizant',
                 'hiring_manager' => 'Hiring Manager / Talent Acquisition Team',
-                'date' => date('F d, Y'),
-                'letter_body' => "Dear Hiring Team at Singapore Logistics Corp,\n\nI am writing to express my strong interest in the Software Development Intern position. With hands-on experience developing Full-Stack web applications using Python, React.js, Node.js, PostgreSQL, and RAG AI Architecture, I am confident in my ability to contribute value immediately.\n\nThroughout my practical project work at MIET Engineering College, I have built a centralized ERP Management System, deployed a live Cargo & Courier tracking website for a Singapore client, and developed an award-winning RAG AI Academic Chatbot. I thrive in collaborative engineering environments where code quality and performance are top priorities.\n\nThank you for considering my application. I look forward to discussing how my technical background aligns with Singapore Logistics Corp's engineering goals.\n\nSincerely,\nMOHAMED KASSIM M",
+                'greeting' => 'Dear Hiring Manager,',
+                'opening' => 'I am writing to express my interest in the Full Stack Developer position at Cognizant. As a Computer Science student with hands-on experience developing web applications, I am eager to apply my software development skills in a professional environment.',
+                'experience_paragraph' => 'Through my project work, I have gained practical experience with React.js, Node.js, Express.js, PostgreSQL, and MongoDB. I have developed an online learning management system involving authentication, REST APIs, database integration, and responsive frontend development. These projects have strengthened my understanding of both frontend and backend development.',
+                'fit_paragraph' => 'I enjoy solving practical programming problems and learning new technologies. I would welcome the opportunity to contribute my technical skills, project experience, and willingness to learn to Cognizant\'s development team.',
+                'closing_paragraph' => 'Thank you for considering my application. I would appreciate the opportunity to discuss how my background and skills could contribute to the role.',
+                'letter_body' => "Dear Hiring Manager,\n\nI am writing to express my interest in the Full Stack Developer position at Cognizant. As a Computer Science student with hands-on experience developing web applications, I am eager to apply my software development skills in a professional environment.\n\nThrough my project work, I have gained practical experience with React.js, Node.js, Express.js, PostgreSQL, and MongoDB. I have developed an online learning management system involving authentication, REST APIs, database integration, and responsive frontend development. These projects have strengthened my understanding of both frontend and backend development.\n\nI enjoy solving practical programming problems and learning new technologies. I would welcome the opportunity to contribute my technical skills, project experience, and willingness to learn to Cognizant's development team.\n\nThank you for considering my application. I would appreciate the opportunity to discuss how my background and skills could contribute to the role.\n\nSincerely,\nDemo Student",
                 'highlights' => [
-                    "Proven proficiency in Python, React.js, Node.js, PostgreSQL, and RAG AI Architecture",
-                    "Hands-on experience building live production cargo tracking applications",
-                    "Strong foundation in enterprise web architecture and database optimization",
+                    "React.js and Node.js web development experience",
+                    "REST API development and database integration",
+                    "MongoDB and PostgreSQL database experience",
+                    "Full-stack project experience",
                 ],
+                'signature' => $user?->name ?? 'Demo Student',
+                'date' => date('F d, Y'),
             ];
         }
 

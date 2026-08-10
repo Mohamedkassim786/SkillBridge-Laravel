@@ -8,19 +8,19 @@
             margin: 40pt 45pt;
         }
         body {
-            font-family: 'Times New Roman', Times, Georgia, serif;
-            color: #000000;
+            font-family: 'Georgia', 'Times New Roman', Times, serif;
+            color: #111111;
             font-size: 10.5pt;
-            line-height: 1.45;
+            line-height: 1.48;
             background-color: #ffffff;
         }
         .header {
-            border-bottom: 1.5pt solid #000000;
+            border-bottom: 1.5pt solid #111111;
             padding-bottom: 6pt;
             margin-bottom: 14pt;
         }
         .name {
-            font-size: 22pt;
+            font-size: 20pt;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5pt;
@@ -30,7 +30,7 @@
         .contact {
             font-size: 9.5pt;
             margin-top: 5pt;
-            color: #222222;
+            color: #333333;
         }
         .date-line {
             margin-top: 14pt;
@@ -46,38 +46,39 @@
         .recipient .company {
             font-weight: bold;
         }
-        .letter-body {
-            text-align: left;
-            margin-bottom: 16pt;
-            white-space: pre-line;
-            font-size: 10pt;
-            line-height: 1.5;
+        .letter-paragraph {
+            margin-bottom: 10pt;
+            font-size: 10.5pt;
+            text-align: justify;
+            text-justify: inter-word;
         }
         .highlights-title {
             font-weight: bold;
-            margin-top: 10pt;
+            margin-top: 12pt;
             margin-bottom: 4pt;
             text-transform: uppercase;
             font-size: 9.5pt;
             letter-spacing: 0.5pt;
+            color: #111111;
         }
         ul.bullet-list {
-            margin: 2pt 0 14pt 16pt;
+            margin: 2pt 0 12pt 16pt;
             padding: 0;
             list-style-type: disc;
         }
         ul.bullet-list li {
-            margin-bottom: 2.5pt;
-            font-size: 9.5pt;
+            margin-bottom: 3pt;
+            font-size: 10pt;
+            color: #222222;
         }
         .signature {
-            margin-top: 20pt;
-            font-size: 10pt;
+            margin-top: 18pt;
+            font-size: 10.5pt;
         }
         .signature .sig-name {
             font-weight: bold;
-            margin-top: 20pt;
-            font-size: 10.5pt;
+            margin-top: 18pt;
+            font-size: 11pt;
         }
     </style>
 </head>
@@ -85,11 +86,12 @@
 
     <!-- HEADER SECTION -->
     <div class="header">
-        <div class="name">{{ $data['name'] ?? 'MOHAMED KASSIM M' }}</div>
+        <div class="name">{{ $data['name'] ?? 'Candidate Name' }}</div>
         <div class="contact">
-            {{ $data['email'] ?? 'haafizkassim786@gmail.com' }} | 
-            {{ $data['phone'] ?? '+91 8610065701' }} | 
-            {{ $data['location'] ?? 'Pudukkottai, Tamil Nadu' }}
+            @php
+                $contactParts = array_filter([$data['email'] ?? '', $data['phone'] ?? '', $data['location'] ?? '']);
+            @endphp
+            {{ implode('  |  ', $contactParts) }}
         </div>
     </div>
 
@@ -99,16 +101,31 @@
     <!-- RECIPIENT -->
     <div class="recipient">
         <div>{{ $data['hiring_manager'] ?? 'Hiring Manager / Talent Acquisition Team' }}</div>
-        <div class="company">{{ $data['company_name'] ?? 'Target Enterprise Company' }}</div>
+        <div class="company">{{ $data['company_name'] ?? 'Target Company' }}</div>
     </div>
 
     <!-- LETTER BODY -->
     <div class="letter-body">
-{{ $data['letter_body'] ?? "Dear Hiring Manager,\n\nI am writing to express my strong interest in the position at {$data['company_name']}.\n\nThank you for your time and consideration." }}
+        @if (!empty($data['opening']))
+            <div class="greeting">{{ $data['greeting'] ?? 'Dear Hiring Manager,' }}</div>
+            <br>
+            <div class="letter-paragraph">{{ $data['opening'] }}</div>
+            @if (!empty($data['experience_paragraph']))
+                <div class="letter-paragraph">{{ $data['experience_paragraph'] }}</div>
+            @endif
+            @if (!empty($data['fit_paragraph']))
+                <div class="letter-paragraph">{{ $data['fit_paragraph'] }}</div>
+            @endif
+            @if (!empty($data['closing_paragraph']))
+                <div class="letter-paragraph">{{ $data['closing_paragraph'] }}</div>
+            @endif
+        @else
+            <div class="letter-paragraph" style="white-space: pre-line;">{{ $data['letter_body'] ?? '' }}</div>
+        @endif
     </div>
 
-    <!-- KEY HIGHLIGHTS -->
-    @if (!empty($data['highlights']))
+    <!-- KEY CORE QUALIFICATIONS -->
+    @if (!empty($data['highlights']) && is_array($data['highlights']) && count($data['highlights']) > 0)
         <div class="highlights-title">KEY CORE QUALIFICATIONS</div>
         <ul class="bullet-list">
             @foreach ($data['highlights'] as $highlight)
@@ -120,7 +137,7 @@
     <!-- SIGNATURE -->
     <div class="signature">
         <div>Sincerely,</div>
-        <div class="sig-name">{{ $data['name'] ?? 'MOHAMED KASSIM M' }}</div>
+        <div class="sig-name">{{ $data['signature'] ?? ($data['name'] ?? 'Candidate Name') }}</div>
     </div>
 
 </body>

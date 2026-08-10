@@ -2,7 +2,7 @@
     <!-- Main Navigation Section -->
     <div>
         <div class="px-3 mb-2 text-xs font-extrabold uppercase tracking-wider text-slate-400">Student Portal</div>
-        <nav class="space-y-1.5" x-data="{ openCourses: true, openJobs: true, openResume: false, openPractice: false }">
+        <nav class="space-y-1.5" x-data="{ openCourses: true, openJobs: true, openResume: {{ request()->routeIs('student.career.*') ? 'true' : 'true' }}, openPractice: {{ request()->routeIs('student.practice.*') ? 'true' : 'true' }} }">
             
             <!-- 1. DASHBOARD -->
             <a href="{{ route('student.dashboard') }}"

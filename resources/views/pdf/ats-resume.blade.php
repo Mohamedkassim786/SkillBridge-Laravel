@@ -121,9 +121,9 @@
         }
         .soft-skills-line {
             font-size: 9.5pt;
-            text-align: center;
-            margin-top: 4pt;
-            font-weight: 500;
+            text-align: left;
+            margin-top: 3pt;
+            line-height: 1.4;
         }
     </style>
 </head>
@@ -188,6 +188,35 @@
                 @endif
             @endforeach
         </table>
+    @endif
+
+    <!-- WORK EXPERIENCE -->
+    @if (!empty($data['work_experience']) && count($data['work_experience']) > 0)
+        <div class="section-header">WORK EXPERIENCE</div>
+        @foreach ($data['work_experience'] as $exp)
+            <table class="item-table">
+                <tr>
+                    <td class="left-col">
+                        {{ $exp['title'] ?? '' }}
+                        @if (!empty($exp['company'])) — <span style="font-weight: normal;">{{ $exp['company'] }}</span> @endif
+                        @if (!empty($exp['employment_type']) && strtolower($exp['employment_type']) !== 'full-time')
+                            <span style="font-size: 8.5pt; font-style: italic; color: #444444;">({{ $exp['employment_type'] }})</span>
+                        @endif
+                    </td>
+                    <td class="right-col">{{ $exp['period'] ?? '' }}</td>
+                </tr>
+            </table>
+            @if (!empty($exp['location']))
+                <div class="sub-row" style="font-style: italic; font-size: 9pt;">{{ $exp['location'] }}</div>
+            @endif
+            @if (!empty($exp['bullets']))
+                <ul class="dash-bullets">
+                    @foreach ($exp['bullets'] as $bullet)
+                        <li>{{ $bullet }}</li>
+                    @endforeach
+                </ul>
+            @endif
+        @endforeach
     @endif
 
     <!-- PROJECTS -->

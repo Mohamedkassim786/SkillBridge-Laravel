@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Student\Career;
 
-use App\Domain\Ai\Common\NvidiaRagAiAgentService;
 use App\Domain\Ai\CoverLetter\CoverLetterGeneratorService;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -25,8 +24,9 @@ class CoverLetterGenerator extends Component
     public string $coreHighlights = '';
     public string $toneStyle = 'Professional, confident, concise';
 
-    // Generated Output State
+    // Generated Structured Output State
     public string $coverLetterOutput = '';
+    public array $coverLetterData = [];
     public array $keyHighlights = [];
     public bool $isAiGenerated = false;
 
@@ -36,6 +36,15 @@ class CoverLetterGenerator extends Component
         if ($user) {
             $this->fullName = $user->name;
             $this->email = $user->email;
+        }
+
+        // Restore existing session data if available
+        $sessionData = session('generated_cover_letter');
+        if (is_array($sessionData) && !empty($sessionData['letter_body'])) {
+            $this->coverLetterOutput = $sessionData['letter_body'];
+            $this->keyHighlights = $sessionData['highlights'] ?? [];
+            $this->coverLetterData = $sessionData;
+            $this->isAiGenerated = true;
         }
     }
 
@@ -55,7 +64,7 @@ class CoverLetterGenerator extends Component
         if (empty($this->coverLetterOutput)) return;
 
         session([
-            'generated_cover_letter' => [
+            'generated_cover_letter' => array_merge([
                 'name' => $this->fullName,
                 'email' => $this->email,
                 'phone' => $this->phone,
@@ -65,46 +74,68 @@ class CoverLetterGenerator extends Component
                 'hiring_manager' => $this->hiringManager,
                 'letter_body' => $this->coverLetterOutput,
                 'highlights' => $this->keyHighlights,
+                'signature' => $this->fullName,
                 'date' => date('F d, Y'),
-            ]
+            ], $this->coverLetterData)
         ]);
     }
 
     /**
-     * Generate cover letter using NVIDIA NIM AI.
-     * Fixed: optional DI parameter with container fallback for wire:click compatibility.
+     * Validate required inputs before calling AI.
      */
-    public function generateCoverLetter(?NvidiaRagAiAgentService $nvidiaAgent = null): void
+    protected function validateInputs(): bool
     {
-        @set_time_limit(30);
-        $nvidiaAgent = $nvidiaAgent ?? app(NvidiaRagAiAgentService::class);
+        $missing = [];
+        if (empty(trim($this->targetRole))) $missing[] = 'Target Job Title';
+        if (empty(trim($this->companyName))) $missing[] = 'Target Company Name';
+        if (empty(trim($this->fullName))) $missing[] = 'Applicant Name';
 
-        $result = $nvidiaAgent->generateCoverLetter(
-            resumeText: $this->coreHighlights,
-            jobTitle: $this->targetRole ?: 'Software Developer',
-            companyName: $this->companyName ?: 'Target Company',
-            candidateName: $this->fullName,
-            skills: $this->skillsInput,
-            experience: $this->coreHighlights,
-            tone: $this->toneStyle
-        );
+        if (count($missing) > 0) {
+            session()->flash('error', '⚠️ Please fill in all required fields first: ' . implode(', ', $missing));
+            return false;
+        }
 
-        $this->coverLetterOutput = $result['cover_letter'] ?? '';
-        $this->keyHighlights = $result['key_highlights'] ?? [
-            "Proficiency in {$this->skillsInput}",
-            "Hands-on experience building production software systems",
-            "Strong alignment with modern architecture best practices",
+        return true;
+    }
+
+    /**
+     * Generate cover letter using NVIDIA NIM AI & CoverLetterGeneratorService.
+     */
+    public function generateCoverLetter(?CoverLetterGeneratorService $generatorService = null): void
+    {
+        if (!$this->validateInputs()) {
+            return;
+        }
+
+        @set_time_limit(60);
+        $generatorService = $generatorService ?? app(CoverLetterGeneratorService::class);
+
+        $userInput = [
+            'targetRole' => $this->targetRole,
+            'companyName' => $this->companyName,
+            'hiringManager' => $this->hiringManager,
+            'fullName' => $this->fullName,
+            'location' => $this->location,
+            'skillsInput' => $this->skillsInput,
+            'coreHighlights' => $this->coreHighlights,
+            'toneStyle' => $this->toneStyle,
         ];
+
+        $result = $generatorService->generateCoverLetter($userInput);
+
+        $this->coverLetterData = $result;
+        $this->coverLetterOutput = $result['full_letter_body'] ?? '';
+        $this->keyHighlights = $result['core_qualifications'] ?? [];
         $this->isAiGenerated = true;
 
-        // Sync to session for PDF download
+        // Sync to session for 1:1 matching PDF download
         $this->syncCoverLetterSession();
 
-        session()->flash('status', '✨ NVIDIA AI Cover Letter generated successfully!');
+        session()->flash('status', '✨ Personalized AI Cover Letter generated successfully!');
     }
 
     public function render()
     {
-        return view('livewire.student.career.cover-letter-generator');
+        return view('livewire.student.career.cover-letter-generator', get_object_vars($this));
     }
 }

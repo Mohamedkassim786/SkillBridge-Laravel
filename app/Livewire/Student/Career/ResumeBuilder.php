@@ -27,6 +27,7 @@ class ResumeBuilder extends Component
     public string $experienceSummary = '';
     public string $educationRaw = '';
     public string $skillsInput = '';
+    public string $workExperienceRaw = '';
     public string $projectsRaw = '';
     public string $certificationsRaw = '';
     public string $softSkillsInput = '';
@@ -95,6 +96,20 @@ class ResumeBuilder extends Component
                 $this->github = $decoded['github'] ?? $this->github;
                 $this->portfolio = $decoded['portfolio'] ?? $this->portfolio;
 
+                if (!empty($decoded['work_experience_raw'])) {
+                    $this->workExperienceRaw = $decoded['work_experience_raw'];
+                } elseif (!empty($decoded['work_experience']) && is_array($decoded['work_experience'])) {
+                    $lines = [];
+                    foreach ($decoded['work_experience'] as $we) {
+                        $lines[] = ($we['title'] ?? '') . ' — ' . ($we['company'] ?? '') . ' | ' . ($we['period'] ?? '');
+                        if (!empty($we['bullets'])) {
+                            foreach ($we['bullets'] as $b) {
+                                $lines[] = "- {$b}";
+                            }
+                        }
+                    }
+                    $this->workExperienceRaw = implode("\n", $lines);
+                }
                 if (!empty($decoded['professional_summary'])) {
                     $this->experienceSummary = $decoded['professional_summary'];
                 }
@@ -178,64 +193,10 @@ class ResumeBuilder extends Component
      */
     public function syncResumeSession(): void
     {
-        // Parse Projects dynamically from projectsRaw textarea using Line-by-Line Parser
-        $projectBlocks = [];
-        $projectLines = array_values(array_filter(array_map('trim', explode("\n", $this->projectsRaw))));
-        $currentProject = null;
-
-        foreach ($projectLines as $line) {
-            $isBullet = preg_match('/^\s*[\-\•\*]\s*/', $line);
-
-            if ($isBullet) {
-                $cleanBullet = preg_replace('/^\s*[\-\•\*]\s*/', '', $line);
-                if ($currentProject) {
-                    $currentProject['bullets'][] = $cleanBullet;
-                } else {
-                    $currentProject = [
-                        'title' => 'Project',
-                        'tech_stack' => '',
-                        'badge' => '',
-                        'bullets' => [$cleanBullet],
-                    ];
-                }
-                continue;
-            }
-
-            $isHeader = false;
-            $pTitle = $line;
-            $pTechStack = '';
-            $pBadge = '';
-
-            if (preg_match('/^(.*?)\s*(?:—|–|\|)\s*(.*)$/', $line, $m)) {
-                $isHeader = true;
-                $pTitle = trim($m[1]);
-                $pTechStack = trim($m[2]);
-            } elseif (str_ends_with($line, ':') && strlen($line) < 70) {
-                $isHeader = true;
-                $pTitle = rtrim(trim($line), ':');
-            } elseif (preg_match('/^(.*?\b(?:System|Platform|App|Project|Dashboard|Lab|Tool|Tracker|Detection|Manager|Portal|Engine|Interface|Simulator)\b.*)$/i', $line) && !str_contains($line, '.')) {
-                $isHeader = true;
-                $pTitle = trim($line);
-            }
-
-            if ($isHeader || $currentProject === null) {
-                if ($currentProject) {
-                    $projectBlocks[] = $currentProject;
-                }
-                $currentProject = [
-                    'title' => $pTitle,
-                    'tech_stack' => $pTechStack,
-                    'badge' => $pBadge,
-                    'bullets' => [],
-                ];
-            } else {
-                $currentProject['bullets'][] = $line;
-            }
-        }
-
-        if ($currentProject) {
-            $projectBlocks[] = $currentProject;
-        }
+        // Parse Work Experience dynamically from workExperienceRaw textarea using ResumeExperienceParser
+        $expParser = app(\App\Domain\Ai\Resume\ResumeExperienceParser::class);
+        $workBlocks = $expParser->parseWorkExperience($this->workExperienceRaw);
+        $projectBlocks = $expParser->parseProjects($this->projectsRaw);
 
         // Parse Education dynamically from educationRaw textarea
         $eduBlocks = [];
@@ -313,6 +274,8 @@ class ResumeBuilder extends Component
             'professional_summary' => $this->experienceSummary,
             'education' => $eduBlocks,
             'technical_skills' => $skillsMap,
+            'work_experience' => $workBlocks,
+            'work_experience_raw' => $this->workExperienceRaw,
             'projects' => $projectBlocks,
             'certifications' => $certList,
             'soft_skills' => $softList,
@@ -321,6 +284,10 @@ class ResumeBuilder extends Component
             'suggested_improvements' => $this->suggestedImprovements,
             'suggested_skills' => $this->suggestedSkills,
         ];
+
+        // Normalize generated resume structure
+        $normalizer = app(\App\Domain\Ai\Resume\ResumeNormalizer::class);
+        $this->generatedResume = $normalizer->normalize($this->generatedResume);
 
         // Store updated payload into session for PDF Controller download
         session(['generated_ats_resume' => $this->generatedResume]);
@@ -353,9 +320,7 @@ class ResumeBuilder extends Component
      */
     public function getAiSuggestions(?ResumeSuggestionService $suggestionService = null, ?NvidiaRagAiAgentService $nvidiaAgent = null): void
     {
-        if (!$this->validateImportantFields()) {
-            return;
-        }
+        $this->updateQualityChecklist();
 
         @set_time_limit(60);
         @ini_set('max_execution_time', '60');
@@ -375,6 +340,7 @@ class ResumeBuilder extends Component
             'experienceSummary' => $this->experienceSummary,
             'educationRaw' => $this->educationRaw,
             'skillsInput' => $this->skillsInput,
+            'workExperienceRaw' => $this->workExperienceRaw,
             'projectsRaw' => $this->projectsRaw,
             'certificationsRaw' => $this->certificationsRaw,
             'softSkillsInput' => $this->softSkillsInput,
@@ -384,11 +350,25 @@ class ResumeBuilder extends Component
         // 1 Single Fast AI Call for Field-by-Field suggestions
         $rawSuggestions = $suggestionService->analyzeAllFields($input);
 
-        // Sanitize every suggestion field to string
+        // Sanitize every suggestion field to string and map to Livewire field properties
         $this->fieldSuggestions = [];
         foreach ($rawSuggestions as $k => $item) {
             if (!is_array($item)) continue;
             
+            $fieldKey = match ($k) {
+                'headline', 'headline_title', 'headlineTitle' => 'headlineTitle',
+                'professional_summary', 'summary', 'experienceSummary' => 'experienceSummary',
+                'technical_skills', 'skills', 'skillsInput' => 'skillsInput',
+                'work_experience', 'work_experience_raw', 'workExperienceRaw' => 'workExperienceRaw',
+                'projects', 'projects_raw', 'projectsRaw' => 'projectsRaw',
+                'certifications', 'certifications_raw', 'certificationsRaw' => 'certificationsRaw',
+                'soft_skills', 'soft_skills_input', 'softSkillsInput' => 'softSkillsInput',
+                'name', 'full_name', 'fullName' => 'fullName',
+                'education', 'education_raw', 'educationRaw' => 'educationRaw',
+                'location', 'city_state' => 'location',
+                default => $k,
+            };
+
             $suggestedVal = $item['suggested'] ?? '';
             if (is_array($suggestedVal)) {
                 $lines = [];
@@ -405,14 +385,14 @@ class ResumeBuilder extends Component
             $originalVal = $item['original'] ?? '';
             if (is_array($originalVal)) $originalVal = implode("\n", array_map('strval', $originalVal));
 
-            $this->fieldSuggestions[$k] = [
-                'field' => (string) ($item['field'] ?? $k),
+            $this->fieldSuggestions[$fieldKey] = [
+                'field' => $fieldKey,
                 'severity' => (string) ($item['severity'] ?? 'warning'),
                 'title' => (string) ($item['title'] ?? 'Suggestion'),
                 'reason' => (string) $reasonVal,
                 'original' => (string) $originalVal,
                 'suggested' => (string) $suggestedVal,
-                'can_apply' => !empty($item['can_apply']),
+                'can_apply' => isset($item['can_apply']) ? (bool) $item['can_apply'] : (!empty($suggestedVal)),
             ];
         }
 
@@ -523,6 +503,7 @@ class ResumeBuilder extends Component
             'experienceSummary' => $this->experienceSummary,
             'educationRaw' => $this->educationRaw,
             'skillsInput' => $this->skillsInput,
+            'workExperienceRaw' => $this->workExperienceRaw,
             'projectsRaw' => $this->projectsRaw,
             'certificationsRaw' => $this->certificationsRaw,
             'softSkillsInput' => $this->softSkillsInput,
@@ -630,6 +611,6 @@ class ResumeBuilder extends Component
 
     public function render()
     {
-        return view('livewire.student.career.resume-builder');
+        return view('livewire.student.career.resume-builder', get_object_vars($this));
     }
 }

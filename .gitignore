@@ -29,3 +29,5 @@ Thumbs.db
 *.sqlite-journal
 database/database.sqlite
 project_structure.txt
+production.env
+scratch/
