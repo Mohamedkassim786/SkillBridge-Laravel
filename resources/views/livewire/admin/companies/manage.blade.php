@@ -26,14 +26,14 @@
     </div>
 
     <!-- ACTION BAR (DARK NAVY CARD) -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl flex flex-col xl:flex-row xl:items-center justify-between gap-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-5 shadow-xl flex flex-col xl:flex-row xl:items-center justify-between gap-4 text-white">
         <!-- Left Buttons -->
         <div class="flex flex-wrap items-center gap-3">
-            <button wire:click="openCreateModal" style="background-color: #D62828;" class="px-5 py-2.5 rounded-xl text-white text-xs font-bold shadow-md hover:bg-red-700 transition-all flex items-center gap-2">
+            <button wire:click="openCreateModal" style="background-color: #f15153;" class="px-5 py-2.5 rounded-xl text-white text-xs font-bold shadow-md hover:bg-red-700 transition-all flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                 <span>Add Company</span>
             </button>
-            <button style="color: white; border: 1.5px solid #1e3a5f; background: rgba(255,255,255,0.05);" class="px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-white/10 transition-all flex items-center gap-2">
+            <button style="color: white; border: 1.5px solid rgba(241,81,83,0.3); background: rgba(255,255,255,0.05);" class="px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-white/10 transition-all flex items-center gap-2">
                 <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <span>Verify Selected</span>
             </button>
@@ -42,19 +42,18 @@
         <!-- Right Search & Filters -->
         <div class="flex flex-wrap items-center gap-3">
             <div class="relative w-full sm:w-[300px]">
-                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search companies..." style="background: rgba(255,255,255,0.08); border: 1px solid #1e3a5f;" class="w-full pl-9 pr-4 py-2 rounded-xl text-xs font-medium text-white placeholder-slate-400 focus:outline-none focus:border-rose-500">
+                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search companies..." style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full pl-9 pr-4 py-2 rounded-xl text-xs font-medium text-white placeholder-slate-400 focus:outline-none focus:border-[#f15153]">
                 <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </div>
 
-            <select wire:model.live="selectedIndustry" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="px-3 py-2 rounded-xl text-xs font-bold focus:outline-none">
+            <select wire:model.live="selectedIndustry" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="px-3 py-2 rounded-xl text-xs font-bold focus:outline-none">
                 <option value="" class="text-slate-900">All Industries</option>
-                <option value="IT Services" class="text-slate-900">IT Services</option>
-                <option value="Product Engineering" class="text-slate-900">Product Engineering</option>
-                <option value="Fintech" class="text-slate-900">Fintech</option>
-                <option value="E-Commerce" class="text-slate-900">E-Commerce</option>
+                @foreach ($industries as $ind)
+                    <option value="{{ $ind }}" class="text-slate-900">{{ $ind }}</option>
+                @endforeach
             </select>
 
-            <select wire:model.live="selectedVerification" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="px-3 py-2 rounded-xl text-xs font-bold focus:outline-none">
+            <select wire:model.live="selectedVerification" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="px-3 py-2 rounded-xl text-xs font-bold focus:outline-none">
                 <option value="" class="text-slate-900">All Status</option>
                 <option value="verified" class="text-slate-900">Verified</option>
                 <option value="unverified" class="text-slate-900">Unverified / Pending</option>
@@ -65,7 +64,7 @@
     <!-- SECTION 1: REAL COMPANY STATISTICS (DARK NAVY CARDS) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <!-- Card 1: Total Companies -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-5 shadow-xl text-white">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-11 h-11 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m3 0h1m-1-4h.01M9 16h.01M9 12h.01M9 8h.01M15 16h.01M15 12h.01M15 8h.01"/></svg>
@@ -76,7 +75,7 @@
         </div>
 
         <!-- Card 2: Verified Companies -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-5 shadow-xl text-white">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-11 h-11 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -87,7 +86,7 @@
         </div>
 
         <!-- Card 3: Total Jobs Posted -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-5 shadow-xl text-white">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-11 h-11 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/30 flex items-center justify-center">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
@@ -98,7 +97,7 @@
         </div>
 
         <!-- Card 4: Total Students Hired -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-5 shadow-xl text-white">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-11 h-11 rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
@@ -110,7 +109,7 @@
     </div>
 
     <!-- SECTION 2: COMPANIES TABLE (DARK NAVY TABLE) -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl shadow-xl overflow-hidden space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl shadow-xl overflow-hidden space-y-4 text-white">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse text-xs text-slate-300">
                 <thead>
@@ -130,7 +129,7 @@
                         <tr class="hover:bg-slate-800/60 transition-colors">
                             <td class="p-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-2xl bg-[#D62828] text-white font-extrabold flex items-center justify-center text-xs shadow-sm shrink-0">
+                                    <div class="w-10 h-10 rounded-2xl bg-[#f15153] text-white font-extrabold flex items-center justify-center text-xs shadow-sm shrink-0">
                                         {{ strtoupper(substr($c->name, 0, 2)) }}
                                     </div>
                                     <div>
@@ -151,7 +150,7 @@
                             </td>
 
                             <td class="p-4 font-medium text-slate-300">
-                                {{ $c->email }}
+                                {{ $c->billing_email ?? $c->email ?? 'hr@company.com' }}
                             </td>
 
                             <td class="p-4 font-mono font-medium text-slate-400">
@@ -202,7 +201,7 @@
 
     <!-- CREATE / EDIT COMPANY MODAL -->
     <div x-show="modalOpen" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-        <div @click.away="modalOpen = false" style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl shadow-2xl w-full max-w-xl overflow-hidden text-white">
+        <div @click.away="modalOpen = false" style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-3xl shadow-2xl w-full max-w-xl overflow-hidden text-white">
             <div class="px-6 py-5 border-b border-slate-800 flex items-center justify-between">
                 <div>
                     <h3 class="text-lg font-black tracking-tight text-white">{{ $editingCompanyId ? 'Edit Company Profile' : 'Add New Hiring Company' }}</h3>
@@ -214,14 +213,14 @@
             <form wire:submit.prevent="saveCompany" class="p-6 space-y-4 text-xs font-semibold">
                 <div>
                     <label class="block text-slate-300 font-bold uppercase mb-1">Company Name</label>
-                    <input type="text" wire:model="name" placeholder="e.g. Tata Consultancy Services" style="background: #112240; border: 1px solid #1e3a5f;" class="w-full px-4 py-2.5 rounded-xl text-white placeholder-slate-500 focus:outline-none">
+                    <input type="text" wire:model="name" placeholder="e.g. Tata Consultancy Services" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-4 py-2.5 rounded-xl text-white placeholder-slate-500 focus:outline-none">
                     @error('name') <span class="text-rose-400 text-[11px] font-bold">{{ $message }}</span> @enderror
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-slate-300 font-bold uppercase mb-1">Industry</label>
-                        <select wire:model="industry" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-4 py-2.5 rounded-xl focus:outline-none">
+                        <select wire:model="industry" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="w-full px-4 py-2.5 rounded-xl focus:outline-none">
                             <option value="IT Services" class="text-slate-900">IT Services</option>
                             <option value="Product Engineering" class="text-slate-900">Product Engineering</option>
                             <option value="Fintech" class="text-slate-900">Fintech</option>
@@ -231,31 +230,31 @@
 
                     <div>
                         <label class="block text-slate-300 font-bold uppercase mb-1">HQ Location</label>
-                        <input type="text" wire:model="location" placeholder="e.g. Chennai, Tamil Nadu" style="background: #112240; border: 1px solid #1e3a5f;" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
+                        <input type="text" wire:model="location" placeholder="e.g. Chennai, Tamil Nadu" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-slate-300 font-bold uppercase mb-1">Contact Person</label>
-                        <input type="text" wire:model="contact_person" placeholder="e.g. Rajesh Kumar, HR Manager" style="background: #112240; border: 1px solid #1e3a5f;" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
+                        <input type="text" wire:model="contact_person" placeholder="e.g. Rajesh Kumar, HR Manager" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
                     </div>
 
                     <div>
                         <label class="block text-slate-300 font-bold uppercase mb-1">Phone Number</label>
-                        <input type="text" wire:model="phone" placeholder="+91 98765 43210" style="background: #112240; border: 1px solid #1e3a5f;" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
+                        <input type="text" wire:model="phone" placeholder="+91 98765 43210" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-slate-300 font-bold uppercase mb-1">HR Email Address</label>
-                    <input type="email" wire:model="email" placeholder="hr@tcs.com" style="background: #112240; border: 1px solid #1e3a5f;" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
+                    <input type="email" wire:model="email" placeholder="hr@tcs.com" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
                     @error('email') <span class="text-rose-400 text-[11px] font-bold">{{ $message }}</span> @enderror
                 </div>
 
                 <div>
                     <label class="block text-slate-300 font-bold uppercase mb-1">Verification Status</label>
-                    <select wire:model="is_verified" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-4 py-2.5 rounded-xl focus:outline-none">
+                    <select wire:model="is_verified" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="w-full px-4 py-2.5 rounded-xl focus:outline-none">
                         <option value="1" class="text-slate-900">Verified Company (Badge Granted)</option>
                         <option value="0" class="text-slate-900">Unverified / Pending Verification</option>
                     </select>
@@ -265,7 +264,7 @@
                     <button type="button" @click="modalOpen = false" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold">
                         Cancel
                     </button>
-                    <button type="submit" style="background-color: #D62828;" class="px-6 py-2.5 rounded-xl text-white text-xs font-black shadow-md hover:bg-red-700 transition-all">
+                    <button type="submit" style="background-color: #f15153;" class="px-6 py-2.5 rounded-xl text-white text-xs font-black shadow-md hover:bg-red-700 transition-all">
                         {{ $editingCompanyId ? 'Update Company' : 'Save Company' }}
                     </button>
                 </div>

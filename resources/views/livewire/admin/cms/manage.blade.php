@@ -1,21 +1,21 @@
 <div class="space-y-8">
     <!-- Admin Header -->
-    <div class="p-6 rounded-3xl bg-gradient-to-r from-[#0B1F3A] to-slate-900 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+    <div class="p-6 rounded-3xl bg-gradient-to-r from-[#251237] to-[#1e0d2d] text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6 border border-purple-800/40">
         <div>
             <div class="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-widest">
                 <span>SkillBridge Admin CMS</span>
                 <span>•</span>
-                <span class="text-[#D62828]">Public Website Control Panel</span>
+                <span class="text-[#f15153]">Public Website Control Panel</span>
             </div>
             <h1 class="text-2xl font-extrabold text-white mt-1">Manage Public Website Content</h1>
             <p class="text-xs text-slate-300 mt-1 max-w-xl">Control every section of the public website. Edits made here update the public home page, hero banners, site contacts, and FAQs in real-time.</p>
         </div>
 
         <div class="flex items-center gap-2">
-            <button wire:click="$set('activeTab', 'hero')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all {{ $activeTab === 'hero' ? 'bg-[#D62828] text-white shadow-md' : 'bg-slate-800 text-slate-300 hover:bg-slate-700' }}">
+            <button wire:click="$set('activeTab', 'hero')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all {{ $activeTab === 'hero' ? 'bg-[#f15153] text-white shadow-md' : 'bg-slate-800 text-slate-300 hover:bg-slate-700' }}">
                 Hero & Branding
             </button>
-            <button wire:click="$set('activeTab', 'faq')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all {{ $activeTab === 'faq' ? 'bg-[#D62828] text-white shadow-md' : 'bg-slate-800 text-slate-300 hover:bg-slate-700' }}">
+            <button wire:click="$set('activeTab', 'faq')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all {{ $activeTab === 'faq' ? 'bg-[#f15153] text-white shadow-md' : 'bg-slate-800 text-slate-300 hover:bg-slate-700' }}">
                 FAQs Manager
             </button>
         </div>
@@ -24,17 +24,17 @@
     @if ($activeTab === 'hero')
         <!-- Hero & Site Settings Form -->
         <div class="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-6">
-            <h3 class="text-lg font-extrabold text-[#0B1F3A]">Hero Banner & Contact Information</h3>
+            <h3 class="text-lg font-extrabold text-[#251237]">Hero Banner & Contact Information</h3>
 
             <form wire:submit.prevent="saveSettings" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Hero Headline</label>
-                    <input type="text" wire:model="hero_headline" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-[#0B1F3A] focus:ring-2 focus:ring-[#D62828]">
+                    <input type="text" wire:model="hero_headline" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-[#251237] focus:ring-2 focus:ring-[#f15153]">
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Hero Subheading</label>
-                    <textarea wire:model="hero_subheading" rows="3" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-[#D62828]"></textarea>
+                    <textarea wire:model="hero_subheading" rows="3" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-[#f15153]"></textarea>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="pt-4 border-t border-slate-100 flex justify-end">
-                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-[#D62828] hover:bg-red-700 text-white font-extrabold text-xs shadow-md">
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-[#f15153] hover:bg-red-700 text-white font-extrabold text-xs shadow-md">
                         Save CMS Settings 💾
                     </button>
                 </div>
@@ -70,7 +70,7 @@
         <!-- FAQ Manager -->
         <div class="space-y-6">
             <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-4">
-                <h3 class="text-base font-extrabold text-[#0B1F3A]">Add New FAQ Question</h3>
+                <h3 class="text-base font-extrabold text-[#251237]">Add New FAQ Question</h3>
 
                 <form wire:submit.prevent="addFaq" class="space-y-4">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -94,7 +94,7 @@
                         <textarea wire:model="new_faq_answer" rows="2" placeholder="Write comprehensive answer..." class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium"></textarea>
                     </div>
 
-                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#0B1F3A] hover:bg-slate-900 text-white font-extrabold text-xs shadow-md">
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#251237] hover:bg-slate-900 text-white font-extrabold text-xs shadow-md">
                         Add FAQ
                     </button>
                 </form>
@@ -116,7 +116,7 @@
                                 <td class="py-3 px-3">
                                     <span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold">{{ $f->category }}</span>
                                 </td>
-                                <td class="py-3 px-3 font-bold text-[#0B1F3A]">{{ $f->question }}</td>
+                                <td class="py-3 px-3 font-bold text-[#251237]">{{ $f->question }}</td>
                                 <td class="py-3 px-3 text-right">
                                     <button wire:click="deleteFaq('{{ $f->id }}')" wire:confirm="Delete this FAQ?" class="px-3 py-1.5 rounded-xl bg-red-100 hover:bg-red-200 text-red-700 font-bold text-xs">
                                         Delete

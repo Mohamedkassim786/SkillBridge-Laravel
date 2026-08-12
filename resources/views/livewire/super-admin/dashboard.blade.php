@@ -12,7 +12,7 @@
         </div>
 
         <div class="flex items-center gap-3">
-            <div style="background: #112240; border: 1px solid #1e3a5f;" class="px-4 py-2 rounded-2xl text-xs font-bold text-slate-300 flex items-center gap-2 shadow-md">
+            <div style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="px-4 py-2 rounded-2xl text-xs font-bold text-slate-300 flex items-center gap-2 shadow-md">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span>CPU Load: {{ $cpuLoad * 100 }}%</span>
                 <span class="text-slate-600">|</span>
@@ -25,7 +25,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
         <!-- 1. Total Students -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wider">
                 <span>Total Students</span>
                 <span class="text-blue-400">👥 DB</span>
@@ -35,7 +35,7 @@
         </div>
 
         <!-- 2. Total Trainers -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wider">
                 <span>Total Trainers</span>
                 <span class="text-amber-400">👨‍🏫 DB</span>
@@ -45,7 +45,7 @@
         </div>
 
         <!-- 3. Total Admins -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wider">
                 <span>Total Admins</span>
                 <span class="text-purple-400">🔑 DB</span>
@@ -55,7 +55,7 @@
         </div>
 
         <!-- 4. Total Courses -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wider">
                 <span>Total Courses</span>
                 <span class="text-emerald-400">📚 DB</span>
@@ -65,7 +65,7 @@
         </div>
 
         <!-- 5. Total Enrollments -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wider">
                 <span>Total Enrollments</span>
                 <span class="text-cyan-400">🎓 DB</span>
@@ -75,7 +75,7 @@
         </div>
 
         <!-- 6. Total Live Classes -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wider">
                 <span>Total Live Classes</span>
                 <span class="text-rose-400">🎥 DB</span>
@@ -85,7 +85,7 @@
         </div>
 
         <!-- 7. Running Live Classes -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wider">
                 <span>Running Live Now</span>
                 <span class="px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 text-[10px] animate-pulse">🔴 LIVE</span>
@@ -95,7 +95,7 @@
         </div>
 
         <!-- 8. Total Jobs & Applications -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wider">
                 <span>Jobs Marketplace</span>
                 <span class="text-indigo-400">💼 DB</span>
@@ -105,7 +105,7 @@
         </div>
 
         <!-- 9. Total Placements -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wider">
                 <span>Total Hired Placements</span>
                 <span class="text-emerald-400">🏆 DB</span>
@@ -115,7 +115,7 @@
         </div>
 
         <!-- 10. Total Revenue -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wider">
                 <span>Total Revenue</span>
                 <span class="text-emerald-400">₹ DB</span>
@@ -125,7 +125,7 @@
         </div>
 
         <!-- 11. Pending Approvals Bar -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wider">
                 <span>Pending Approvals</span>
                 <span class="text-amber-400">⏳ DB</span>
@@ -135,7 +135,7 @@
         </div>
 
         <!-- 12. Failed Jobs & Errors -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wider">
                 <span>System Failed Jobs</span>
                 <span class="text-rose-400">⚠️ DB</span>
@@ -147,7 +147,7 @@
     </div>
 
     <!-- RECENT SYSTEM ACTIVITY & AUDIT TRAIL TABLE -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
         <div class="flex items-center justify-between">
             <h3 class="text-base font-black text-white flex items-center gap-2">
                 <span>📋 Recent System Audit Logs</span>

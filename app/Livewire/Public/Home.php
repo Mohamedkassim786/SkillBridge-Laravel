@@ -12,6 +12,7 @@ use App\Models\JobPosting;
 use App\Models\PublicEvent;
 use App\Models\SuccessStory;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -22,6 +23,8 @@ class Home extends Component
 {
     public function render()
     {
+        $cacheTtl = 300; // Cache stats for 5 minutes
+
         $heroHeadline = CmsSetting::get('hero_headline', 'Master Enterprise Software Engineering with Real Code');
         $heroSubheading = CmsSetting::get('hero_subheading', 'Learn full-stack software architecture, domain-driven design, microservices, and modern PHP/Laravel through production projects built by senior engineers.');
 
@@ -46,9 +49,17 @@ class Home extends Component
         $latestBlogs = BlogPost::where('is_published', true)->take(3)->get();
         $faqs = Faq::where('is_published', true)->orderBy('sort_order')->take(5)->get();
 
-        $totalStudents = User::role('student')->count();
-        $totalCourses = Course::count();
-        $totalJobs = JobPosting::count();
+        $totalStudents = Cache::remember('home_total_students', $cacheTtl, function () {
+            return User::role('student')->count();
+        });
+
+        $totalCourses = Cache::remember('home_total_courses', $cacheTtl, function () {
+            return Course::count();
+        });
+
+        $totalJobs = Cache::remember('home_total_jobs', $cacheTtl, function () {
+            return JobPosting::count();
+        });
 
         return view('livewire.public.home', [
             'heroHeadline' => $heroHeadline,

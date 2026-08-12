@@ -21,7 +21,7 @@
         </div>
 
         <!-- Verification Record Card -->
-        <div class="p-6 md:p-8 rounded-3xl border border-slate-800 space-y-6 shadow-2xl" style="background-color: #0B1F3A;">
+        <div class="p-6 md:p-8 rounded-3xl border border-purple-800/40 space-y-6 shadow-2xl" style="background-color: #251237;">
             
             <!-- Candidate Information -->
             <div class="flex items-center gap-4 pb-6 border-b border-slate-800">

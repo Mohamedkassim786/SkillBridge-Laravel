@@ -26,7 +26,7 @@
     </div>
 
     <!-- ACTION BAR (DARK NAVY CARD) -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl flex flex-col xl:flex-row xl:items-center justify-between gap-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-5 shadow-xl flex flex-col xl:flex-row xl:items-center justify-between gap-4 text-white">
         <!-- Left Buttons -->
         <div class="flex flex-wrap items-center gap-3">
             <button wire:click="clearOldLogs" wire:confirm="Clear audit logs older than 30 days?" class="px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 text-xs font-bold hover:bg-slate-700 hover:text-white transition-all">
@@ -37,11 +37,11 @@
         <!-- Right Search & Filters -->
         <div class="flex flex-wrap items-center gap-3">
             <div class="relative w-full sm:w-[300px]">
-                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search logs, IP address..." style="background: rgba(255,255,255,0.08); border: 1px solid #1e3a5f;" class="w-full pl-9 pr-4 py-2 rounded-xl text-xs font-medium text-white placeholder-slate-400 focus:outline-none focus:border-rose-500">
+                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search logs, IP address..." style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full pl-9 pr-4 py-2 rounded-xl text-xs font-medium text-white placeholder-slate-400 focus:outline-none focus:border-[#f15153]">
                 <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </div>
 
-            <select wire:model.live="selectedUser" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="px-3 py-2 rounded-xl text-xs font-bold focus:outline-none">
+            <select wire:model.live="selectedUser" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="px-3 py-2 rounded-xl text-xs font-bold focus:outline-none">
                 <option value="" class="text-slate-900">All Users</option>
                 @foreach ($users as $usr)
                     <option value="{{ $usr->id }}" class="text-slate-900">{{ $usr->first_name }} {{ $usr->last_name }}</option>
@@ -53,7 +53,7 @@
     <!-- SECTION 1: LOG STATISTICS (DARK NAVY CARDS) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <!-- Card 1: Total Logs -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-5 shadow-xl text-white">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-11 h-11 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
@@ -64,7 +64,7 @@
         </div>
 
         <!-- Card 2: Active User Sessions -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-5 shadow-xl text-white">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-11 h-11 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
@@ -76,7 +76,7 @@
     </div>
 
     <!-- SECTION 2: ACTIVITY LOGS TABLE (DARK NAVY TABLE) -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl shadow-xl overflow-hidden space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl shadow-xl overflow-hidden space-y-4 text-white">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse text-xs text-slate-300">
                 <thead>
@@ -99,7 +99,7 @@
                             </td>
                             <td class="p-3.5">
                                 <div class="flex items-center gap-2">
-                                    <div style="width: 26px; height: 26px; border-radius: 50%; background: #D62828; color: white; font-weight: 800; font-size: 11px;" class="flex items-center justify-center shrink-0">
+                                    <div style="width: 26px; height: 26px; border-radius: 50%; background: #f15153; color: white; font-weight: 800; font-size: 11px;" class="flex items-center justify-center shrink-0">
                                         {{ strtoupper(substr($actorName, 0, 1)) }}
                                     </div>
                                     <div>

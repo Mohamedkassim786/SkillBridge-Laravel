@@ -26,7 +26,7 @@
     <div class="space-y-6">
         <!-- Overview Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="md:col-span-2 rounded-3xl p-6 shadow-xl text-white space-y-4">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="md:col-span-2 rounded-3xl p-6 shadow-xl text-white space-y-4">
                 <h3 class="text-base font-black text-white">Class Details & Configuration</h3>
                 <p class="text-xs text-slate-300 leading-relaxed">{{ $liveClass->description ?? 'No detailed agenda specified for this masterclass.' }}</p>
 
@@ -62,7 +62,7 @@
 
             <!-- Attendance & Recording Metrics Widget -->
             <div class="space-y-6">
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl text-white space-y-4">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 shadow-xl text-white space-y-4">
                     <h3 class="text-base font-black text-white">Attendance Summary</h3>
                     
                     <div class="grid grid-cols-2 gap-3 text-center">
@@ -82,7 +82,7 @@
                 </div>
 
                 <!-- Recording Upload Section -->
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl text-white space-y-4">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 shadow-xl text-white space-y-4">
                     <h3 class="text-base font-black text-white">Session Video Recording</h3>
 
                     @if ($liveClass->isPublishedRecording())

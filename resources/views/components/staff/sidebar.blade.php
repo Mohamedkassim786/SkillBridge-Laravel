@@ -21,19 +21,20 @@
     ];
 @endphp
 
-<aside style="background-color: #0B1F3A;" class="w-64 p-4 flex flex-col justify-between space-y-6 overflow-y-auto shrink-0 border-r border-slate-800 sticky top-16 h-[calc(100vh-4rem)] self-start z-20">
+<aside style="background-color: #210f30; border-right: 1px solid rgba(241,81,83,0.2);" class="w-64 p-4 flex flex-col justify-between space-y-6 overflow-y-auto shrink-0 sticky top-16 h-[calc(100vh-4rem)] self-start z-20">
     <div class="space-y-5">
 
         <!-- GROUP 1: CORE INSTRUCTION -->
         <div>
-            <div class="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 px-3 mb-2">
+            <div class="text-[10px] font-extrabold uppercase tracking-widest px-3 mb-2" style="color: #a997be;">
                 CORE INSTRUCTION
             </div>
             <nav class="space-y-1 text-xs font-semibold">
                 @foreach ($coreNav as $item)
                     @php $isActive = $currentTab === $item['id']; @endphp
                     <a href="{{ route('staff.dashboard') }}?tab={{ $item['id'] }}"
-                       class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all text-sm font-semibold {{ $isActive ? 'bg-[#D62828] text-white shadow-md shadow-[#D62828]/30 font-extrabold' : 'text-slate-300 hover:bg-white/10 hover:text-white' }}">
+                       class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all text-sm font-semibold {{ $isActive ? 'bg-[#f15153] text-white shadow-md shadow-[#f15153]/30 font-extrabold' : 'hover:bg-white/10 hover:text-white' }}"
+                       style="{{ $isActive ? '' : 'color: #d4c5e2;' }}">
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"></path>
                         </svg>
@@ -45,7 +46,7 @@
 
         <!-- GROUP 2: EVALUATION & CLASSES -->
         <div>
-            <div class="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 px-3 mb-2">
+            <div class="text-[10px] font-extrabold uppercase tracking-widest px-3 mb-2" style="color: #a997be;">
                 EVALUATION & CLASSES
             </div>
             <nav class="space-y-1 text-xs font-semibold">
@@ -55,7 +56,8 @@
                         $targetUrl = $item['id'] === 'live_classes' ? route('staff.live-classes.index') : route('staff.dashboard') . '?tab=' . $item['id'];
                     @endphp
                     <a href="{{ $targetUrl }}"
-                       class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all text-sm font-semibold {{ $isActive ? 'bg-[#D62828] text-white shadow-md shadow-[#D62828]/30 font-extrabold' : 'text-slate-300 hover:bg-white/10 hover:text-white' }}">
+                       class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all text-sm font-semibold {{ $isActive ? 'bg-[#f15153] text-white shadow-md shadow-[#f15153]/30 font-extrabold' : 'hover:bg-white/10 hover:text-white' }}"
+                       style="{{ $isActive ? '' : 'color: #d4c5e2;' }}">
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"></path>
                         </svg>
@@ -67,14 +69,15 @@
 
         <!-- GROUP 3: REPORTS & SETTINGS -->
         <div>
-            <div class="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 px-3 mb-2">
+            <div class="text-[10px] font-extrabold uppercase tracking-widest px-3 mb-2" style="color: #a997be;">
                 REPORTS & PREFERENCES
             </div>
             <nav class="space-y-1 text-xs font-semibold">
                 @foreach ($sysNav as $item)
                     @php $isActive = $currentTab === $item['id']; @endphp
                     <a href="{{ route('staff.dashboard') }}?tab={{ $item['id'] }}"
-                       class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all text-sm font-semibold {{ $isActive ? 'bg-[#D62828] text-white shadow-md shadow-[#D62828]/30 font-extrabold' : 'text-slate-300 hover:bg-white/10 hover:text-white' }}">
+                       class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all text-sm font-semibold {{ $isActive ? 'bg-[#f15153] text-white shadow-md shadow-[#f15153]/30 font-extrabold' : 'hover:bg-white/10 hover:text-white' }}"
+                       style="{{ $isActive ? '' : 'color: #d4c5e2;' }}">
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"></path>
                         </svg>
@@ -87,10 +90,10 @@
     </div>
 
     <!-- LOGOUT BUTTON -->
-    <div class="pt-4 border-t border-slate-700/60">
+    <div class="pt-4 border-t border-purple-800/40">
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-extrabold text-xs bg-[#D62828] text-white hover:bg-red-700 transition-all shadow-md">
+            <button type="submit" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-extrabold text-xs bg-[#f15153] text-white hover:opacity-90 transition-all shadow-md shadow-[#f15153]/30">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                 Logout
             </button>

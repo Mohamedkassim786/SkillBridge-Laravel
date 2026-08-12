@@ -9,7 +9,7 @@
     </div>
 
     <!-- Main Clean Setup Card -->
-    <div class="rounded-3xl p-6 md:p-8 space-y-6 border border-slate-800 shadow-2xl" style="background-color: #0B1F3A;">
+    <div class="rounded-3xl p-6 md:p-8 space-y-6 border border-purple-800/40 shadow-2xl" style="background-color: #251237;">
         <form wire:submit.prevent="startInterview" class="space-y-6">
             <!-- Role Selection -->
             <div class="space-y-2">
@@ -103,7 +103,7 @@
 
     <!-- Past Sessions List -->
     @if($pastInterviews->isNotEmpty())
-        <div class="rounded-3xl p-6 space-y-4 border border-slate-800" style="background-color: #0B1F3A;">
+        <div class="rounded-3xl p-6 space-y-4 border border-purple-800/40" style="background-color: #251237;">
             <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider border-b border-slate-800 pb-3 flex items-center justify-between">
                 <span>Recent Completed Sessions</span>
                 <span class="text-slate-500 font-normal">{{ $pastInterviews->count() }} total</span>

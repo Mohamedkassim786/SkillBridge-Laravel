@@ -1,6 +1,6 @@
 <div class="space-y-8 text-white">
     <!-- Header Banner -->
-    <div class="p-6 rounded-3xl border border-slate-800 flex items-center justify-between" style="background-color: #0B1F3A;">
+    <div class="p-6 rounded-3xl border border-purple-800/40 flex items-center justify-between" style="background-color: #251237;">
         <div class="space-y-1">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
                 🔄 Single Question Practice Retake
@@ -15,7 +15,7 @@
     </div>
 
     <!-- Question Box -->
-    <div class="rounded-3xl p-6 md:p-8 border border-slate-800 space-y-6" style="background-color: #0B1F3A;">
+    <div class="rounded-3xl p-6 md:p-8 border border-purple-800/40 space-y-6" style="background-color: #251237;">
         <div class="space-y-2 border-b border-slate-800 pb-4">
             <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">Target Question:</span>
             <h2 class="text-xl font-bold text-white">"{{ $question->question }}"</h2>

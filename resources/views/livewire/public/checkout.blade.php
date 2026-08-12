@@ -17,31 +17,31 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- ORDER SUMMARY CARD -->
-        <div style="background-color: #0B1F3A;" class="md:col-span-1 text-white rounded-3xl p-6 shadow-2xl h-fit border border-slate-800">
-            <h3 class="text-xs uppercase font-extrabold tracking-widest text-slate-400 mb-4">Order Summary</h3>
+        <div style="background-color: #251237;" class="md:col-span-1 text-white rounded-3xl p-6 shadow-2xl h-fit border border-purple-800/40">
+            <h3 class="text-xs uppercase font-extrabold tracking-widest text-purple-300 mb-4">Order Summary</h3>
 
             @if ($course)
                 <div class="space-y-4">
-                    <img src="{{ $course->thumbnail }}" alt="{{ $course->title }}" class="w-full h-32 object-cover rounded-2xl border border-slate-700 shadow-md">
+                    <img src="{{ $course->thumbnail }}" alt="{{ $course->title }}" class="w-full h-32 object-cover rounded-2xl border border-purple-700/40 shadow-md">
                     <div>
                         <h4 class="font-extrabold text-base leading-snug text-white">{{ $course->title }}</h4>
-                        <p class="text-xs text-slate-300 mt-1">Instructor: {{ $course->trainer?->name ?? 'SkillBridge Expert' }}</p>
+                        <p class="text-xs text-purple-200 mt-1">Instructor: {{ $course->trainer?->name ?? 'SkillBridge Expert' }}</p>
                     </div>
-                    <div class="pt-4 border-t border-slate-800 flex justify-between items-center text-sm">
-                        <span class="text-slate-400">Course Price</span>
+                    <div class="pt-4 border-t border-purple-800/40 flex justify-between items-center text-sm">
+                        <span class="text-purple-300">Course Price</span>
                         <span class="font-extrabold text-white">₹{{ number_format($course->currentVersion?->price ?? 49, 2) }}</span>
                     </div>
                     <div class="flex justify-between items-center text-sm">
-                        <span class="text-slate-400">Platform Fee</span>
+                        <span class="text-purple-300">Platform Fee</span>
                         <span class="font-semibold text-emerald-400">FREE</span>
                     </div>
-                    <div class="pt-4 border-t border-slate-800 flex justify-between items-center text-lg font-black">
+                    <div class="pt-4 border-t border-purple-800/40 flex justify-between items-center text-lg font-black">
                         <span>Total Due</span>
-                        <span class="text-rose-500">₹{{ number_format($course->currentVersion?->price ?? 49, 2) }}</span>
+                        <span class="text-[#f15153]">₹{{ number_format($course->currentVersion?->price ?? 49, 2) }}</span>
                     </div>
                 </div>
             @else
-                <p class="text-xs text-slate-400">No course selected.</p>
+                <p class="text-xs text-purple-300">No course selected.</p>
             @endif
         </div>
 
@@ -62,11 +62,11 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1">Full Name</label>
-                            <input type="text" wire:model="name" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-rose-500">
+                            <input type="text" wire:model="name" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#f15153]">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1">Email Address</label>
-                            <input type="email" wire:model="email" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-rose-500">
+                            <input type="email" wire:model="email" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#f15153]">
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                 </div>
 
                 <!-- LAUNCH RAZORPAY MODAL BUTTON -->
-                <button type="button" @click="showModal = true" style="background-color: #D62828;" class="w-full py-4 text-white rounded-2xl font-black text-base shadow-xl hover:bg-rose-700 transition relative flex items-center justify-center gap-2">
+                <button type="button" @click="showModal = true" style="background-color: #f15153;" class="w-full py-4 text-white rounded-2xl font-black text-base shadow-xl hover:opacity-90 transition relative flex items-center justify-center gap-2">
                     <span>💳 Proceed to Razorpay Payment (₹{{ number_format($course?->currentVersion?->price ?? 49, 2) }})</span>
                 </button>
             </div>
@@ -93,26 +93,26 @@
     <div x-show="showModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4" x-transition>
         <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl border border-slate-200 space-y-0" @click.away="showModal = false">
             <!-- MODAL HEADER BAR (RAZORPAY BLUE & LOGO) -->
-            <div style="background-color: #0c2340;" class="p-5 text-white flex items-center justify-between">
+            <div style="background-color: #210f30;" class="p-5 text-white flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center font-black text-rose-500 text-lg">S</div>
+                    <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center font-black text-[#f15153] text-lg">S</div>
                     <div>
-                        <div class="text-xs font-extrabold tracking-wider text-slate-300">SkillBridge LMS</div>
+                        <div class="text-xs font-extrabold tracking-wider text-purple-200">SkillBridge LMS</div>
                         <div class="text-sm font-black text-white">₹{{ number_format($course?->currentVersion?->price ?? 49, 2) }}</div>
                     </div>
                 </div>
-                <button @click="showModal = false" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+                <button @click="showModal = false" class="text-purple-300 hover:text-white text-lg font-bold">✕</button>
             </div>
 
             <!-- MODAL PAYMENT TAB NAVIGATION -->
             <div class="flex border-b border-slate-200 bg-slate-50 text-xs font-extrabold">
-                <button @click="selectedTab = 'upi'" :class="{'bg-white text-rose-600 border-b-2 border-rose-600': selectedTab === 'upi', 'text-slate-500': selectedTab !== 'upi'}" class="flex-1 py-3 text-center transition">
+                <button @click="selectedTab = 'upi'" :class="{'bg-white text-[#f15153] border-b-2 border-[#f15153]': selectedTab === 'upi', 'text-slate-500': selectedTab !== 'upi'}" class="flex-1 py-3 text-center transition">
                     📱 UPI / QR
                 </button>
-                <button @click="selectedTab = 'card'" :class="{'bg-white text-rose-600 border-b-2 border-rose-600': selectedTab === 'card', 'text-slate-500': selectedTab !== 'card'}" class="flex-1 py-3 text-center transition">
+                <button @click="selectedTab = 'card'" :class="{'bg-white text-[#f15153] border-b-2 border-[#f15153]': selectedTab === 'card', 'text-slate-500': selectedTab !== 'card'}" class="flex-1 py-3 text-center transition">
                     💳 Card
                 </button>
-                <button @click="selectedTab = 'netbanking'" :class="{'bg-white text-rose-600 border-b-2 border-rose-600': selectedTab === 'netbanking', 'text-slate-500': selectedTab !== 'netbanking'}" class="flex-1 py-3 text-center transition">
+                <button @click="selectedTab = 'netbanking'" :class="{'bg-white text-[#f15153] border-b-2 border-[#f15153]': selectedTab === 'netbanking', 'text-slate-500': selectedTab !== 'netbanking'}" class="flex-1 py-3 text-center transition">
                     🏦 NetBanking
                 </button>
             </div>
@@ -134,7 +134,7 @@
 
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">Enter your UPI ID</label>
-                        <input type="text" x-model="upiId" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:ring-2 focus:ring-rose-500">
+                        <input type="text" x-model="upiId" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:ring-2 focus:ring-[#f15153]">
                     </div>
                 </div>
 
@@ -160,15 +160,15 @@
                 <div x-show="selectedTab === 'netbanking'" class="space-y-3">
                     <div class="text-xs font-bold text-slate-700">Select Popular Bank</div>
                     <div class="grid grid-cols-2 gap-2 text-xs font-bold">
-                        <button class="p-3 border border-slate-200 rounded-xl hover:border-rose-600 text-left bg-slate-50">🏦 HDFC Bank</button>
-                        <button class="p-3 border border-slate-200 rounded-xl hover:border-rose-600 text-left bg-slate-50">🏦 ICICI Bank</button>
-                        <button class="p-3 border border-slate-200 rounded-xl hover:border-rose-600 text-left bg-slate-50">🏦 SBI Bank</button>
-                        <button class="p-3 border border-slate-200 rounded-xl hover:border-rose-600 text-left bg-slate-50">🏦 Axis Bank</button>
+                        <button class="p-3 border border-slate-200 rounded-xl hover:border-[#f15153] text-left bg-slate-50">🏦 HDFC Bank</button>
+                        <button class="p-3 border border-slate-200 rounded-xl hover:border-[#f15153] text-left bg-slate-50">🏦 ICICI Bank</button>
+                        <button class="p-3 border border-slate-200 rounded-xl hover:border-[#f15153] text-left bg-slate-50">🏦 SBI Bank</button>
+                        <button class="p-3 border border-slate-200 rounded-xl hover:border-[#f15153] text-left bg-slate-50">🏦 Axis Bank</button>
                     </div>
                 </div>
 
                 <!-- SUBMIT TEST PAYMENT BUTTON -->
-                <button type="button" @click="paySuccess()" style="background-color: #D62828;" class="w-full py-3.5 text-white rounded-2xl font-black text-sm shadow-xl hover:bg-rose-700 transition flex items-center justify-center gap-2">
+                <button type="button" @click="paySuccess()" style="background-color: #f15153;" class="w-full py-3.5 text-white rounded-2xl font-black text-sm shadow-xl hover:opacity-90 transition flex items-center justify-center gap-2">
                     <span>Pay ₹{{ number_format($course?->currentVersion?->price ?? 49, 2) }}</span>
                 </button>
             </div>

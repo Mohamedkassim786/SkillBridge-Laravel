@@ -1,6 +1,6 @@
 <div class="space-y-8 text-white">
     <!-- TOP HEADER -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
             <h1 class="text-2xl sm:text-3xl font-black text-white">Saved Jobs & Interview Schedules</h1>
             <p class="text-xs text-slate-300 mt-1">Manage bookmarked developer postings, configure job alert notifications, and view scheduled interviews.</p>
@@ -11,7 +11,7 @@
     </div>
 
     <!-- UPCOMING INTERVIEW SCHEDULES -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 sm:p-8 shadow-xl text-white space-y-6">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 sm:p-8 shadow-xl text-white space-y-6">
         <h3 class="text-base font-black text-white flex items-center gap-2">
             <span>📅 Scheduled Technical Interviews</span>
         </h3>
@@ -48,7 +48,7 @@
     </div>
 
     <!-- SAVED JOBS LIST -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 sm:p-8 shadow-xl text-white space-y-6">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 sm:p-8 shadow-xl text-white space-y-6">
         <h3 class="text-base font-black text-white flex items-center gap-2">
             <span>🔖 Bookmarked Jobs ({{ $savedJobs->count() }})</span>
         </h3>

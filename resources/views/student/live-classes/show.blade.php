@@ -21,7 +21,7 @@
     <div class="space-y-6">
         <!-- Class Banner & Info -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="md:col-span-2 rounded-3xl p-6 shadow-xl text-white space-y-4">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="md:col-span-2 rounded-3xl p-6 shadow-xl text-white space-y-4">
                 <h3 class="text-base font-black text-white">Class Agenda & Syllabus Overview</h3>
                 <p class="text-xs text-slate-300 leading-relaxed">{{ $liveClass->description ?? 'Join your instructor and cohort peers for an interactive live technical session.' }}</p>
 
@@ -77,7 +77,7 @@
             <!-- Side Widget: Recording & Post-Class Feedback -->
             <div class="space-y-6">
                 <!-- Recording Box -->
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl text-white space-y-4">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 shadow-xl text-white space-y-4">
                     <h3 class="text-base font-black text-white">Class Recording</h3>
 
                     @if ($liveClass->isPublishedRecording())
@@ -93,7 +93,7 @@
                 </div>
 
                 <!-- Feedback Form -->
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl text-white space-y-4">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 shadow-xl text-white space-y-4">
                     <h3 class="text-base font-black text-white">Rate This Session</h3>
 
                     @if ($userFeedback)

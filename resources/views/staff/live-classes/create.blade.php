@@ -11,7 +11,7 @@
         </div>
     </x-slot>
 
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="max-w-3xl mx-auto rounded-3xl p-8 shadow-xl text-white space-y-6">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="max-w-3xl mx-auto rounded-3xl p-8 shadow-xl text-white space-y-6">
         <form method="POST" action="{{ route('staff.live-classes.store') }}" enctype="multipart/form-data" class="space-y-6">
             @csrf
 

@@ -1,11 +1,11 @@
 <div class="space-y-8 text-white">
     <!-- Header Hero Banner with Course Progress Widget -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-8 rounded-3xl text-white shadow-xl relative overflow-hidden">
-        <div class="absolute -top-24 -right-24 w-96 h-96 bg-[#D62828]/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-8 rounded-3xl text-white shadow-xl relative overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-[#f15153]/20 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="relative z-10 space-y-6 max-w-4xl">
             <div class="flex flex-wrap items-center gap-3">
-                <span class="px-3 py-1 rounded-full bg-white/10 text-xs font-bold text-slate-200 border border-white/10 backdrop-blur-md">
+                <span class="px-3 py-1 rounded-full bg-white/10 text-xs font-bold text-white border border-white/10 backdrop-blur-md">
                     {{ $course->category?->name ?? 'Software Architecture' }}
                 </span>
                 <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-black border border-emerald-500/30">
@@ -14,7 +14,7 @@
             </div>
 
             <h1 class="text-3xl sm:text-4xl font-black text-white leading-tight">{{ $course->title }}</h1>
-            <p class="text-sm text-slate-300 leading-relaxed">{{ $course->currentVersion?->description ?? 'Enterprise software course focusing on domain driven design, repository pattern, service layers, and Livewire 3.' }}</p>
+            <p class="text-sm leading-relaxed" style="color: #d4c5e2;">{{ $course->currentVersion?->description ?? 'Enterprise software course focusing on domain driven design, repository pattern, service layers, and Livewire 3.' }}</p>
 
             @php
                 $enrollment = $course->enrollments->first();
@@ -43,28 +43,28 @@
             @endphp
 
             <!-- Course Progress Bar & Metrics Widget -->
-            <div style="background: #112240; border: 1px solid #1e3a5f;" class="p-5 rounded-2xl backdrop-blur-md space-y-3 text-white">
+            <div style="background: #1e0d2d; border: 1px solid rgba(255,255,255,0.1);" class="p-5 rounded-2xl backdrop-blur-md space-y-3 text-white">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-bold">
                     <div class="flex items-center gap-3">
-                        <span class="text-slate-300">Overall Progress:</span>
-                        <span class="text-[#D62828] text-base font-black">{{ $progressPercent }}%</span>
-                        <span class="text-slate-400">• {{ $completedLessonsCount }} / {{ max(1, $totalLessons) }} Lessons Completed</span>
+                        <span style="color: #a997be;">Overall Progress:</span>
+                        <span class="text-[#f15153] text-base font-black">{{ $progressPercent }}%</span>
+                        <span style="color: #d4c5e2;">• {{ $completedLessonsCount }} / {{ max(1, $totalLessons) }} Lessons Completed</span>
                     </div>
 
                     @if ($currentLesson)
-                        <div class="text-slate-300">
+                        <div style="color: #d4c5e2;">
                             Current Lesson: <span class="text-white font-extrabold">{{ $currentLesson->title }}</span>
                         </div>
                     @endif
                 </div>
 
-                <div class="w-full bg-slate-900 h-3 rounded-full overflow-hidden border border-slate-800">
-                    <div class="bg-[#D62828] h-full rounded-full transition-all duration-500" style="width: {{ $progressPercent }}%"></div>
+                <div style="width: 100%; background-color: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); border-radius: 9999px; height: 16px; padding: 2px; box-sizing: border-box; overflow: hidden;">
+                    <div style="width: {{ max(2, (int)($progressPercent ?? 0)) }}%; background-color: #10b981 !important; height: 100%; border-radius: 9999px; min-height: 10px; box-shadow: 0 0 10px #10b981;"></div>
                 </div>
 
                 <!-- Certificate Eligibility Indicator -->
                 <div class="flex items-center justify-between text-[11px] pt-1">
-                    <span class="text-slate-300">
+                    <span style="color: #d4c5e2;">
                         📜 Certificate Status: 
                         @if ($progressPercent >= 100)
                             <strong class="text-emerald-400 font-bold">Eligible & Issued 🎉</strong>
@@ -72,7 +72,7 @@
                             <strong class="text-amber-300 font-semibold">Requires 100% Completion (Currently {{ $progressPercent }}%)</strong>
                         @endif
                     </span>
-                    <span class="text-slate-400">Total Duration: {{ $durationHours > 0 ? $durationHours.' hrs' : '2.5 hrs' }}</span>
+                    <span style="color: #a997be;">Total Duration: {{ $durationHours > 0 ? $durationHours.' hrs' : '2.5 hrs' }}</span>
                 </div>
             </div>
         </div>
@@ -122,14 +122,14 @@
     @if ($activeTab === 'overview')
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div class="lg:col-span-2 space-y-6">
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
                     <h3 class="text-lg font-black text-white">Course Overview & Description</h3>
                     <p class="text-xs text-slate-300 leading-relaxed">
                         {{ $course->currentVersion?->description ?? 'This course provides hands-on mastery over scalable software architecture, clean code principles, domain repositories, and Livewire 3 reactive interfaces.' }}
                     </p>
                 </div>
 
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
                     <h3 class="text-lg font-black text-white">Key Highlights</h3>
                     <div class="grid grid-cols-2 gap-4 text-xs">
                         <div style="background: #112240; border: 1px solid #1e3a5f;" class="p-4 rounded-2xl text-white">
@@ -153,7 +153,7 @@
             </div>
 
             <div class="space-y-6">
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
                     <h4 class="text-sm font-black text-white">Instructor Info</h4>
                     <div class="flex items-center gap-3">
                         <div class="w-12 h-12 rounded-full bg-[#D62828] text-white font-black text-sm flex items-center justify-center shadow-md">
@@ -171,7 +171,7 @@
 
     <!-- Tab 2: Curriculum Syllabus -->
     @if ($activeTab === 'curriculum')
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-6 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-6 text-white">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                 <div>
                     <h3 class="text-lg font-black text-white">Curriculum Syllabus & Lesson Unlocking</h3>
@@ -266,7 +266,7 @@
 
     <!-- Tab 3: Learning Outcomes -->
     @if ($activeTab === 'outcomes')
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
             <h3 class="text-lg font-black text-white">Course Learning Outcomes</h3>
             <ul class="space-y-3 text-xs text-slate-300">
                 <li class="flex items-start gap-2.5">
@@ -287,7 +287,7 @@
 
     <!-- Tab 4: Requirements -->
     @if ($activeTab === 'requirements')
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
             <h3 class="text-lg font-black text-white">Prerequisites & System Requirements</h3>
             <ul class="space-y-2 text-xs text-slate-300 list-disc list-inside">
                 <li>Basic understanding of Object-Oriented PHP 8.3 & Laravel framework fundamentals.</li>
@@ -299,7 +299,7 @@
 
     <!-- Tab 5: Downloadable Resources -->
     @if ($activeTab === 'resources')
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
             <h3 class="text-lg font-black text-white">Course Download Files</h3>
             <div class="space-y-3">
                 @forelse ($resources as $res)
@@ -319,7 +319,7 @@
 
     <!-- Tab 6: Instructor Profile -->
     @if ($activeTab === 'instructor')
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-6 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-6 text-white">
             <div class="flex items-center gap-4">
                 <div class="w-16 h-16 rounded-2xl bg-[#D62828] text-white font-black text-xl flex items-center justify-center shadow-lg">
                     {{ strtoupper(substr($course->trainer?->first_name ?? 'D', 0, 1)) }}
@@ -337,7 +337,7 @@
 
     <!-- Tab 7: Reviews -->
     @if ($activeTab === 'reviews')
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-6 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-6 text-white">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                 <div>
                     <h3 class="text-lg font-black text-white">Student Reviews & Rating Breakdown</h3>
@@ -363,7 +363,7 @@
 
     <!-- Tab 8: FAQs -->
     @if ($activeTab === 'faqs')
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
             <h3 class="text-lg font-black text-white">Frequently Asked Questions</h3>
             <div class="space-y-3 text-xs">
                 <div style="background: #112240; border: 1px solid #1e3a5f;" class="p-4 rounded-2xl space-y-1 text-white">
@@ -380,7 +380,7 @@
 
     <!-- Tab 9: Certificate Eligibility -->
     @if ($activeTab === 'certificate')
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-6 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-6 text-white">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                 <div>
                     <h3 class="text-lg font-black text-white">Verified Certificate Eligibility</h3>

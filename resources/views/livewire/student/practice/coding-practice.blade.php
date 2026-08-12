@@ -1,6 +1,6 @@
 <div class="space-y-8 text-white relative">
     <!-- TOP HEADER -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
             <div class="flex items-center gap-2 text-xs font-bold text-rose-400 uppercase tracking-widest mb-1">
                 <span>💻 Multi-Language Code Playground & AI Examiner</span>
@@ -37,7 +37,7 @@
             $totalSteps = count($detectedInputs);
         @endphp
         <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-6 text-white border-2 border-rose-500/40">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-6 text-white border-2 border-rose-500/40">
                 <div class="flex items-center justify-between border-b border-slate-700/60 pb-4">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/30 flex items-center justify-center text-xl font-bold">
@@ -91,7 +91,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <!-- LEFT COLUMN: CODE EDITOR & EXECUTION RESULTS (7 COLUMNS) -->
         <div class="lg:col-span-7 space-y-6">
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl text-white space-y-4">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 shadow-xl text-white space-y-4">
                 <div class="flex items-center justify-between">
                     <div>
                         <h3 class="text-base font-black text-white flex items-center gap-2">
@@ -188,7 +188,7 @@
 
             <!-- SESSION EXECUTION HISTORY (REQUIREMENT 30) -->
             @if (count($executionHistory) > 0)
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl text-white space-y-3">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 shadow-xl text-white space-y-3">
                     <h4 class="text-xs font-black uppercase text-slate-300 tracking-wider">📜 Session Execution History</h4>
                     <div class="space-y-2">
                         @foreach (array_reverse($executionHistory) as $run)
@@ -212,7 +212,7 @@
 
         <!-- RIGHT COLUMN: AI ERROR DIAGNOSTIC & BIG-O PANEL (5 COLUMNS) -->
         <div class="lg:col-span-5 space-y-6">
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl text-white space-y-5">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 shadow-xl text-white space-y-5">
                 <div class="flex items-center justify-between">
                     <h3 class="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
                         <span>🤖 AI Error Diagnostic & Complexity</span>

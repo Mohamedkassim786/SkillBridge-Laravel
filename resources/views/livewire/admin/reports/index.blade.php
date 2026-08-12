@@ -42,14 +42,14 @@
     </div>
 
     <!-- ACTION BAR (DARK NAVY CARD) -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-5 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-white">
         <div class="flex flex-wrap items-center gap-3">
-            <select wire:model.live="dateRange" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="px-4 py-2.5 rounded-xl text-xs font-bold focus:outline-none">
+            <select wire:model.live="dateRange" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="px-4 py-2.5 rounded-xl text-xs font-bold focus:outline-none">
                 <option value="30_days" class="text-slate-900">Last 30 Days</option>
                 <option value="7_days" class="text-slate-900">Last 7 Days</option>
                 <option value="this_year" class="text-slate-900">This Year</option>
             </select>
-            <button style="background-color: #D62828;" class="px-5 py-2.5 rounded-xl text-white text-xs font-bold shadow-md hover:bg-red-700 transition-all flex items-center gap-2">
+            <button style="background-color: #f15153;" class="px-5 py-2.5 rounded-xl text-white text-xs font-bold shadow-md hover:bg-red-700 transition-all flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                 <span>Export PDF</span>
             </button>
@@ -61,19 +61,19 @@
         <div class="space-y-6">
             <!-- 4 KPI CARDS -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl text-white">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl p-5 shadow-xl text-white">
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Active Students</p>
                     <h3 class="text-2xl font-black text-white mt-1">{{ number_format($activeStudents) }}</h3>
                 </div>
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl text-white">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl p-5 shadow-xl text-white">
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Courses Catalog</p>
                     <h3 class="text-2xl font-black text-white mt-1">{{ number_format($totalCourses) }}</h3>
                 </div>
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl text-white">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl p-5 shadow-xl text-white">
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Job Applications</p>
                     <h3 class="text-2xl font-black text-white mt-1">{{ number_format($jobApplications) }}</h3>
                 </div>
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl text-white">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl p-5 shadow-xl text-white">
                     <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Platform Revenue</p>
                     <h3 class="text-2xl font-black text-white mt-1">₹{{ number_format($totalRevenue) }}</h3>
                 </div>
@@ -81,7 +81,7 @@
 
             <!-- ANALYTICS CHARTS GRID -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-6 shadow-xl text-white space-y-4">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl p-6 shadow-xl text-white space-y-4">
                     <h3 class="text-base font-black text-white">Platform Growth Trend</h3>
                     <div class="h-44 flex items-end justify-between gap-2 pt-4 border-b border-slate-800">
                         @foreach ([40, 52, 60, 68, 75, 82, 88, 92, 95, 98, 99, 100] as $th)
@@ -90,7 +90,7 @@
                     </div>
                 </div>
 
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-6 shadow-xl text-white space-y-4">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl p-6 shadow-xl text-white space-y-4">
                     <h3 class="text-base font-black text-white">Course Completion Metrics</h3>
                     <div class="flex items-center justify-around py-4">
                         <div class="relative w-36 h-36 rounded-full border-[12px] border-emerald-500 border-t-blue-500 border-r-slate-800 flex items-center justify-center">
@@ -110,7 +110,7 @@
     <!-- TAB 2 CONTENT: STUDENT PROGRESS -->
     @if ($activeTab === 'student_progress')
         <div class="space-y-6">
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-6 shadow-xl text-white space-y-4">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl p-6 shadow-xl text-white space-y-4">
                 <div class="flex items-center justify-between">
                     <div>
                         <h3 class="text-base font-black text-white">Student Learning & Assessment Progress</h3>
@@ -159,7 +159,7 @@
     <!-- TAB 3 CONTENT: COURSE CATALOG -->
     @if ($activeTab === 'course_completion')
         <div class="space-y-6">
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-6 shadow-xl text-white space-y-4">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl p-6 shadow-xl text-white space-y-4">
                 <div class="flex items-center justify-between">
                     <div>
                         <h3 class="text-base font-black text-white">Course Catalog Performance & Completion</h3>
@@ -194,7 +194,7 @@
     <!-- TAB 4 CONTENT: FINANCIAL PERFORMANCE -->
     @if ($activeTab === 'revenue')
         <div class="space-y-6">
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-6 shadow-xl text-white space-y-4">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl p-6 shadow-xl text-white space-y-4">
                 <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                     <div>
                         <h3 class="text-base font-black text-white">Financial Revenue Stream Breakdown</h3>

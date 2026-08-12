@@ -15,7 +15,7 @@
         </div>
 
         <div class="flex items-center gap-3">
-            <button @click="createModalOpen = true" style="background: #D62828; color: white;" class="px-5 py-2.5 rounded-xl text-xs font-black shadow-md hover:bg-rose-700 transition-all flex items-center gap-2">
+            <button @click="createModalOpen = true" style="background: #f15153; color: white;" class="px-5 py-2.5 rounded-xl text-xs font-black shadow-md hover:bg-rose-700 transition-all flex items-center gap-2">
                 <svg style="width: 16px; height: 16px; min-width: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
                 Create Course
             </button>
@@ -23,21 +23,21 @@
     </div>
 
     <!-- ACTION BAR (Dark Navy Card) -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-4 sm:p-6 shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-4 sm:p-6 shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 text-white">
 
         <!-- Left Action Buttons -->
         <div class="flex flex-wrap items-center gap-3">
-            <button @click="createModalOpen = true" style="background: #D62828; color: white;" class="px-4 py-2 rounded-xl text-xs font-black shadow-sm hover:bg-rose-700 transition-all flex items-center gap-2">
+            <button @click="createModalOpen = true" style="background: #f15153; color: white;" class="px-4 py-2 rounded-xl text-xs font-black shadow-sm hover:bg-rose-700 transition-all flex items-center gap-2">
                 <svg style="width: 16px; height: 16px; min-width: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
                 Create Course
             </button>
 
-            <button style="color: white; border: 1.5px solid #1e3a5f; background: rgba(255,255,255,0.05);" class="px-4 py-2 rounded-xl text-xs font-black hover:bg-white/10 transition-all flex items-center gap-2">
+            <button style="color: white; border: 1.5px solid rgba(241,81,83,0.3); background: rgba(255,255,255,0.05);" class="px-4 py-2 rounded-xl text-xs font-black hover:bg-white/10 transition-all flex items-center gap-2">
                 <svg style="width: 16px; height: 16px; min-width: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
                 Bulk Upload
             </button>
 
-            <button style="color: white; border: 1.5px solid #1e3a5f; background: rgba(255,255,255,0.05);" class="px-4 py-2 rounded-xl text-xs font-black hover:bg-white/10 transition-all flex items-center gap-2">
+            <button style="color: white; border: 1.5px solid rgba(241,81,83,0.3); background: rgba(255,255,255,0.05);" class="px-4 py-2 rounded-xl text-xs font-black hover:bg-white/10 transition-all flex items-center gap-2">
                 <svg style="width: 16px; height: 16px; min-width: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                 Export CSV
             </button>
@@ -47,17 +47,17 @@
         <div class="flex flex-wrap items-center gap-3">
             <div class="relative w-full sm:w-[300px]">
                 <svg style="width: 15px; height: 15px; min-width: 15px;" class="text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search courses, instructors..." style="background: rgba(255,255,255,0.08); border: 1px solid #1e3a5f;" class="w-full pl-10 pr-4 py-2 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:border-rose-500 font-medium">
+                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search courses, instructors..." style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full pl-10 pr-4 py-2 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:border-rose-500 font-medium">
             </div>
 
-            <select wire:model.live="selectedCategory" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="px-3.5 py-2 rounded-xl text-xs font-extrabold focus:outline-none">
+            <select wire:model.live="selectedCategory" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="px-3.5 py-2 rounded-xl text-xs font-extrabold focus:outline-none">
                 <option value="" class="text-slate-900">All Categories</option>
                 @foreach ($categories as $cat)
                     <option value="{{ $cat->id }}" class="text-slate-900">{{ $cat->name }}</option>
                 @endforeach
             </select>
 
-            <select wire:model.live="selectedStatus" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="px-3.5 py-2 rounded-xl text-xs font-extrabold focus:outline-none">
+            <select wire:model.live="selectedStatus" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="px-3.5 py-2 rounded-xl text-xs font-extrabold focus:outline-none">
                 <option value="" class="text-slate-900">All Status</option>
                 <option value="published" class="text-slate-900">Published</option>
                 <option value="draft" class="text-slate-900">Draft</option>
@@ -71,7 +71,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
         <!-- Card 1: Total Courses -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-6 shadow-xl space-y-3 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-6 shadow-xl space-y-3 text-white">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Total Courses</span>
                 <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center shrink-0">
@@ -85,7 +85,7 @@
         </div>
 
         <!-- Card 2: Total Enrollments -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-6 shadow-xl space-y-3 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-6 shadow-xl space-y-3 text-white">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Total Enrollments</span>
                 <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/30 flex items-center justify-center shrink-0">
@@ -99,7 +99,7 @@
         </div>
 
         <!-- Card 3: Total Revenue -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-6 shadow-xl space-y-3 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-6 shadow-xl space-y-3 text-white">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Total Revenue</span>
                 <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center shrink-0">
@@ -113,7 +113,7 @@
         </div>
 
         <!-- Card 4: Average Rating -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-6 shadow-xl space-y-3 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-6 shadow-xl space-y-3 text-white">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Average Rating</span>
                 <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center shrink-0">
@@ -129,7 +129,7 @@
     </div>
 
     <!-- SECTION 2: DYNAMIC REAL COURSES TABLE (Dark Navy Table) -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl shadow-xl overflow-hidden space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl shadow-xl overflow-hidden space-y-4 text-white">
 
         <div class="overflow-x-auto">
             <table class="w-full text-left text-xs text-slate-300">
@@ -170,7 +170,7 @@
                             <!-- Instructor -->
                             <td class="p-4">
                                 <div class="flex items-center gap-2.5">
-                                    <div style="width: 34px; height: 34px; border-radius: 50%; background: #D62828; color: white; font-weight: 800; font-size: 13px;" class="flex items-center justify-center shrink-0">
+                                    <div style="width: 34px; height: 34px; border-radius: 50%; background: #f15153; color: white; font-weight: 800; font-size: 13px;" class="flex items-center justify-center shrink-0">
                                         {{ strtoupper(substr($instructorName, 0, 1)) }}
                                     </div>
                                     <div>
@@ -265,13 +265,13 @@
     </div>
 
     <!-- RIGHT FLOATING BUTTON -->
-    <button @click="createModalOpen = true" title="Create Course" style="background: #D62828; color: white;" class="fixed bottom-8 right-8 z-40 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
+    <button @click="createModalOpen = true" title="Create Course" style="background: #f15153; color: white;" class="fixed bottom-8 right-8 z-40 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
         <svg style="width: 26px; height: 26px; min-width: 26px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
     </button>
 
     <!-- CREATE / EDIT COURSE MODAL (Dark Navy Modal) -->
     <div x-show="createModalOpen" x-cloak class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div @click.away="createModalOpen = false" style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl text-white relative">
+        <div @click.away="createModalOpen = false" style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl text-white relative">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                 <h3 class="text-xl font-black text-white">
                     {{ $editingCourseId ? 'Edit Course Details' : 'Create New Course' }}
@@ -284,14 +284,14 @@
             <form wire:submit.prevent="saveCourse" class="space-y-4 text-xs font-semibold">
                 <div>
                     <label class="block text-slate-300 font-bold mb-1">Course Title</label>
-                    <input type="text" wire:model.live="title" placeholder="e.g. Complete Laravel 12 Development Course" style="background: #112240; border: 1px solid #1e3a5f;" class="w-full px-4 py-2.5 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-rose-500">
+                    <input type="text" wire:model.live="title" placeholder="e.g. Complete Laravel 12 Development Course" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-4 py-2.5 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-rose-500">
                     @error('title') <span class="text-rose-400 text-[11px]">{{ $message }}</span> @enderror
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-slate-300 font-bold mb-1">Category</label>
-                        <select wire:model="category_id" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-4 py-2.5 rounded-xl focus:outline-none">
+                        <select wire:model="category_id" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="w-full px-4 py-2.5 rounded-xl focus:outline-none">
                             @foreach ($categories as $cat)
                                 <option value="{{ $cat->id }}" class="text-slate-900">{{ $cat->name }}</option>
                             @endforeach
@@ -301,7 +301,7 @@
 
                     <div>
                         <label class="block text-slate-300 font-bold mb-1">Instructor / Trainer</label>
-                        <select wire:model="trainer_id" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-4 py-2.5 rounded-xl focus:outline-none">
+                        <select wire:model="trainer_id" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="w-full px-4 py-2.5 rounded-xl focus:outline-none">
                             @foreach ($trainers as $tr)
                                 <option value="{{ $tr->id }}" class="text-slate-900">{{ $tr->first_name }} {{ $tr->last_name }} ({{ $tr->email }})</option>
                             @endforeach
@@ -313,13 +313,13 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-slate-300 font-bold mb-1">Price (₹)</label>
-                        <input type="number" step="0.01" wire:model="price" style="background: #112240; border: 1px solid #1e3a5f;" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
+                        <input type="number" step="0.01" wire:model="price" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
                         @error('price') <span class="text-rose-400 text-[11px]">{{ $message }}</span> @enderror
                     </div>
 
                     <div>
                         <label class="block text-slate-300 font-bold mb-1">Difficulty Level</label>
-                        <select wire:model="level" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-4 py-2.5 rounded-xl focus:outline-none">
+                        <select wire:model="level" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="w-full px-4 py-2.5 rounded-xl focus:outline-none">
                             <option value="beginner" class="text-slate-900">Beginner</option>
                             <option value="intermediate" class="text-slate-900">Intermediate</option>
                             <option value="advanced" class="text-slate-900">Advanced</option>
@@ -330,13 +330,13 @@
 
                 <div>
                     <label class="block text-slate-300 font-bold mb-1">Course Thumbnail Image (Optional)</label>
-                    <input type="file" wire:model="thumbnailFile" accept="image/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#D62828] file:text-white hover:file:bg-rose-700">
+                    <input type="file" wire:model="thumbnailFile" accept="image/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#f15153] file:text-white hover:file:bg-rose-700">
                     @error('thumbnailFile') <span class="text-rose-400 text-[11px]">{{ $message }}</span> @enderror
                 </div>
 
                 <div>
                     <label class="block text-slate-300 font-bold mb-1">Description</label>
-                    <textarea wire:model="description" rows="3" placeholder="Comprehensive course description..." style="background: #112240; border: 1px solid #1e3a5f;" class="w-full px-4 py-2.5 rounded-xl text-white placeholder-slate-500 focus:outline-none"></textarea>
+                    <textarea wire:model="description" rows="3" placeholder="Comprehensive course description..." style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-4 py-2.5 rounded-xl text-white placeholder-slate-500 focus:outline-none"></textarea>
                     @error('description') <span class="text-rose-400 text-[11px]">{{ $message }}</span> @enderror
                 </div>
 
@@ -347,7 +347,7 @@
 
                 <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
                     <button type="button" @click="createModalOpen = false" class="px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 font-bold hover:bg-slate-800">Cancel</button>
-                    <button type="submit" style="background: #D62828; color: white;" class="px-6 py-2.5 rounded-xl font-black shadow-md hover:bg-rose-700">Save Course</button>
+                    <button type="submit" style="background: #f15153; color: white;" class="px-6 py-2.5 rounded-xl font-black shadow-md hover:bg-rose-700">Save Course</button>
                 </div>
             </form>
         </div>

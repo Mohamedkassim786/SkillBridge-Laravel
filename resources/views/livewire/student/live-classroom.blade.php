@@ -6,7 +6,7 @@
     @endphp
 
     <!-- CLASSROOM HEADER BAR -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;"
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);"
         class="rounded-3xl p-6 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
             <div class="flex items-center gap-3">
@@ -50,7 +50,7 @@
             </div>
 
             <!-- CLASS DESCRIPTION CARD -->
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;"
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);"
                 class="rounded-3xl p-6 shadow-xl space-y-3 text-white">
                 <h3 class="font-extrabold text-base text-white">About Today's Masterclass</h3>
                 <p class="text-xs font-medium text-slate-300 leading-relaxed">
@@ -64,7 +64,7 @@
         </div>
 
         <!-- INTERACTIVE LIVE CHAT & Q&A SIDEBAR -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;"
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);"
             class="rounded-3xl p-6 shadow-xl flex flex-col h-[520px] text-white">
             <div class="pb-4 border-b border-slate-800 flex items-center justify-between">
                 <h3 class="font-extrabold text-sm text-white flex items-center gap-2">

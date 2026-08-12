@@ -1,6 +1,6 @@
 <x-layouts.staff>
     <!-- Top Hero Banner Card -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4 text-white">
         <div>
             <h1 class="text-2xl sm:text-3xl font-black text-white">Live Masterclasses</h1>
             <p class="text-xs text-slate-300 mt-1">Schedule Jitsi live sessions, view real student attendance, and publish recordings.</p>
@@ -12,13 +12,13 @@
 
     <div class="space-y-6 mt-6">
         <!-- Search & Multi-Filter Bar -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl">
             <form method="GET" action="{{ route('staff.live-classes.index') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search class title..." style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-4 py-2.5 rounded-xl text-xs focus:outline-none focus:border-rose-500">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search class title..." style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="w-full px-4 py-2.5 rounded-xl text-xs focus:outline-none focus:border-[#f15153]">
                 </div>
                 <div>
-                    <select name="course_id" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-4 py-2.5 rounded-xl text-xs focus:outline-none">
+                    <select name="course_id" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="w-full px-4 py-2.5 rounded-xl text-xs focus:outline-none">
                         <option value="" class="text-slate-900">All Courses</option>
                         @foreach ($courses as $c)
                             <option value="{{ $c->id }}" {{ request('course_id') == $c->id ? 'selected' : '' }} class="text-slate-900">{{ $c->title }}</option>
@@ -26,7 +26,7 @@
                     </select>
                 </div>
                 <div>
-                    <select name="status" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-4 py-2.5 rounded-xl text-xs focus:outline-none">
+                    <select name="status" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="w-full px-4 py-2.5 rounded-xl text-xs focus:outline-none">
                         <option value="" class="text-slate-900">All Statuses</option>
                         <option value="scheduled" {{ request('status') == 'scheduled' ? 'selected' : '' }} class="text-slate-900">Scheduled</option>
                         <option value="starting_soon" {{ request('status') == 'starting_soon' ? 'selected' : '' }} class="text-slate-900">Starting Soon</option>
@@ -51,7 +51,7 @@
         <!-- Masterclass Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse ($liveClasses as $lc)
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl space-y-4 flex flex-col justify-between text-white">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 shadow-xl space-y-4 flex flex-col justify-between text-white">
                     <div class="space-y-3">
                         <div class="flex items-center justify-between">
                             <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase border

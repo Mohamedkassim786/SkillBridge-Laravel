@@ -16,7 +16,7 @@
                     $userAttended = $lc->attendees->first();
                 @endphp
 
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl space-y-4 flex flex-col justify-between text-white">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 shadow-xl space-y-4 flex flex-col justify-between text-white">
                     <div class="space-y-3">
                         <div class="flex items-center justify-between">
                             <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase border
@@ -63,7 +63,7 @@
                     </div>
                 </div>
             @empty
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="col-span-full p-12 text-center rounded-3xl shadow-xl space-y-3 text-white">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="col-span-full p-12 text-center rounded-3xl shadow-xl space-y-3 text-white">
                     <div class="text-4xl">📚</div>
                     <h3 class="text-lg font-black text-white">No Live Classes Scheduled</h3>
                     <p class="text-xs text-slate-400">Live sessions scheduled by your course trainers will automatically appear here.</p>

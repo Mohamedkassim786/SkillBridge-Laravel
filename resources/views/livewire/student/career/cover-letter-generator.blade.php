@@ -1,6 +1,6 @@
 <div class="space-y-8 text-white">
     <!-- TOP HEADER -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
             <div class="flex items-center gap-2 text-xs font-bold text-rose-400 uppercase tracking-widest mb-1">
                 <span>✉️ NVIDIA NIM AI (Llama 3.3 70B) + RAG Engine</span>
@@ -32,7 +32,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <!-- LEFT COLUMN: INPUT FORM (5 COLUMNS) -->
         <div class="lg:col-span-5 space-y-6">
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl text-white space-y-5">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 shadow-xl text-white space-y-5">
                 <div class="flex items-center justify-between">
                     <h3 class="text-base font-black text-white flex items-center gap-2">
                         <span>📝 Cover Letter Details</span>
@@ -113,7 +113,7 @@
         <!-- RIGHT COLUMN: LIVE COVER LETTER PAPER PREVIEW (7 COLUMNS) -->
         <div class="lg:col-span-7 space-y-6">
             <!-- PREVIEW STATUS CARD -->
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 text-white shadow-xl flex items-center justify-between gap-6">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 text-white shadow-xl flex items-center justify-between gap-6">
                 <div>
                     <div class="flex items-center gap-3">
                         <div class="text-[10px] font-black uppercase tracking-widest text-slate-400">Target Role & Company</div>
@@ -195,7 +195,7 @@
                 </div>
             @else
                 <!-- EMPTY STATE -->
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-10 text-center shadow-xl">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-10 text-center shadow-xl">
                     <div class="text-4xl mb-3">✉️</div>
                     <h3 class="text-lg font-black text-white mb-1">Your Cover Letter Preview</h3>
                     <p class="text-xs text-slate-400 max-w-sm mx-auto">Fill in the target role and company details, then click <strong class="text-rose-400">Generate Cover Letter with NVIDIA AI</strong> to create a personalized, professional cover letter.</p>

@@ -1,6 +1,6 @@
 <div class="space-y-8 text-white">
     <!-- TOP HEADER -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
             <div class="flex items-center gap-2 text-xs font-bold text-rose-400 uppercase tracking-widest mb-1">
                 <span>🎯 NVIDIA Nim AI (Llama 3.3 70B) Skill Assessment</span>
@@ -23,7 +23,7 @@
 
     <!-- STEP 1: SKILL TITLE SETUP -->
     @if (!$quizStarted)
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-8 shadow-xl max-w-2xl mx-auto space-y-6 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-8 shadow-xl max-w-2xl mx-auto space-y-6 text-white">
             <div class="text-center space-y-2">
                 <div class="w-16 h-16 rounded-2xl bg-rose-500/20 text-rose-400 text-3xl font-bold flex items-center justify-center mx-auto shadow-inner border border-rose-500/30">
                     🎯
@@ -82,7 +82,7 @@
         </div>
     @elseif (!$quizCompleted)
         <!-- STEP 2: ACTIVE QUIZ QUESTIONS SHEET -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 sm:p-8 shadow-xl text-white space-y-6 max-w-4xl mx-auto">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 sm:p-8 shadow-xl text-white space-y-6 max-w-4xl mx-auto">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                 <div>
                     <span class="text-[10px] font-black uppercase tracking-widest text-rose-400">Dynamic AI Skill Assessment</span>
@@ -127,7 +127,7 @@
         </div>
     @else
         <!-- STEP 3: FINAL QUIZ RESULTS & LEARNING PATH -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-8 shadow-xl text-white space-y-6 max-w-4xl mx-auto">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-8 shadow-xl text-white space-y-6 max-w-4xl mx-auto">
             <div class="text-center space-y-2">
                 <div class="inline-flex items-center justify-center w-24 h-24 rounded-full border-4 border-emerald-500 bg-emerald-500/10 font-black text-3xl text-emerald-400 shadow-inner">
                     {{ $score }}%

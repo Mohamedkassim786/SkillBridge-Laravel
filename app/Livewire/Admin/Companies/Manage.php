@@ -5,7 +5,6 @@ namespace App\Livewire\Admin\Companies;
 use App\Models\Company;
 use App\Models\JobApplication;
 use App\Models\JobPosting;
-use App\Models\User;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -72,11 +71,11 @@ class Manage extends Component
         $this->editingCompanyId = $company->id;
         $this->name = $company->name;
         $this->website = $company->website ?? '';
-        $this->location = $company->location ?? 'Chennai, Tamil Nadu';
-        $this->industry = $company->industry ?? 'IT Services';
-        $this->contact_person = $company->contact_person ?? 'HR Manager';
-        $this->email = $company->email ?? 'hr@company.com';
-        $this->phone = $company->phone ?? '+91 98765 43210';
+        $this->location = 'Chennai, Tamil Nadu';
+        $this->industry = 'IT Services';
+        $this->contact_person = 'HR Manager';
+        $this->email = $company->billing_email ?? 'hr@company.com';
+        $this->phone = '+91 98765 43210';
         $this->is_verified = $company->is_verified ? '1' : '0';
 
         $this->showModal = true;
@@ -87,10 +86,7 @@ class Manage extends Component
         $this->validate([
             'name' => 'required|string|max:255',
             'website' => 'nullable|url|max:255',
-            'location' => 'required|string|max:255',
-            'industry' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:50',
         ]);
 
         if ($this->editingCompanyId) {
@@ -99,11 +95,8 @@ class Manage extends Component
                 'name' => $this->name,
                 'slug' => Str::slug($this->name),
                 'website' => $this->website,
-                'location' => $this->location,
-                'industry' => $this->industry,
-                'contact_person' => $this->contact_person,
-                'email' => $this->email,
-                'phone' => $this->phone,
+                'billing_email' => $this->email,
+                'description' => $this->name . ' - Partner Hiring Company',
                 'is_verified' => (bool) $this->is_verified,
             ]);
             session()->flash('status', "Company '{$this->name}' updated successfully!");
@@ -112,11 +105,8 @@ class Manage extends Component
                 'name' => $this->name,
                 'slug' => Str::slug($this->name),
                 'website' => $this->website,
-                'location' => $this->location,
-                'industry' => $this->industry,
-                'contact_person' => $this->contact_person,
-                'email' => $this->email,
-                'phone' => $this->phone,
+                'billing_email' => $this->email,
+                'description' => $this->name . ' - Partner Hiring Company',
                 'is_verified' => (bool) $this->is_verified,
             ]);
             session()->flash('status', "New Company '{$this->name}' added successfully!");
@@ -165,13 +155,9 @@ class Manage extends Component
         if ($this->search) {
             $query->where(function ($q) {
                 $q->where('name', 'like', '%' . $this->search . '%')
-                  ->orWhere('location', 'like', '%' . $this->search . '%')
-                  ->orWhere('industry', 'like', '%' . $this->search . '%');
+                  ->orWhere('description', 'like', '%' . $this->search . '%')
+                  ->orWhere('billing_email', 'like', '%' . $this->search . '%');
             });
-        }
-
-        if ($this->selectedIndustry) {
-            $query->where('industry', $this->selectedIndustry);
         }
 
         if ($this->selectedVerification !== '') {
@@ -190,8 +176,20 @@ class Manage extends Component
         $totalJobsCount = JobPosting::count();
         $totalHiredCount = JobApplication::where('status', 'hired')->count();
 
+        $industries = collect([
+            'IT Services & Software',
+            'Financial Technology',
+            'Healthcare & Biotech',
+            'E-Commerce & Retail',
+            'EdTech & Learning',
+            'AI & Machine Learning',
+            'Cybersecurity',
+            'Cloud Infrastructure'
+        ]);
+
         return view('livewire.admin.companies.manage', [
             'companies' => $companies,
+            'industries' => $industries,
             'totalCompaniesCount' => $totalCompaniesCount,
             'verifiedCompaniesCount' => $verifiedCompaniesCount,
             'totalJobsCount' => $totalJobsCount,

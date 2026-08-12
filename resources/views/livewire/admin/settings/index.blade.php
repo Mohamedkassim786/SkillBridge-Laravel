@@ -29,20 +29,20 @@
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
         <!-- VERTICAL TABS NAVIGATION (DARK NAVY CARD) -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="space-y-1 rounded-2xl p-3 shadow-xl h-fit text-white">
-            <button wire:click="setSection('general')" class="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2.5 {{ $activeSection === 'general' ? 'bg-[#D62828] text-white font-extrabold shadow-md' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="space-y-1 rounded-2xl p-3 shadow-xl h-fit text-white">
+            <button wire:click="setSection('general')" class="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2.5 {{ $activeSection === 'general' ? 'bg-[#f15153] text-white font-extrabold shadow-md' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
                 <span>🏠 General Settings</span>
             </button>
-            <button wire:click="setSection('branding')" class="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2.5 {{ $activeSection === 'branding' ? 'bg-[#D62828] text-white font-extrabold shadow-md' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+            <button wire:click="setSection('branding')" class="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2.5 {{ $activeSection === 'branding' ? 'bg-[#f15153] text-white font-extrabold shadow-md' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
                 <span>🎨 Branding & Design</span>
             </button>
-            <button wire:click="setSection('seo')" class="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2.5 {{ $activeSection === 'seo' ? 'bg-[#D62828] text-white font-extrabold shadow-md' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+            <button wire:click="setSection('seo')" class="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2.5 {{ $activeSection === 'seo' ? 'bg-[#f15153] text-white font-extrabold shadow-md' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
                 <span>🔐 SEO Settings</span>
             </button>
-            <button wire:click="setSection('payment')" class="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2.5 {{ $activeSection === 'payment' ? 'bg-[#D62828] text-white font-extrabold shadow-md' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+            <button wire:click="setSection('payment')" class="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2.5 {{ $activeSection === 'payment' ? 'bg-[#f15153] text-white font-extrabold shadow-md' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
                 <span>💳 Payment Settings</span>
             </button>
-            <button wire:click="setSection('email')" class="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2.5 {{ $activeSection === 'email' ? 'bg-[#D62828] text-white font-extrabold shadow-md' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+            <button wire:click="setSection('email')" class="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2.5 {{ $activeSection === 'email' ? 'bg-[#f15153] text-white font-extrabold shadow-md' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
                 <span>📧 Email & SMS</span>
             </button>
             <a href="{{ route('admin.backups.index') }}" class="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-xs text-slate-300 hover:bg-slate-800 hover:text-white transition-all flex items-center gap-2.5 text-decoration-none">
@@ -58,7 +58,7 @@
 
             <!-- SECTION 1: GENERAL SETTINGS -->
             @if ($activeSection === 'general')
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-6 shadow-xl text-white space-y-6">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-6 shadow-xl text-white space-y-6">
                     <div class="border-b border-slate-800 pb-4">
                         <h3 class="text-base font-black text-white tracking-tight">General Website Settings</h3>
                         <p class="text-xs text-slate-400 font-medium">Manage platform title, branding assets, localization, and maintenance mode.</p>
@@ -70,17 +70,17 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-slate-300 mb-1">Site Name</label>
-                                    <input type="text" wire:model="site_name" style="background: #112240; border: 1px solid #1e3a5f;" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
+                                    <input type="text" wire:model="site_name" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-slate-300 mb-1">Site Tagline</label>
-                                    <input type="text" wire:model="site_tagline" style="background: #112240; border: 1px solid #1e3a5f;" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
+                                    <input type="text" wire:model="site_tagline" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
                                 </div>
                             </div>
 
                             <div>
                                 <label class="block text-slate-300 mb-1">Site Description</label>
-                                <textarea wire:model="site_description" rows="3" style="background: #112240; border: 1px solid #1e3a5f;" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none"></textarea>
+                                <textarea wire:model="site_description" rows="3" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none"></textarea>
                             </div>
                         </div>
 
@@ -89,17 +89,17 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-slate-300 mb-1">Support Email</label>
-                                    <input type="email" wire:model="support_email" style="background: #112240; border: 1px solid #1e3a5f;" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
+                                    <input type="email" wire:model="support_email" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-slate-300 mb-1">Support Phone</label>
-                                    <input type="text" wire:model="support_phone" style="background: #112240; border: 1px solid #1e3a5f;" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
+                                    <input type="text" wire:model="support_phone" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-4 py-2.5 rounded-xl text-white focus:outline-none">
                                 </div>
                             </div>
                         </div>
 
                         <div class="flex items-center justify-start gap-4 pt-4 border-t border-slate-800">
-                            <button type="submit" style="background-color: #D62828;" class="px-6 py-3 rounded-xl text-white text-xs font-black shadow-md hover:bg-red-700 transition-all">
+                            <button type="submit" style="background-color: #f15153;" class="px-6 py-3 rounded-xl text-white text-xs font-black shadow-md hover:bg-red-700 transition-all">
                                 Save Changes
                             </button>
                         </div>
@@ -109,29 +109,29 @@
 
             <!-- SECTION 2: PAYMENT SETTINGS -->
             @if ($activeSection === 'payment')
-                <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-6 shadow-xl text-white space-y-6">
+                <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-6 shadow-xl text-white space-y-6">
                     <div class="border-b border-slate-800 pb-4">
                         <h3 class="text-base font-black text-white tracking-tight">Payment Gateway API Keys</h3>
                         <p class="text-xs text-slate-400 font-medium">Configure credentials for Razorpay and Stripe payment processing.</p>
                     </div>
 
                     <div class="space-y-6 text-xs font-semibold">
-                        <div style="background: #112240; border: 1px solid #1e3a5f;" class="p-5 rounded-2xl space-y-3">
+                        <div style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.25);" class="p-5 rounded-2xl space-y-3">
                             <h4 class="text-xs font-black text-white uppercase">Razorpay Configuration</h4>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-slate-300 mb-1">API Key ID</label>
-                                    <input type="text" wire:model="razorpay_key" style="background: #07162C; border: 1px solid #1e3a5f;" class="w-full px-3 py-2 rounded-xl text-white font-mono focus:outline-none">
+                                    <input type="text" wire:model="razorpay_key" style="background: #07162C; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-3 py-2 rounded-xl text-white font-mono focus:outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-slate-300 mb-1">API Key Secret</label>
-                                    <input type="password" wire:model="razorpay_secret" style="background: #07162C; border: 1px solid #1e3a5f;" class="w-full px-3 py-2 rounded-xl text-white font-mono focus:outline-none">
+                                    <input type="password" wire:model="razorpay_secret" style="background: #07162C; border: 1px solid rgba(241,81,83,0.3);" class="w-full px-3 py-2 rounded-xl text-white font-mono focus:outline-none">
                                 </div>
                             </div>
                         </div>
 
                         <div class="pt-4 border-t border-slate-800">
-                            <button type="button" wire:click="saveSettings" style="background-color: #D62828;" class="px-6 py-2.5 rounded-xl text-white text-xs font-black shadow-md">
+                            <button type="button" wire:click="saveSettings" style="background-color: #f15153;" class="px-6 py-2.5 rounded-xl text-white text-xs font-black shadow-md">
                                 Save Payment Keys
                             </button>
                         </div>

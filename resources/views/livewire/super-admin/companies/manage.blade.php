@@ -8,14 +8,14 @@
     </div>
 
     <!-- FILTER BAR -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-4 rounded-3xl shadow-xl flex items-center justify-between">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="p-4 rounded-3xl shadow-xl flex items-center justify-between">
         <div class="w-full sm:w-80">
-            <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search company name..." style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-4 py-2 rounded-xl text-xs font-semibold focus:outline-none">
+            <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search company name..." style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="w-full px-4 py-2 rounded-xl text-xs font-semibold focus:outline-none">
         </div>
     </div>
 
     <!-- COMPANIES TABLE CARD -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
                 <thead>

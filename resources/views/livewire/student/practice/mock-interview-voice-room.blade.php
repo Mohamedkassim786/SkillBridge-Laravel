@@ -1,6 +1,6 @@
 <div x-data="voiceRoomManager()" x-init="initRoom()" class="max-w-3xl mx-auto space-y-6 text-white">
     <!-- Top Bar -->
-    <div class="flex items-center justify-between p-4 rounded-2xl border border-slate-800" style="background-color: #0B1F3A;">
+    <div class="flex items-center justify-between p-4 rounded-2xl border border-purple-800/40" style="background-color: #251237;">
         <div class="flex items-center gap-3">
             <a href="{{ route('student.practice.mock') }}" class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white transition-all text-xs font-bold">
                 ←
@@ -21,7 +21,7 @@
     </div>
 
     <!-- Main Clean Voice Room -->
-    <div class="rounded-3xl p-8 md:p-12 text-center border border-slate-800 shadow-2xl flex flex-col items-center justify-center space-y-8 min-h-[420px]" style="background-color: #0B1F3A;">
+    <div class="rounded-3xl p-8 md:p-12 text-center border border-purple-800/40 shadow-2xl flex flex-col items-center justify-center space-y-8 min-h-[420px]" style="background-color: #251237;">
         <!-- AI Voice Orb -->
         <div class="relative flex items-center justify-center">
             <div class="absolute w-36 h-36 rounded-full bg-rose-500/20 transition-all duration-300"
@@ -84,7 +84,7 @@
 
     <!-- Transcript Box -->
     @if($showTranscript)
-        <div class="p-6 rounded-3xl border border-slate-800 space-y-3" style="background-color: #0B1F3A;">
+        <div class="p-6 rounded-3xl border border-purple-800/40 space-y-3" style="background-color: #251237;">
             <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider border-b border-slate-800 pb-2">Conversation History</h3>
             <div class="space-y-2 max-h-52 overflow-y-auto pr-1">
                 @foreach($conversation as $item)

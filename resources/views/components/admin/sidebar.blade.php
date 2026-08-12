@@ -1,4 +1,6 @@
-<aside style="background-color: #0B1F3A; border-right: 1px solid rgba(255,255,255,0.08);" class="w-64 p-4 flex flex-col justify-between space-y-6 overflow-y-auto shrink-0 sticky top-16 h-[calc(100vh-4rem)] self-start z-20">
+<aside style="background-color: #210f30; border-right: 1px solid rgba(241,81,83,0.25);" 
+       :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
+       class="w-64 p-4 flex flex-col justify-between space-y-6 overflow-y-auto shrink-0 fixed lg:static top-16 left-0 bottom-0 lg:bottom-auto h-[calc(100vh-4rem)] z-40 lg:z-20 transition-transform duration-300 ease-in-out">
 
     <div class="space-y-6">
 
@@ -23,7 +25,7 @@
                         $targetUrl = Route::has($nav['route']) ? route($nav['route']) : route('admin.dashboard');
                     @endphp
                     <a href="{{ $targetUrl }}"
-                        style="{{ $isActive ? 'background: #D62828; color: white; border-radius: 12px; font-weight: 800; box-shadow: 0 4px 14px rgba(214,40,40,0.35);' : 'color: #cbd5e1;' }}"
+                        style="{{ $isActive ? 'background: #f15153; color: white; border-radius: 12px; font-weight: 800; box-shadow: 0 4px 14px rgba(241,81,83,0.35);' : 'color: #a997be;' }}"
                         class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-white/10 hover:text-white transition-all text-decoration-none">
                         {!! $nav['svg'] !!}
                         <span>{{ $nav['name'] }}</span>
@@ -54,7 +56,7 @@
                         $targetUrl = Route::has($nav['route']) ? route($nav['route']) : route('admin.dashboard');
                     @endphp
                     <a href="{{ $targetUrl }}"
-                        style="{{ $isActive ? 'background: #D62828; color: white; border-radius: 12px; font-weight: 800; box-shadow: 0 4px 14px rgba(214,40,40,0.35);' : 'color: #cbd5e1;' }}"
+                        style="{{ $isActive ? 'background: #f15153; color: white; border-radius: 12px; font-weight: 800; box-shadow: 0 4px 14px rgba(241,81,83,0.35);' : 'color: #a997be;' }}"
                         class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-white/10 hover:text-white transition-all text-decoration-none">
                         {!! $nav['svg'] !!}
                         <span>{{ $nav['name'] }}</span>
@@ -85,7 +87,7 @@
                         $targetUrl = Route::has($nav['route']) ? route($nav['route']) : route('admin.dashboard');
                     @endphp
                     <a href="{{ $targetUrl }}"
-                        style="{{ $isActive ? 'background: #D62828; color: white; border-radius: 12px; font-weight: 800; box-shadow: 0 4px 14px rgba(214,40,40,0.35);' : 'color: #cbd5e1;' }}"
+                        style="{{ $isActive ? 'background: #f15153; color: white; border-radius: 12px; font-weight: 800; box-shadow: 0 4px 14px rgba(241,81,83,0.35);' : 'color: #a997be;' }}"
                         class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-white/10 hover:text-white transition-all text-decoration-none">
                         {!! $nav['svg'] !!}
                         <span>{{ $nav['name'] }}</span>
@@ -100,7 +102,7 @@
     <div class="pt-4 border-t border-slate-700/60">
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" style="background: #D62828; color: white;" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-extrabold text-xs hover:bg-red-700 transition-all shadow-md">
+            <button type="submit" style="background: #f15153; color: white;" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-extrabold text-xs hover:bg-red-700 transition-all shadow-md">
                 <svg style="width: 16px; height: 16px; min-width: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                 Logout
             </button>

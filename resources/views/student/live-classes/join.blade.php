@@ -28,7 +28,7 @@
 
     <div class="space-y-6">
         <!-- Embedded Jitsi Meeting Container -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;"
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);"
             class="rounded-3xl p-4 shadow-2xl overflow-hidden">
             <div id="jitsi-container" class="w-full rounded-2xl overflow-hidden bg-black aspect-video min-h-[600px]">
             </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full" style="background-color: #321847;">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,25 +20,17 @@
             height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #07162C;
+            background: #210f30;
         }
         ::-webkit-scrollbar-thumb {
-            background: #1e3a5f;
+            background: #542878;
             border-radius: 9999px;
-            border: 1px solid rgba(214, 40, 40, 0.2);
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #D62828;
-        }
-        ::-webkit-scrollbar-corner {
-            background: #07162C;
-        }
-        * {
-            scrollbar-width: thin;
-            scrollbar-color: #1e3a5f #07162C;
+            background: #f15153;
         }
         select option {
-            background-color: #0B1F3A !important;
+            background-color: #321847 !important;
             color: #FFFFFF !important;
         }
 
@@ -55,18 +47,21 @@
         }
     </style>
 </head>
-<body style="background-color: #07162C;" class="h-full font-sans antialiased text-white" x-data="{ sidebarOpen: false }">
-    <div style="background-color: #07162C;" class="min-h-screen flex flex-col">
+<body style="background-color: #321847;" class="h-full font-sans antialiased text-white" x-data="{ sidebarOpen: false }">
+    <div style="background-color: #321847;" class="min-h-screen flex flex-col">
 
         <!-- Top Navbar -->
         <x-admin.navbar />
 
-        <div style="background-color: #07162C;" class="flex-1 flex admin-sidebar-layout">
+        <div style="background-color: #321847;" class="flex-1 flex relative min-h-[calc(100vh-64px)]">
+            <!-- Mobile Backdrop Overlay -->
+            <div x-show="sidebarOpen" @click="sidebarOpen = false" x-cloak class="fixed inset-0 bg-black/60 z-30 lg:hidden backdrop-blur-xs"></div>
+
             <!-- Sidebar Navigation -->
             <x-admin.sidebar />
 
-            <!-- Main Content Area (Deep Navy Dark Canvas #07162C) -->
-            <main style="background-color: #07162C;" class="flex-1 p-4 sm:p-6 lg:p-8">
+            <!-- Main Content Area -->
+            <main style="background-color: #321847;" class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8">
                 <div class="w-full space-y-6">
                     @if (session('status'))
                         <div class="p-4 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center gap-2 shadow-sm">
@@ -87,8 +82,8 @@
             </main>
         </div>
 
-        <!-- Dark Navy Footer -->
-        <footer style="background-color: #0B1F3A; border-top: 1px solid #1e3a5f;" class="py-4 text-center text-xs text-slate-400 font-semibold z-20">
+        <!-- Footer -->
+        <footer style="background-color: #210f30; border-top: 1px solid rgba(241,81,83,0.2); color: #a997be;" class="py-4 text-center text-xs font-semibold z-20">
             © 2026 SkillBridge Admin Suite • Enterprise LMS & Placement Portal
         </footer>
     </div>

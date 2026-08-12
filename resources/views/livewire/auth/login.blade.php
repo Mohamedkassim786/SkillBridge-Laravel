@@ -1,45 +1,48 @@
 <div>
     <div class="mb-8">
-        <h2 class="text-3xl font-extrabold text-[#0B1F3A] tracking-tight">Welcome Back</h2>
-        <p class="mt-2 text-sm text-slate-600">Sign in to your SkillBridge account to continue learning or managing jobs.</p>
+        <h2 class="text-3xl font-black text-white tracking-tight">Welcome Back</h2>
+        <p class="mt-2 text-sm text-purple-200">Sign in to your SkillBridge account to continue learning or managing jobs.</p>
     </div>
 
     <form wire:submit="authenticate" class="space-y-6">
         <div>
-            <label for="email" class="block text-sm font-semibold text-slate-800">Email Address</label>
+            <label for="email" class="block text-sm font-extrabold text-white">Email Address</label>
             <div class="mt-1.5 relative rounded-lg shadow-sm">
                 <input wire:model="email" id="email" type="email" autocomplete="email" required
-                       class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/20 transition-all text-sm text-slate-900 placeholder-slate-400 @error('email') border-rose-500 @enderror"
+                       style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: #ffffff;"
+                       class="w-full px-4 py-3 rounded-lg focus:border-[#f15153] focus:ring-2 focus:ring-[#f15153]/30 transition-all text-sm placeholder-purple-300/50 @error('email') border-rose-500 @enderror"
                        placeholder="name@example.com">
             </div>
-            @error('email') <p class="mt-1.5 text-xs text-rose-600 font-medium">{{ $message }}</p> @enderror
+            @error('email') <p class="mt-1.5 text-xs text-rose-400 font-medium">{{ $message }}</p> @enderror
         </div>
 
         <div>
             <div class="flex items-center justify-between">
-                <label for="password" class="block text-sm font-semibold text-slate-800">Password</label>
-                <a href="{{ route('password.request') }}" class="text-xs font-semibold text-[#D62828] hover:text-[#0B1F3A] transition-colors">
+                <label for="password" class="block text-sm font-extrabold text-white">Password</label>
+                <a href="{{ route('password.request') }}" class="text-xs font-extrabold text-[#f15153] hover:underline transition-colors">
                     Forgot Password?
                 </a>
             </div>
             <div class="mt-1.5 relative rounded-lg shadow-sm">
                 <input wire:model="password" id="password" type="password" autocomplete="current-password" required
-                       class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-[#D62828] focus:ring-2 focus:ring-[#D62828]/20 transition-all text-sm text-slate-900 placeholder-slate-400 @error('password') border-rose-500 @enderror"
+                       style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: #ffffff;"
+                       class="w-full px-4 py-3 rounded-lg focus:border-[#f15153] focus:ring-2 focus:ring-[#f15153]/30 transition-all text-sm placeholder-purple-300/50 @error('password') border-rose-500 @enderror"
                        placeholder="••••••••">
             </div>
-            @error('password') <p class="mt-1.5 text-xs text-rose-600 font-medium">{{ $message }}</p> @enderror
+            @error('password') <p class="mt-1.5 text-xs text-rose-400 font-medium">{{ $message }}</p> @enderror
         </div>
 
         <div class="flex items-center justify-between">
             <label class="flex items-center gap-2 cursor-pointer">
-                <input wire:model="remember" type="checkbox" class="w-4 h-4 rounded border-slate-300 text-[#D62828] focus:ring-[#D62828]">
-                <span class="text-sm text-slate-600">Remember this device</span>
+                <input wire:model="remember" type="checkbox" class="w-4 h-4 rounded border-purple-400 text-[#f15153] focus:ring-[#f15153]">
+                <span class="text-sm font-medium text-purple-200">Remember this device</span>
             </label>
         </div>
 
         <div>
             <button type="submit" wire:loading.attr="disabled"
-                    class="w-full py-3.5 px-4 rounded-lg bg-[#D62828] hover:bg-[#b7102a] text-white font-semibold text-sm shadow-lg shadow-[#D62828]/25 transition-all duration-200 flex items-center justify-center gap-2">
+                    style="background-color: #f15153; box-shadow: 0 4px 20px rgba(241,81,83,0.4);"
+                    class="w-full py-3.5 px-4 rounded-xl text-white font-black text-sm hover:opacity-90 transition-all duration-200 flex items-center justify-center gap-2">
                 <span wire:loading.remove>Sign In to Account</span>
                 <span wire:loading class="inline-flex items-center gap-2">
                     <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
@@ -52,10 +55,10 @@
         </div>
     </form>
 
-    <div class="mt-8 pt-6 border-t border-slate-200 text-center">
-        <p class="text-sm text-slate-600">
+    <div class="mt-8 pt-6 text-center" style="border-top: 1px solid rgba(255,255,255,0.1);">
+        <p class="text-sm text-purple-200">
             Don't have a student account?
-            <a href="{{ route('register') }}" class="font-bold text-[#0B1F3A] hover:text-[#D62828] transition-colors">
+            <a href="{{ route('register') }}" class="font-extrabold text-[#f15153] hover:underline transition-colors">
                 Register as Student
             </a>
         </p>

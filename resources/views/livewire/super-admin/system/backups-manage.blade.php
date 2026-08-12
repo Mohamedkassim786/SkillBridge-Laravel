@@ -6,14 +6,14 @@
             <p class="text-xs text-slate-300">Generate manual database snapshots, download backups, set retention rules, and execute safe database restores.</p>
         </div>
 
-        <button wire:click="generateManualBackup" wire:loading.attr="disabled" style="background-color: #D62828;" class="px-5 py-2.5 rounded-2xl text-white font-black text-xs shadow-lg hover:bg-rose-700 transition flex items-center gap-2">
+        <button wire:click="generateManualBackup" wire:loading.attr="disabled" style="background-color: #f15153;" class="px-5 py-2.5 rounded-2xl text-white font-black text-xs shadow-lg hover:bg-rose-700 transition flex items-center gap-2">
             <span wire:loading.remove>⚡ Create Manual DB Backup</span>
             <span wire:loading>Generating Backup...</span>
         </button>
     </div>
 
     <!-- BACKUPS TABLE CARD -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
         <h3 class="text-base font-black text-white">Backup Snapshot Archive</h3>
 
         <div class="overflow-x-auto">
@@ -50,7 +50,7 @@
     <!-- RESTORE CONFIRMATION MODAL -->
     @if ($showRestoreConfirmModal)
         <div class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-2xl max-w-md w-full text-white space-y-4">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-3xl p-6 shadow-2xl max-w-md w-full text-white space-y-4">
                 <div class="p-3 rounded-2xl bg-rose-500/20 border border-rose-500/30 text-rose-300 text-xs font-bold">
                     ⚠️ DANGER: Restoring a database backup replaces active database state. Logged action will audit to trail.
                 </div>
@@ -60,12 +60,12 @@
 
                 <form wire:submit.prevent="confirmRestore" class="space-y-4">
                     <div>
-                        <input type="text" wire:model="confirmRestoreText" required placeholder="RESTORE DATABASE" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-3 py-2.5 rounded-xl text-xs font-mono">
+                        <input type="text" wire:model="confirmRestoreText" required placeholder="RESTORE DATABASE" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="w-full px-3 py-2.5 rounded-xl text-xs font-mono">
                     </div>
 
                     <div class="flex items-center justify-end gap-3 pt-2">
                         <button type="button" wire:click="$set('showRestoreConfirmModal', false)" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs">Cancel</button>
-                        <button type="submit" style="background-color: #D62828;" class="px-5 py-2 rounded-xl text-white font-bold text-xs shadow-md">Authorize Restore</button>
+                        <button type="submit" style="background-color: #f15153;" class="px-5 py-2 rounded-xl text-white font-bold text-xs shadow-md">Authorize Restore</button>
                     </div>
                 </form>
             </div>

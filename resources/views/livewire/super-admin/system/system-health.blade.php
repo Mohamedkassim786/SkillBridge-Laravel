@@ -11,28 +11,28 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
         <!-- CPU Load -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">Host CPU Load</div>
             <div class="text-3xl font-black text-emerald-400">{{ round($cpuLoad * 100, 1) }}%</div>
             <div class="text-[11px] text-slate-400">System load average</div>
         </div>
 
         <!-- RAM Usage -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">PHP RAM Usage</div>
             <div class="text-3xl font-black text-cyan-400">{{ $memoryUsageMb }} MB</div>
             <div class="text-[11px] text-slate-400">Peak: {{ $memoryPeakMb }} MB</div>
         </div>
 
         <!-- Disk Allocation -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">Storage Disk Space</div>
             <div class="text-3xl font-black text-purple-400">{{ $diskFreeGb }} GB Free</div>
             <div class="text-[11px] text-slate-400">{{ $diskUsedPercent }}% disk space used (Total {{ $diskTotalGb }} GB)</div>
         </div>
 
         <!-- Database Health -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">Database Status</div>
             <div class="text-2xl font-black text-emerald-400">✓ {{ $dbStatus }}</div>
             <div class="text-[11px] text-slate-400">MySQL Connection Port 3306</div>
@@ -41,7 +41,7 @@
 
     <!-- ENVIRONMENT SPECIFICATIONS & QUEUE STATUS CARD -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
             <h3 class="text-base font-black text-white">Environment Specifications</h3>
             
             <div class="space-y-3 text-xs">
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
             <h3 class="text-base font-black text-white">Queue & Background Tasks Status</h3>
 
             <div class="space-y-3 text-xs">

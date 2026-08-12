@@ -405,7 +405,7 @@
             </div>
 
             <!-- Video Player Controls Bar (Previous, Mark Complete, Next Lesson) -->
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-4 rounded-2xl shadow-xl flex flex-wrap items-center justify-between gap-3 text-white">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-4 rounded-2xl shadow-xl flex flex-wrap items-center justify-between gap-3 text-white">
                 <!-- Previous Lesson -->
                 @if ($previousLesson)
                     <button type="button"
@@ -471,7 +471,7 @@
             </div>
 
             <!-- Player Tabs (Notes, Bookmarks, Resources, Review, Analytics) -->
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-6 text-white">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-6 text-white">
                 <div class="border-b border-slate-800 flex items-center gap-6 overflow-x-auto">
                     <button wire:click="$set('activeTab', 'notes')"
                             class="pb-3 text-xs font-extrabold transition-all border-b-2 whitespace-nowrap {{ $activeTab === 'notes' ? 'border-[#D62828] text-white font-black' : 'border-transparent text-slate-400 hover:text-white' }}">
@@ -658,7 +658,7 @@
 
         <!-- Right 1 Column: Curriculum Accordion Sidebar -->
         <div class="space-y-4">
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="p-6 rounded-3xl shadow-xl space-y-4 text-white">
                 <div class="flex items-center justify-between border-b border-slate-800 pb-3">
                     <h3 class="text-base font-black text-white">Curriculum Syllabus</h3>
                 </div>

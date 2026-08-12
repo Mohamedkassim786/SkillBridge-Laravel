@@ -26,10 +26,10 @@
     </div>
 
     <!-- ACTION BAR (DARK NAVY CARD) -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl flex flex-col xl:flex-row xl:items-center justify-between gap-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl p-5 shadow-xl flex flex-col xl:flex-row xl:items-center justify-between gap-4 text-white">
         <!-- Left Buttons -->
         <div class="flex flex-wrap items-center gap-3">
-            <button style="color: white; border: 1.5px solid #1e3a5f; background: rgba(255,255,255,0.05);" class="px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-white/10 transition-all flex items-center gap-2">
+            <button style="color: white; border: 1.5px solid rgba(241,81,83,0.3); background: rgba(255,255,255,0.05);" class="px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-white/10 transition-all flex items-center gap-2">
                 <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                 <span>Export CSV</span>
             </button>
@@ -38,11 +38,11 @@
         <!-- Right Search & Filters -->
         <div class="flex flex-wrap items-center gap-3">
             <div class="relative w-full sm:w-[300px]">
-                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search user, transaction ID..." style="background: rgba(255,255,255,0.08); border: 1px solid #1e3a5f;" class="w-full pl-9 pr-4 py-2 rounded-xl text-xs font-medium text-white placeholder-slate-400 focus:outline-none focus:border-rose-500">
+                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search user, transaction ID..." style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="w-full pl-9 pr-4 py-2 rounded-xl text-xs font-medium text-white placeholder-slate-400 focus:outline-none focus:border-[#f15153]">
                 <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </div>
 
-            <select wire:model.live="selectedStatus" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="px-3 py-2 rounded-xl text-xs font-bold focus:outline-none">
+            <select wire:model.live="selectedStatus" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="px-3 py-2 rounded-xl text-xs font-bold focus:outline-none">
                 <option value="" class="text-slate-900">All Status</option>
                 <option value="completed" class="text-slate-900">Success</option>
                 <option value="pending" class="text-slate-900">Pending</option>
@@ -55,7 +55,7 @@
     <!-- SECTION 1: REAL PAYMENT STATISTICS (DARK NAVY CARDS) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <!-- Card 1: Total Revenue -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl p-5 shadow-xl text-white">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-11 h-11 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-black text-lg">
                     ₹
@@ -66,7 +66,7 @@
         </div>
 
         <!-- Card 2: Stripe Revenue -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl p-5 shadow-xl text-white">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-11 h-11 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
@@ -77,7 +77,7 @@
         </div>
 
         <!-- Card 3: Razorpay Revenue -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl p-5 shadow-xl text-white">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-11 h-11 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/30 flex items-center justify-center">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
@@ -88,7 +88,7 @@
         </div>
 
         <!-- Card 4: Pending Payouts -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-5 shadow-xl text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl p-5 shadow-xl text-white">
             <div class="flex items-center justify-between mb-3">
                 <div class="w-11 h-11 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -100,7 +100,7 @@
     </div>
 
     <!-- SECTION 2: REAL TRANSACTIONS TABLE (DARK NAVY TABLE) -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl shadow-xl overflow-hidden space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-2xl shadow-xl overflow-hidden space-y-4 text-white">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse text-xs text-slate-300">
                 <thead>
@@ -126,7 +126,7 @@
 
                             <td class="p-4">
                                 <div class="flex items-center gap-2.5">
-                                    <div style="width: 28px; height: 28px; border-radius: 50%; background: #D62828; color: white; font-weight: 800; font-size: 11px;" class="flex items-center justify-center shrink-0">
+                                    <div style="width: 28px; height: 28px; border-radius: 50%; background: #f15153; color: white; font-weight: 800; font-size: 11px;" class="flex items-center justify-center shrink-0">
                                         {{ strtoupper(substr($userName, 0, 1)) }}
                                     </div>
                                     <div>

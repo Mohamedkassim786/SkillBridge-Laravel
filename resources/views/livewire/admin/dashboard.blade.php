@@ -1,7 +1,7 @@
 <div class="space-y-6">
 
     <!-- HERO WELCOME BANNER (Matching Student Portal Hero Box style) -->
-    <div style="background: linear-gradient(135deg, #0B1F3A 0%, #112240 100%); border: 1px solid #1e3a5f; border-radius: 24px; padding: 32px;"
+    <div style="background: linear-gradient(135deg, #251237 0%, #1e0d2d 100%); border: 1px solid rgba(241,81,83,0.25); border-radius: 24px; padding: 32px;"
         class="text-white relative overflow-hidden shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div class="space-y-3 max-w-2xl relative z-10">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold"
@@ -29,7 +29,7 @@
             </select>
 
             <a href="{{ route('admin.courses.manage') }}"
-                style="background: #D62828; color: white; box-shadow: 0 4px 16px rgba(214,40,40,0.4);"
+                style="background: #f15153; color: white; box-shadow: 0 4px 16px rgba(214,40,40,0.4);"
                 class="px-5 py-2.5 rounded-xl text-xs font-extrabold hover:bg-red-700 transition-all flex items-center gap-2 text-decoration-none">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -39,11 +39,11 @@
         </div>
     </div>
 
-    <!-- 4 DARK NAVY KPI STAT CARDS (Theme Matching #0B1F3A) -->
+    <!-- 4 DARK NAVY KPI STAT CARDS (Theme Matching #251237) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
         <!-- Stat Card 1: Revenue -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;"
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);"
             class="rounded-2xl p-6 shadow-xl text-white space-y-3 hover:border-slate-600 transition-all">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Revenue</span>
@@ -62,7 +62,7 @@
         </div>
 
         <!-- Stat Card 2: Active Students -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;"
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);"
             class="rounded-2xl p-6 shadow-xl text-white space-y-3 hover:border-slate-600 transition-all">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Active Students</span>
@@ -81,7 +81,7 @@
         </div>
 
         <!-- Stat Card 3: Published Courses -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;"
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);"
             class="rounded-2xl p-6 shadow-xl text-white space-y-3 hover:border-slate-600 transition-all">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Courses Catalog</span>
@@ -100,7 +100,7 @@
         </div>
 
         <!-- Stat Card 4: Job Applications -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;"
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);"
             class="rounded-2xl p-6 shadow-xl text-white space-y-3 hover:border-slate-600 transition-all">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Job Applications</span>
@@ -124,7 +124,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         <!-- Revenue Bar Chart (2 Cols) -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-6 shadow-xl text-white lg:col-span-2 space-y-6">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-6 shadow-xl text-white lg:col-span-2 space-y-6">
             <div class="flex items-center justify-between">
                 <div>
                     <h3 class="text-base font-extrabold text-white">Monthly Revenue & Enrollments</h3>
@@ -152,7 +152,7 @@
                     @foreach ($monthsData as $mData)
                         <div class="flex flex-col items-center gap-2 h-full justify-end">
                             <span class="text-[11px] text-slate-300 font-bold">{{ $mData['rev'] }}</span>
-                            <div style="height: {{ $mData['pct'] }}%; width: 100%; max-width: 44px; background: linear-gradient(180deg, #D62828 0%, #1e3a5f 100%); border-radius: 8px 8px 0 0;"
+                            <div style="height: {{ $mData['pct'] }}%; width: 100%; max-width: 44px; background: linear-gradient(180deg, #f15153 0%, rgba(241,81,83,0.3) 100%); border-radius: 8px 8px 0 0;"
                                 class="shadow-sm"></div>
                             <span class="text-xs text-slate-400 font-bold mt-1">{{ $mData['month'] }}</span>
                         </div>
@@ -162,7 +162,7 @@
         </div>
 
         <!-- Student Placement Ratio Card (1 Col) -->
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;"
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);"
             class="rounded-2xl p-6 shadow-xl text-white space-y-6 flex flex-col justify-between">
             <div class="space-y-4">
                 <h3 class="text-base font-extrabold text-white">Student Placement Ratio</h3>
@@ -212,7 +212,7 @@
     </div>
 
     <!-- DARK NAVY DATA TABLE 1: RECENT ENROLLMENTS -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl shadow-xl overflow-hidden space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl shadow-xl overflow-hidden space-y-4 text-white">
         <div class="p-6 border-b border-slate-800 flex items-center justify-between">
             <div>
                 <h3 class="text-base font-extrabold text-white">Recent Student Enrollments</h3>
@@ -239,7 +239,7 @@
                     @forelse ($recentEnrollments as $enr)
                         <tr class="hover:bg-slate-800/60 transition-colors">
                             <td class="p-4 font-bold text-white flex items-center gap-3">
-                                <div style="width: 28px; height: 28px; border-radius: 50%; background: #D62828; color: white; font-weight: 800; font-size: 11px;"
+                                <div style="width: 28px; height: 28px; border-radius: 50%; background: #f15153; color: white; font-weight: 800; font-size: 11px;"
                                     class="flex items-center justify-center shrink-0">
                                     {{ strtoupper(substr($enr->user?->first_name ?? 'S', 0, 1)) }}
                                 </div>
@@ -267,7 +267,7 @@
     </div>
 
     <!-- DARK NAVY DATA TABLE 2: RECENT JOB APPLICATIONS -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl shadow-xl overflow-hidden space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl shadow-xl overflow-hidden space-y-4 text-white">
         <div class="p-6 border-b border-slate-800 flex items-center justify-between">
             <div>
                 <h3 class="text-base font-extrabold text-white">Recent Job Applications</h3>

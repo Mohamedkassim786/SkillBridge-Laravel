@@ -1,7 +1,7 @@
 <div class="space-y-6">
 
     <!-- ACTION BAR HEADER (Dark Navy Card) -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl p-6 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl p-6 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-white">
         <div>
             <h1 class="text-2xl font-black tracking-tight text-white">User & Student Management</h1>
             <p class="text-xs text-slate-400 mt-1">Manage all registered students, instructors, admins, and staff accounts.</p>
@@ -9,10 +9,10 @@
 
         <div class="flex items-center gap-3">
             <div class="relative">
-                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search by name or email..." style="background: rgba(255,255,255,0.08); border: 1px solid #1e3a5f;" class="px-4 py-2 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:border-rose-500 font-medium">
+                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search by name or email..." style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3);" class="px-4 py-2 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:border-[#f15153] font-medium">
             </div>
 
-            <select wire:model.live="roleFilter" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="px-4 py-2 rounded-xl text-xs font-bold focus:outline-none">
+            <select wire:model.live="roleFilter" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="px-4 py-2 rounded-xl text-xs font-bold focus:outline-none">
                 <option value="" class="text-slate-900">All Roles</option>
                 <option value="student" class="text-slate-900">Students</option>
                 <option value="trainer" class="text-slate-900">Instructors</option>
@@ -24,7 +24,7 @@
     </div>
 
     <!-- USERS DATA TABLE (Dark Navy Card) -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-2xl shadow-xl overflow-hidden space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-2xl shadow-xl overflow-hidden space-y-4 text-white">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-xs text-slate-300">
                 <thead>
@@ -47,7 +47,7 @@
                         <tr class="hover:bg-slate-800/60 transition-colors">
                             <td class="p-4 text-slate-400 font-mono text-[11px]">#{{ substr($u->id, 0, 18) }}...</td>
                             <td class="p-4 font-bold text-white flex items-center gap-3">
-                                <div style="width: 32px; height: 32px; min-width: 32px; min-height: 32px; max-width: 32px; max-height: 32px; border-radius: 50%; background: #D62828; color: white; font-weight: 800; font-size: 12px; display: inline-flex; align-items: center; justify-content: center;" class="shrink-0">
+                                <div style="width: 32px; height: 32px; min-width: 32px; min-height: 32px; max-width: 32px; max-height: 32px; border-radius: 50%; background: #f15153; color: white; font-weight: 800; font-size: 12px; display: inline-flex; align-items: center; justify-content: center;" class="shrink-0">
                                     {{ strtoupper(substr($fullName, 0, 1)) }}
                                 </div>
                                 <div>

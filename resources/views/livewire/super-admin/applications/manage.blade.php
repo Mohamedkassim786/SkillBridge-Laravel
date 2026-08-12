@@ -8,10 +8,10 @@
     </div>
 
     <!-- FILTER BAR -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-4 rounded-3xl shadow-xl flex items-center justify-between">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="p-4 rounded-3xl shadow-xl flex items-center justify-between">
         <div class="text-xs font-bold text-slate-300">Filter Application Status:</div>
 
-        <select wire:model.live="statusFilter" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="px-3 py-2.5 rounded-xl text-xs font-bold focus:outline-none">
+        <select wire:model.live="statusFilter" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="px-3 py-2.5 rounded-xl text-xs font-bold focus:outline-none">
             <option value="">All Application Lifecycle Statuses</option>
             <option value="applied">Applied</option>
             <option value="under_review">Under Review</option>
@@ -25,7 +25,7 @@
     </div>
 
     <!-- APPLICATIONS TABLE CARD -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
                 <thead>

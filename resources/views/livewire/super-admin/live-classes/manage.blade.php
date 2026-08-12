@@ -8,10 +8,10 @@
     </div>
 
     <!-- FILTER BAR -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-4 rounded-3xl shadow-xl flex items-center justify-between">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="p-4 rounded-3xl shadow-xl flex items-center justify-between">
         <div class="text-xs font-bold text-slate-300">Filter Session Status:</div>
 
-        <select wire:model.live="statusFilter" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="px-3 py-2.5 rounded-xl text-xs font-bold focus:outline-none">
+        <select wire:model.live="statusFilter" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="px-3 py-2.5 rounded-xl text-xs font-bold focus:outline-none">
             <option value="">All Statuses</option>
             <option value="live">🔴 Live Now</option>
             <option value="scheduled">Scheduled</option>
@@ -21,7 +21,7 @@
     </div>
 
     <!-- LIVE CLASSES TABLE CARD -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
                 <thead>
@@ -62,7 +62,7 @@
                                         End Session
                                     </button>
                                 @elseif ($lc->status === 'scheduled')
-                                    <button wire:click="updateClassStatus('{{ $lc->id }}', 'live')" style="background-color: #D62828;" class="px-3 py-1.5 rounded-xl text-white text-[11px] font-bold shadow-md">
+                                    <button wire:click="updateClassStatus('{{ $lc->id }}', 'live')" style="background-color: #f15153;" class="px-3 py-1.5 rounded-xl text-white text-[11px] font-bold shadow-md">
                                         Start Live
                                     </button>
                                     <button wire:click="updateClassStatus('{{ $lc->id }}', 'cancelled')" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-bold">
@@ -90,7 +90,7 @@
     <!-- ATTENDANCE MODAL -->
     @if ($selectedClassForAttendance)
         <div class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-2xl max-w-3xl w-full text-white space-y-4">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-3xl p-6 shadow-2xl max-w-3xl w-full text-white space-y-4">
                 <div class="flex items-center justify-between">
                     <h3 class="text-base font-black text-white">Attendance Audit Log: {{ $selectedClassForAttendance->title }}</h3>
                     <button wire:click="$set('selectedClassForAttendance', null)" class="text-slate-400 hover:text-white text-xs">✕ Close</button>

@@ -6,26 +6,26 @@
             <p class="text-xs text-slate-300">Generate real-time analytics for user growth, course enrollment revenue, student engagement, and placement reports.</p>
         </div>
 
-        <button wire:click="exportCsvReport" style="background-color: #D62828;" class="px-5 py-2.5 rounded-2xl text-white font-black text-xs shadow-lg hover:bg-rose-700 transition flex items-center gap-2">
+        <button wire:click="exportCsvReport" style="background-color: #f15153;" class="px-5 py-2.5 rounded-2xl text-white font-black text-xs shadow-lg hover:bg-rose-700 transition flex items-center gap-2">
             📊 Export CSV Report
         </button>
     </div>
 
     <!-- METRICS OVERVIEW CARDS -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">30-Day Student Growth</div>
             <div class="text-3xl font-black text-blue-400">+{{ number_format($studentGrowth) }}</div>
             <div class="text-[11px] text-slate-400">New student registrations</div>
         </div>
 
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">Completed Gross Revenue</div>
             <div class="text-3xl font-black text-emerald-400">₹{{ number_format($revenueTotal) }}</div>
             <div class="text-[11px] text-slate-400">Total course sales total</div>
         </div>
 
-        <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
+        <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="p-6 rounded-3xl shadow-xl space-y-2 text-white">
             <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">Verified Placements</div>
             <div class="text-3xl font-black text-purple-400">{{ number_format($hiredTotal) }} Hired</div>
             <div class="text-[11px] text-slate-400">Career placement success</div>
@@ -33,7 +33,7 @@
     </div>
 
     <!-- TOP PERFORMING COURSES REPORT CARD -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
         <h3 class="text-base font-black text-white">Top Enrolled Courses Performance</h3>
 
         <div class="overflow-x-auto">

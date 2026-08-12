@@ -1,6 +1,6 @@
 <div class="space-y-6 text-white">
     <!-- TOP HEADER -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl p-6 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
             <h1 class="text-2xl font-black text-white">My Job Applications</h1>
             <p class="text-xs text-slate-300 mt-1">Track status and AI ATS match score for all submitted job applications.</p>
@@ -11,7 +11,7 @@
     </div>
 
     <!-- APPLICATIONS TABLE -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl shadow-xl overflow-hidden text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.25);" class="rounded-3xl shadow-xl overflow-hidden text-white">
         @if ($applications->count() > 0)
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs text-slate-300">

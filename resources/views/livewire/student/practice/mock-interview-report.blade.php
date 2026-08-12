@@ -1,6 +1,6 @@
 <div class="max-w-4xl mx-auto space-y-8 text-white">
     <!-- Header Banner -->
-    <div class="rounded-3xl p-6 md:p-8 border border-slate-800 flex items-center justify-between gap-6" style="background-color: #0B1F3A;">
+    <div class="rounded-3xl p-6 md:p-8 border border-purple-800/40 flex items-center justify-between gap-6" style="background-color: #251237;">
         <div class="space-y-1">
             <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">Interview Coaching Report</span>
             <h1 class="text-2xl font-black text-white">{{ $interview->role }} Performance</h1>
@@ -14,7 +14,7 @@
     </div>
 
     <!-- 8 Skill Rubrics Grid -->
-    <div class="rounded-3xl p-6 border border-slate-800 space-y-4" style="background-color: #0B1F3A;">
+    <div class="rounded-3xl p-6 border border-purple-800/40 space-y-4" style="background-color: #251237;">
         <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider border-b border-slate-800 pb-2">8 Core Interview Skill Metrics</h2>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
             @php
@@ -45,7 +45,7 @@
 
     <!-- Personalized 7-Day Action Plan -->
     @if(!empty($report->improvement_plan))
-        <div class="rounded-3xl p-6 border border-slate-800 space-y-4" style="background-color: #0B1F3A;">
+        <div class="rounded-3xl p-6 border border-purple-800/40 space-y-4" style="background-color: #251237;">
             <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider border-b border-slate-800 pb-2 flex items-center justify-between">
                 <span>🗓️ Personalized 7-Day Improvement Plan</span>
                 <span class="text-rose-400 text-[10px]">Tailored to your interview performance</span>
@@ -72,7 +72,7 @@
         </h2>
 
         @foreach($questions as $index => $q)
-            <div class="rounded-2xl p-5 border border-slate-800 space-y-3" style="background-color: #0B1F3A;">
+            <div class="rounded-2xl p-5 border border-purple-800/40 space-y-3" style="background-color: #251237;">
                 <div class="flex items-start justify-between gap-4 border-b border-slate-800 pb-2">
                     <div>
                         <span class="text-[10px] font-bold text-rose-400 uppercase">Question {{ $index + 1 }}</span>

@@ -8,7 +8,7 @@
          x-transition:leave="transition-opacity ease-linear duration-200"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
-         class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm"></div>
+         class="fixed inset-0 bg-purple-950/80 backdrop-blur-sm"></div>
 
     <!-- Mobile Slide-over Panel -->
     <aside x-transition:enter="transition ease-in-out duration-300 transform"
@@ -17,12 +17,13 @@
            x-transition:leave="transition ease-in-out duration-300 transform"
            x-transition:leave-start="translate-x-0"
            x-transition:leave-end="-translate-x-full"
-           class="fixed inset-y-0 left-0 top-16 z-50 w-64 bg-[#0B1F3A] text-slate-300 border-r border-white/10 flex flex-col justify-between overflow-y-auto">
+           style="background-color: #210f30; border-right: 1px solid rgba(241,81,83,0.2);"
+           class="fixed inset-y-0 left-0 top-16 z-50 w-64 text-purple-100 flex flex-col justify-between overflow-y-auto">
         <x-student.sidebar-content />
     </aside>
 </div>
 
 <!-- 2. DESKTOP STICKY SIDEBAR (Desktop Only: lg+) -->
-<aside class="hidden lg:flex flex-col justify-between w-64 shrink-0 bg-[#0B1F3A] text-slate-300 border-r border-white/10 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto z-20">
+<aside style="background-color: #210f30; border-right: 1px solid rgba(241,81,83,0.2);" class="hidden lg:flex flex-col justify-between w-64 shrink-0 text-purple-100 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto z-20">
     <x-student.sidebar-content />
 </aside>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-[#0B1F3A]">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full" style="background-color: #321847;">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,30 +28,22 @@
             height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #07162C;
+            background: #210f30;
         }
         ::-webkit-scrollbar-thumb {
-            background: #1e3a5f;
+            background: #542878;
             border-radius: 9999px;
-            border: 1px solid rgba(214, 40, 40, 0.2);
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #D62828;
-        }
-        ::-webkit-scrollbar-corner {
-            background: #07162C;
-        }
-        * {
-            scrollbar-width: thin;
-            scrollbar-color: #1e3a5f #07162C;
+            background: #f15153;
         }
         select option {
-            background-color: #0B1F3A !important;
+            background-color: #321847 !important;
             color: #FFFFFF !important;
         }
     </style>
 </head>
-<body style="background-color: #0B1F3A; margin: 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between;" class="font-sans antialiased text-slate-100 selection:bg-[#D62828] selection:text-white">
+<body style="background-color: #321847; margin: 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between;" class="font-sans antialiased text-purple-50 selection:bg-[#f15153] selection:text-white">
 
     <x-public.navbar />
 

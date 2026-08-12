@@ -8,13 +8,13 @@
     </div>
 
     <!-- CONTROL & FILTERS BAR -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-4 rounded-3xl shadow-xl flex flex-col md:flex-row gap-4 items-center justify-between">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="p-4 rounded-3xl shadow-xl flex flex-col md:flex-row gap-4 items-center justify-between">
         <div class="w-full md:w-80">
-            <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search name, email, user ID..." style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-4 py-2.5 rounded-xl text-xs font-semibold focus:outline-none focus:border-rose-500 placeholder-slate-400">
+            <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search name, email, user ID..." style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="w-full px-4 py-2.5 rounded-xl text-xs font-semibold focus:outline-none focus:border-[#f15153] placeholder-slate-400">
         </div>
 
         <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
-            <select wire:model.live="role" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="px-3 py-2.5 rounded-xl text-xs font-bold focus:outline-none">
+            <select wire:model.live="role" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="px-3 py-2.5 rounded-xl text-xs font-bold focus:outline-none">
                 <option value="">All Roles</option>
                 <option value="student">Student</option>
                 <option value="staff">Staff / Trainer</option>
@@ -22,7 +22,7 @@
                 <option value="super_admin">Super Admin</option>
             </select>
 
-            <select wire:model.live="status" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="px-3 py-2.5 rounded-xl text-xs font-bold focus:outline-none">
+            <select wire:model.live="status" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="px-3 py-2.5 rounded-xl text-xs font-bold focus:outline-none">
                 <option value="">All Statuses</option>
                 <option value="active">Active</option>
                 <option value="suspended">Suspended</option>
@@ -32,7 +32,7 @@
     </div>
 
     <!-- USERS TABLE CARD -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
                 <thead>
@@ -110,19 +110,19 @@
     <!-- PASSWORD RESET MODAL -->
     @if ($showPasswordModal)
         <div class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-2xl max-w-md w-full text-white space-y-4">
+            <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-3xl p-6 shadow-2xl max-w-md w-full text-white space-y-4">
                 <h3 class="text-base font-black text-white">Reset Password for {{ $selectedUser?->name }}</h3>
                 <p class="text-xs text-slate-300">Set a new strong password for this account. System audit log will record this action.</p>
 
                 <form wire:submit.prevent="resetPassword" class="space-y-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-300 mb-1">New Password</label>
-                        <input type="password" wire:model="newPassword" required placeholder="At least 8 characters..." style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-3 py-2.5 rounded-xl text-xs focus:outline-none">
+                        <input type="password" wire:model="newPassword" required placeholder="At least 8 characters..." style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="w-full px-3 py-2.5 rounded-xl text-xs focus:outline-none">
                     </div>
 
                     <div class="flex items-center justify-end gap-3 pt-2">
                         <button type="button" wire:click="$set('showPasswordModal', false)" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs">Cancel</button>
-                        <button type="submit" style="background-color: #D62828;" class="px-5 py-2 rounded-xl text-white font-bold text-xs shadow-md">Confirm Reset</button>
+                        <button type="submit" style="background-color: #f15153;" class="px-5 py-2 rounded-xl text-white font-bold text-xs shadow-md">Confirm Reset</button>
                     </div>
                 </form>
             </div>

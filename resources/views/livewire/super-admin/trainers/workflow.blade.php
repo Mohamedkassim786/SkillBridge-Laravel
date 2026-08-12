@@ -8,12 +8,12 @@
     </div>
 
     <!-- CONTROL BAR -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="p-4 rounded-3xl shadow-xl flex flex-col md:flex-row gap-4 items-center justify-between">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="p-4 rounded-3xl shadow-xl flex flex-col md:flex-row gap-4 items-center justify-between">
         <div class="w-full md:w-80">
-            <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search trainer name, email..." style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="w-full px-4 py-2.5 rounded-xl text-xs font-semibold focus:outline-none placeholder-slate-400">
+            <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search trainer name, email..." style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="w-full px-4 py-2.5 rounded-xl text-xs font-semibold focus:outline-none placeholder-slate-400">
         </div>
 
-        <select wire:model.live="verification_status" style="background: #112240; border: 1px solid #1e3a5f; color: white;" class="px-3 py-2.5 rounded-xl text-xs font-bold focus:outline-none">
+        <select wire:model.live="verification_status" style="background: #1e0d2d; border: 1px solid rgba(241,81,83,0.3); color: white;" class="px-3 py-2.5 rounded-xl text-xs font-bold focus:outline-none">
             <option value="">All Verification Statuses</option>
             <option value="pending">Pending Verification</option>
             <option value="approved">Approved</option>
@@ -23,7 +23,7 @@
     </div>
 
     <!-- TRAINERS TABLE CARD -->
-    <div style="background-color: #0B1F3A; border: 1px solid #1e3a5f;" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
+    <div style="background-color: #251237; border: 1px solid rgba(241,81,83,0.3);" class="rounded-3xl p-6 shadow-xl space-y-4 text-white">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
                 <thead>
@@ -64,7 +64,7 @@
                             </td>
                             <td class="py-3.5 px-4 text-right space-x-2">
                                 @if ($vStatus === 'pending' || $vStatus === 'rejected')
-                                    <button wire:click="updateTrainerVerification('{{ $t->id }}', 'approved')" style="background-color: #D62828;" class="px-3 py-1.5 rounded-xl text-white text-[11px] font-bold shadow-md">
+                                    <button wire:click="updateTrainerVerification('{{ $t->id }}', 'approved')" style="background-color: #f15153;" class="px-3 py-1.5 rounded-xl text-white text-[11px] font-bold shadow-md">
                                         Approve Trainer
                                     </button>
                                     <button wire:click="updateTrainerVerification('{{ $t->id }}', 'rejected')" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-[11px] font-bold">
