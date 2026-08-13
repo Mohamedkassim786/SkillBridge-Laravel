@@ -1,2 +1,9 @@
 *
 !.gitignore
+!videos/
+!videos/full-stack-laravel-architecture/
+!videos/full-stack-laravel-architecture/home-page-background/
+!videos/full-stack-laravel-architecture/home-page-background/background.mp4
+
+
+
